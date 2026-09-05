@@ -1,0 +1,675 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>조리교육 통합관리 · 커리큘럼/체크리스트/교육일지</title>
+<style>
+:root{--navy:#1f3864;--blue:#2f5496;--line:#dcdfe6;--bg:#f4f6f9;--ok:#1f7a44;--warn:#c0392b;--mut:#6b7280;--gold:#b8860b}
+*{box-sizing:border-box}
+body{margin:0;font-family:"맑은 고딕","Malgun Gothic",sans-serif;background:var(--bg);color:#1d2733;font-size:14px}
+header{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+header h1{font-size:17px;margin:0;font-weight:700}
+.sp{flex:1}
+.btn{background:#fff;color:var(--navy);border:1px solid #c9d3e0;border-radius:6px;padding:6px 11px;font-size:12.5px;cursor:pointer;font-weight:600}
+.btn.ghost{background:transparent;color:#fff;border-color:#5a73a8}.btn.ghost:hover{background:#2a4575}
+.btn.gold{background:var(--gold);color:#fff;border:none}
+.btn.go{background:var(--ok);color:#fff;border:none;padding:9px 18px;font-size:14px}
+.btn.warn{background:#fbeaea;color:var(--warn);border-color:#e3b7b3}
+.wrap{padding:18px;max-width:1080px;margin:0 auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card h2{margin:0 0 4px;font-size:18px;color:var(--navy)}
+.card .sub{color:var(--mut);font-size:13px;margin-bottom:16px}
+label.f{display:block;font-size:12.5px;color:#33415c;font-weight:700;margin:12px 0 5px}
+input,select{font-family:inherit;font-size:14px;border:1px solid #c9d3e0;border-radius:7px;padding:8px 10px}
+input.w{width:100%;max-width:340px}
+.brandpick{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.bp{border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;cursor:pointer;font-weight:700;color:#444;min-width:150px;display:flex;align-items:center;gap:9px;background:#fff}
+.bp.on{border-color:var(--navy);background:#eef2fb;color:var(--navy)}
+.bp input{width:18px;height:18px;accent-color:var(--navy)}
+.bp .m{font-size:11px;color:var(--mut);font-weight:500}
+.overall{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.bar{height:12px;background:#eef0f4;border-radius:8px;overflow:hidden}.bar > i{display:block;height:100%;background:linear-gradient(90deg,#2f5496,#1f7a44);width:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{background:#fff;border:1.5px solid var(--line);color:#555;border-radius:22px;padding:9px 18px;font-weight:700;cursor:pointer;font-size:14px}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}.tab .p{font-size:11px;opacity:.85;margin-left:6px}
+.metabar{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.metabar b{color:var(--navy)}
+.sec{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.sec h3{margin:0;background:#eef2f8;color:var(--navy);font-size:14px;padding:9px 14px;display:flex;align-items:center;gap:8px}
+.sec h3 .c{flex:1}.sec h3 .cnt{font-size:12px;color:var(--mut);font-weight:600}
+table{border-collapse:collapse;width:100%}
+th,td{border-bottom:1px solid #eef0f4;padding:7px 10px;text-align:center}
+th{background:#f7faff;color:#33415c;font-weight:700;font-size:12px}
+td.t,th.t{text-align:left}td.t{font-weight:600}
+tr.done td{background:#f2faf5}
+.ck{width:20px;height:20px;cursor:pointer;accent-color:#1f7a44}
+.note{width:96%;border:1px solid #e3e9f3;border-radius:5px;padding:4px 6px;font-size:12px}
+.del{color:var(--warn);cursor:pointer;font-weight:700}
+.ce[contenteditable="true"]{outline:1px dashed #c9d3e0;border-radius:4px;padding:1px 4px}
+.ce[contenteditable="true"]:focus{outline:2px solid var(--gold);background:#fffdf5}
+.mut{color:var(--mut);font-size:12px}
+.note-i{background:#fff8e6;border:1px solid #f1e2b6;color:#7a5b00;padding:8px 12px;border-radius:8px;font-size:12.5px;margin-bottom:12px}
+.admin-brand{border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.admin-brand > .bh{background:var(--navy);color:#fff;padding:8px 14px;display:flex;gap:8px;align-items:center;font-weight:700}
+.admin-brand .bh .ce{color:#fff}
+.admin-sec{padding:8px 14px;border-bottom:1px solid #f0f0f0}
+.admin-sec .sh{font-weight:700;color:var(--navy);display:flex;gap:8px;align-items:center;margin-bottom:4px}
+.admin-item{display:flex;gap:8px;align-items:center;padding:2px 0 2px 14px;font-size:13px}
+.hide{display:none}
+footer{padding:16px;text-align:center;color:var(--mut);font-size:12px}
+
+/* 커리큘럼 */
+.curr table{table-layout:fixed}
+.curr th{font-size:12px}
+.curr td{vertical-align:top;text-align:left;font-size:12.5px}
+.curr td.tm{text-align:center;font-weight:700;color:var(--navy);white-space:nowrap;width:104px}
+.curr td.md,.curr td.ow{text-align:center;width:88px;color:#4a5568}
+.curr .ce[contenteditable="true"]{display:block;min-height:20px}
+.daymeta{background:#eef2fb;border:1px solid #d6e0f5;border-radius:9px;padding:10px 14px;margin-bottom:12px;font-size:13px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.daymeta b{color:var(--navy)}
+.goal{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;line-height:1.65}
+
+/* 교육일지 */
+.logform label.f{margin-top:14px}
+textarea{font-family:inherit;font-size:13.5px;border:1px solid #c9d3e0;border-radius:7px;padding:9px 11px;width:100%;line-height:1.6;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+.prog-inline{background:#f7faff;border:1px solid #dfe7f5;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:6px}
+.prog-inline .row{display:flex;justify-content:space-between;padding:3px 0}
+.signwrap{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+.signbox{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#fff;flex:1;min-width:270px}
+.signbox .lbl{font-size:12.5px;font-weight:700;color:#33415c;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.signbox .lbl .sp{flex:1}
+.sigpad{border:1px dashed #bcc7d8;border-radius:7px;background:#fcfdff;touch-action:none;display:block;width:100%;height:110px;cursor:crosshair}
+.sigmeta{font-size:11.5px;color:var(--mut);margin-top:5px}
+.sigdone{border-color:var(--ok);background:#f7fdf9}
+.chip{display:inline-block;background:#eef2fb;color:var(--navy);border-radius:20px;padding:3px 11px;font-size:11.5px;font-weight:700}
+.chip.done{background:#e8f6ee;color:var(--ok)}
+
+@media print{
+  header,footer,.metabar,.tabs .p,.del,.note-i{display:none!important}
+  body{background:#fff;font-size:11.5px}
+  .wrap{padding:0;max-width:none}
+  .tab{display:none}.tab.on{display:inline-block}
+  .sec,.signbox,.card{break-inside:avoid}
+  .btn{display:none!important}
+  textarea,input{border:none;border-bottom:1px solid #bbb;border-radius:0;padding:2px 0}
+  textarea{resize:none;overflow:visible;height:auto}
+  .sigpad{border:1px solid #999}
+  .prn-only{display:block!important}
+}
+.prn-only{display:none}
+.syncbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.sdot{width:9px;height:9px;border-radius:50%;background:#c4ccd8;display:inline-block}
+.sdot.on{background:#1f7a44}.sdot.err{background:#c0392b}.sdot.wait{background:#b8860b}
+.syncmsg{display:none;margin-top:10px;padding:10px 13px;border-radius:8px;font-size:12.5px;line-height:1.6;border:1px solid #dfe7f5;background:#f7faff;color:#33415c}
+.syncmsg.err{border-color:#e3b7b3;background:#fbeaea;color:#8e2c22}
+.syncmsg.ok{border-color:#bfe3cd;background:#f0faf4;color:#1f7a44}
+.syncnote{background:#f7faff;border:1px solid #dfe7f5;border-radius:8px;padding:10px 13px;font-size:12.5px;color:#33415c;line-height:1.65;margin-top:10px}
+</style></head><body>
+<header>
+  <h1 id="hTitle">조리교육 통합관리</h1>
+  <span id="save" style="font-size:12px;color:#cdd8ec"></span>
+  <span id="syncst" style="font-size:12px;color:#cdd8ec"></span>
+  <span class="sp"></span>
+  <button class="btn ghost" id="navCurr" onclick="show('curr')">커리큘럼</button>
+  <button class="btn ghost" id="navList" onclick="show('list')">체크리스트</button>
+  <button class="btn ghost" id="navLog" onclick="show('log')">교육일지</button>
+  <button class="btn ghost" id="navAdmin" onclick="show('admin')">⚙️ 관리자</button>
+</header>
+<div class="wrap" id="app"></div>
+<input type="file" id="imp" accept=".json" hidden>
+<footer>FNBHERO 교육팀 · 커리큘럼 · 체크리스트 · 교육일지 통합관리 · 커리큘럼과 브랜드 템플릿은 수정 즉시 저장되어 전체에 반영됩니다.</footer>
+<script>
+const LS_TPL='fnbhero_cook_tpl_v2', LS_ST='fnbhero_cook_state_v2';
+const DEF_TPL={brands:[
+ {name:'냉면장인 임사부', secs:[
+   {name:'1. 공통·기본 준비',items:['위생·복장(두건·앞치마·위생장갑)·손세척','흑미면/순메밀면 삶기·냉수 헹굼·물기 제거','냉면육수 준비·살얼음 관리','비빔양념장 계량(메뉴별 양)','고명 준비(오이·쌈무·지단·삶은달걀·열무김치)','겨자·식초·다대기 별첨 세팅']},
+   {name:'2. 냉면 메뉴 조리',items:['흑미 살얼음 물냉면','흑미 비빔냉면','해장 물비빔냉면','흑미 [불] 물냉면','흑미 [불] 비빔냉면','명태 비빔냉면(코다리회무침 토핑)','시원한 열무 물냉면','시원한 열무 비빔냉면','시원한 열무 물비빔냉면']},
+   {name:'3. 분식·사이드',items:['갈비만두 튀김','고기왕만두 튀김','김치왕만두 튀김','바삭한 통등심 수제 돈까스','어니언 크림 수제 돈까스','자연치즈 돈까스','직화 석쇠불고기','코다리 회무침','사골 왕만두국 / 떡만두국','오사카 타코야끼']},
+   {name:'4. 포장·마감',items:['냉면 포장(육수 별도·양념 별첨)·용기 밀봉','튀김·돈까스 눅눅하지 않게 포장','원산지 표기 확인(넙치·쌀·돼지 등)','주문서 확인·누락 점검']},
+ ]},
+ {name:'조선명가 묵은지 김치찜', secs:[
+   {name:'1. 공통·기본 준비',items:['위생·복장·손세척','임사부 김치찜 베이스 데우기·농도·간','밥/공기밥 짓기·용기 담기','반찬 준비(마카로니 콘 샐러드·콩나물무침·김)','고기 손질·계량(목살/삼겹/우삼겹/스팸/꽁치/돈까스/킬바사)']},
+   {name:'2. 김치찜 메뉴 조리',items:['1.5인 묵은지 김치찜 - 목살','1.5인 묵은지 김치찜 - 삼겹','1.5인 묵은지 김치찜 - 스팸','1.5인 묵은지 김치찜 - 꽁치','1.5인 묵은지 김치찜 - 직화우삼겹','1.5인 - 삼겹치즈 / 돈까스 / 킬바사','묵은지 김치찜 세트(2~3인)','묵은지 김치찜 세트(3~4인)','순두부 왕창 김치찜(순두부 추가·간)']},
+   {name:'3. 사이드·토핑',items:['콩나물밥','곤드레밥','간장버터계란밥','소금김밥','계란찜','수제돈까스 / 고등어구이','토핑: 모짜렐라·비엔나·분모자·당면·라면·떡사리']},
+   {name:'4. 포장·마감',items:['찜용기·사이드용기·공기밥 용기 포장','국물 새지 않게 밀봉','원산지 표기 확인(배추김치·고춧가루·돼지·콩 등)','주문서 확인·누락 점검']},
+ ]},
+ {name:'해장요리전문 임사부국밥', secs:[
+   {name:'1. 공통·기본 준비',items:['위생·복장·손세척','국밥 육수(국밥소스·원팩) 준비·데우기·농도','신동진 쌀밥 짓기','고명·양념 세팅(대파·부추·깍두기·다대기·새우젓)','머릿고기·병천순대·찰순대·살코기 손질·계량']},
+   {name:'2. 국밥 조리',items:['순대국밥(머릿고기+순대)','순대국밥(머릿고기만/순대만/살코기)','특 순대국밥','돼지국밥 / 특 돼지국밥','마라 해장국밥','매운 해장국밥','병천순대 순대만 국밥']},
+   {name:'3. 원팩 국밥 7종',items:['소양 가득 차돌 해장국','소고기 화개장터국밥','마포 가마솥 설렁탕','부드러운 순살 우거지 해장국','얼큰 시래기 소고기 육개장','얼큰 부대찌개 국밥','소고기 들깨 미역국']},
+   {name:'4. 수육·편육·분식',items:['모듬 수육','수육 + 명태회 / 편육 + 명태회','코다리 회무침','전통순대 / 찰순대 한접시','갈비만두 튀김','떡갈비 / 맛보기 수육']},
+   {name:'5. 세트류',items:['국밥 + 갈비만두 5개','국밥 + 떡갈비 2개','국밥 + 맛보기 수육','국밥 + 모듬수육 / 수육&명태회','2인 세트(국밥2 + 수육류)','국밥 + 두부김치 / 순두부']},
+   {name:'6. 포장·마감',items:['국밥 포장(밥·건더기·국물 분리)·용기 밀봉','반찬·양념 별첨','원산지 표기 확인(돼지·쌀·배추김치 등)','주문서 확인·누락 점검']},
+ ]},
+ {name:'직화고', secs:[
+   {name:'1. 공통·기본 준비',items:['위생·복장·손세척','쌀 세척·밥 짓기','감자육수 / 된장찌개 베이스 제조','계란물 만들기']},
+   {name:'2. 소스·반제품 제조',items:['직화고 쌈장','명란 쌈장','버터 마늘소스','봉산집 간장소스','참기름장','간장 양념장','히말라야 허브소금','비빔 오징어젓갈','허니쓰리라차','마라파우더','블랙페퍼소스','껍데기 삶기·양념 절임','육회고기 / 볶음김치']},
+   {name:'3. 고기·구이류',items:['삼겹살 구이(기본/간장/고추장/매운고추장)','목살 구이(기본/간장/고추장/매운고추장)','양념갈비 구이']},
+   {name:'4. 밥·면류',items:['김치볶음밥','떠먹는 파초밥','된장술밥','육회비빔밥','콩나물밥+양념간장','쫄면 / 냉쫄면','칼비빔면','물냉면 / 비빔냉면']},
+   {name:'5. 찜·찌개류·세트',items:['된장찌개','삼겹 김치찜','목살 김치찜','계란찜','소스 6종 / 반찬 3종 / 쌈야채 세트']},
+   {name:'6. 포장·마감',items:['용기별 포장·소스 별첨','원산지 표기 확인','주문서 확인·누락 점검']},
+ ]},
+ {name:'공통 운영 · 발주/재고', secs:[
+   {name:'1. 위생·안전',items:['규정 복장(위생복·두건·앞치마·안전화) 착용 및 손세척 시점 준수','냉장 0~5℃·냉동 -18℃ 이하 온도 관리 및 기록','식자재 선입선출·해동 수칙 준수','유통기한 라벨 부착 및 폐기 기준 준수','칼·도마·행주 세척·소독 루틴 수행','안전사고 예방 수칙 숙지(화상·미끄러짐·칼)']},
+   {name:'2. 식자재 발주',items:['발주처 구분 및 발주 주기·마감시간 숙지','품목별 규격·발주 단위 확인','일일 사용량 기준 소요량 산출','재고 실사 수행 및 재고표 작성','발주서 작성 및 마감시간 내 전송','입고 검수·수량 대조 및 반품 처리']},
+   {name:'3. 부자재 발주',items:['포장용기·수저·비닐·라벨 등 품목 파악','규격 및 발주 수량 단위 확인','리드타임을 고려한 발주 시점 판단','부자재 보관 위치 지정 및 재고 관리']},
+   {name:'4. 재고·원가 관리',items:['폐기대장 작성','로스율 산출 및 원인 분석','로스율 기반 발주량 보정','매출 대비 발주 비율 점검']},
+   {name:'5. 오픈 준비',items:['개점일 기준 초도 발주 수량 확정','초도 입고 일정 확인 및 검수 준비','입고 품목별 보관 위치 배치 확정']},
+ ]},
+],
+curriculum:[
+ {d:1,title:'OT · 위생·안전 · 발주 체계 · 공통 준비',
+  goal:'브랜드와 7일 교육 일정을 이해하고, 위생·안전 기준과 발주 체계, 주방 기물 사용법을 숙지하여 조리 실습에 들어갈 준비를 마친다.',
+  blocks:[
+   {t:'14:00~14:40',s:'교육 오리엔테이션',d:'브랜드 소개, 7일 교육 일정 및 목표 안내, 교육생 역할 배정',m:'이론',o:'교육 담당'},
+   {t:'14:40~15:00',s:'위생·안전 1',d:'개인위생 기준 — 복장·두건·앞치마·위생장갑 착용, 손세척 시점과 방법',m:'이론',o:'교육 담당'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~16:30',s:'위생·안전 2',d:'주방 5대 위생, 교차오염 방지, 도구·작업대 세척·소독, 안전사고 예방 수칙',m:'이론',o:'교육 담당'},
+   {t:'16:30~17:30',s:'식자재 관리',d:'냉장 0~5℃·냉동 -18℃ 이하 관리, 선입선출, 해동 수칙, 유통기한 라벨 작성',m:'이론·실습',o:'교육 담당'},
+   {t:'17:30~19:00',s:'발주 체계 이해',d:'식자재·부자재 발주처 구분, 발주 주기와 마감시간, 물류 입고·검수 절차, 발주 시스템 계정 세팅',m:'이론',o:'운영 매니저'},
+   {t:'19:00~20:30',s:'기물 운용',d:'취반기·직화렌지·튀김기·제빙기 사용법 및 세척·관리 방법',m:'시연·실습',o:'주방장'},
+   {t:'20:30~22:00',s:'공통 준비 (임사부국밥)',d:'국밥 육수 준비·데우기·농도, 신동진 쌀밥 짓기, 고명·양념 세팅, 머릿고기·순대·살코기 손질',m:'실습',o:'주방장'},
+   {t:'22:00~22:40',s:'공통 준비 (직화고)',d:'쌀 세척·밥 짓기, 감자육수 및 된장찌개 베이스 제조, 계란물 만들기',m:'실습',o:'주방장'},
+   {t:'22:40~23:00',s:'마무리',d:'1일차 진도 점검, 교육일지 작성 및 서명',m:'정리',o:'교육 담당'}]},
+ {d:2,title:'임사부국밥 — 국밥 조리 7종 · 식자재 발주 실습',
+  goal:'순대국밥·돼지국밥·해장국밥을 표준 레시피대로 조리하고, 국밥 원부재료의 일일 소요량을 산출할 수 있다.',
+  blocks:[
+   {t:'11:00~11:30',s:'전일 복습',d:'육수 농도·밥 상태 점검, 전일 미흡 항목 재확인',m:'실습',o:'주방장'},
+   {t:'11:30~14:00',s:'순대국밥',d:'순대국밥(머릿고기+순대), 순대국밥(머릿고기만/순대만/살코기), 특 순대국밥',m:'시연·실습',o:'주방장'},
+   {t:'14:00~15:00',s:'돼지국밥',d:'돼지국밥, 특 돼지국밥 표준 레시피 및 완성 기준',m:'시연·실습',o:'주방장'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~17:00',s:'해장국밥',d:'마라 해장국밥, 매운 해장국밥, 병천순대 순대만 국밥',m:'시연·실습',o:'주방장'},
+   {t:'17:00~18:30',s:'식자재 발주 1',d:'국밥 원부재료 품목·규격 파악, 발주 단위 확인, 일일 사용량 기준 소요량 산출',m:'실습',o:'운영 매니저'},
+   {t:'18:30~21:00',s:'반복 실습',d:'국밥 7종 반복 조리, 농도·간 편차 점검 및 보정',m:'실습',o:'주방장'},
+   {t:'21:00~22:30',s:'저녁 피크 참관·보조',d:'실제 주문 흐름 관찰, 조리 보조 투입',m:'현장 실습',o:'주방·홀'},
+   {t:'22:30~23:00',s:'마무리',d:'2일차 진도 점검, 교육일지 작성 및 서명',m:'정리',o:'교육 담당'}]},
+ {d:3,title:'임사부국밥 — 원팩 국밥 7종 · 부자재 발주',
+  goal:'원팩 국밥 7종의 조리·보관·해동 기준을 숙지하고, 포장용기 등 부자재 발주 품목과 발주 시점을 판단할 수 있다.',
+  blocks:[
+   {t:'11:00~11:30',s:'전일 복습',d:'국밥 7종 중 미흡 항목 재실습',m:'실습',o:'주방장'},
+   {t:'11:30~14:00',s:'원팩 국밥 1',d:'소양 가득 차돌 해장국, 마포 가마솥 설렁탕, 소고기 화개장터국밥',m:'시연·실습',o:'주방장'},
+   {t:'14:00~15:00',s:'원팩 국밥 2',d:'부드러운 순살 우거지 해장국, 얼큰 시래기 소고기 육개장',m:'시연·실습',o:'주방장'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~16:30',s:'원팩 국밥 3',d:'얼큰 부대찌개 국밥, 소고기 들깨 미역국',m:'시연·실습',o:'주방장'},
+   {t:'16:30~18:00',s:'부자재 발주',d:'포장용기·수저·비닐·라벨 등 품목별 규격 확인, 발주 단위와 리드타임 고려한 발주 시점 판단',m:'실습',o:'운영 매니저'},
+   {t:'18:00~19:30',s:'원팩 운용',d:'원팩 보관·해동·데우기 기준, 주문 폭증 시 동시 조리 요령',m:'실습',o:'주방장'},
+   {t:'19:30~22:30',s:'저녁 피크 실전',d:'국밥·원팩 조리 직접 투입',m:'현장 실습',o:'주방·홀'},
+   {t:'22:30~23:00',s:'마무리',d:'3일차 진도 점검, 교육일지 작성 및 서명',m:'정리',o:'교육 담당'}]},
+ {d:4,title:'임사부국밥 — 수육·분식 · 세트류 · 포장 · 재고 실사 및 발주서 작성 · 배달 운영',
+  goal:'사이드·세트 메뉴와 포장 기준을 익히고, 재고 실사부터 발주서 전송까지 발주 전 과정을 단독 수행할 수 있다.',
+  blocks:[
+   {t:'11:00~11:30',s:'전일 복습',d:'원팩 국밥 재실습 및 완성 기준 점검',m:'실습',o:'주방장'},
+   {t:'11:30~13:00',s:'수육·편육',d:'모듬 수육, 수육+명태회, 편육+명태회, 코다리 회무침',m:'시연·실습',o:'주방장'},
+   {t:'13:00~14:00',s:'분식류',d:'전통순대/찰순대 한접시, 갈비만두 튀김, 떡갈비, 맛보기 수육',m:'시연·실습',o:'주방장'},
+   {t:'14:00~15:00',s:'세트류 6종',d:'국밥+갈비만두, 국밥+떡갈비, 국밥+맛보기 수육, 국밥+모듬수육/수육&명태회, 2인 세트, 국밥+두부김치/순두부',m:'시연·실습',o:'주방장'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~16:30',s:'포장·마감',d:'밥·건더기·국물 분리 포장, 반찬·양념 별첨, 원산지 표기 확인, 주문서 누락 점검',m:'실습',o:'주방장'},
+   {t:'16:30~18:00',s:'재고 실사 및 발주서 작성',d:'재고 실사 수행, 발주 수량 확정, 발주서 작성·전송, 발주 마감시간 준수 실습',m:'실습',o:'운영 매니저'},
+   {t:'18:00~19:30',s:'배달플랫폼 운영교육',d:'플랫폼 구조·수수료·정산 체계, 주문 접수·취소·배차 흐름, 리뷰 및 클레임 응대',m:'이론',o:'운영 매니저'},
+   {t:'19:30~22:00',s:'저녁 피크 실전',d:'국밥·사이드·세트 동시 조리 및 포장',m:'현장 실습',o:'주방·홀'},
+   {t:'22:00~22:40',s:'임사부국밥 1차 평가',d:'35개 항목 진도 점검 및 보완 과제 부여',m:'평가',o:'교육 담당'},
+   {t:'22:40~23:00',s:'마무리',d:'4일차 진도 점검, 교육일지 작성 및 서명',m:'정리',o:'교육 담당'}]},
+ {d:5,title:'직화고 — 소스·반제품 제조 · 브랜드 통합 발주',
+  goal:'직화고 소스 11종과 반제품을 표준 배합으로 제조하고, 2개 브랜드 식자재를 하나의 발주서로 통합 작성할 수 있다.',
+  blocks:[
+   {t:'11:00~11:30',s:'전일 복습',d:'임사부국밥 보완 과제 점검',m:'실습',o:'주방장'},
+   {t:'11:30~14:00',s:'소스 제조 1',d:'직화고 쌈장, 명란 쌈장, 버터 마늘소스, 봉산집 간장소스, 참기름장, 간장 양념장, 히말라야 허브소금',m:'시연·실습',o:'주방장'},
+   {t:'14:00~15:00',s:'소스 제조 2',d:'비빔 오징어젓갈, 허니쓰리라차',m:'시연·실습',o:'주방장'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~16:30',s:'소스 제조 3',d:'마라파우더, 블랙페퍼소스',m:'시연·실습',o:'주방장'},
+   {t:'16:30~18:00',s:'반제품 제조',d:'껍데기 삶기·양념 절임, 육회고기 손질, 볶음김치',m:'시연·실습',o:'주방장'},
+   {t:'18:00~19:00',s:'식자재 발주 2',d:'직화고 육류·소스 원재료 발주 품목 파악, 2개 브랜드 통합 발주서 작성',m:'실습',o:'운영 매니저'},
+   {t:'19:00~20:00',s:'보관 기준',d:'소스·반제품 보관 용기, 라벨 표기, 유효기간 관리',m:'이론·실습',o:'주방장'},
+   {t:'20:00~22:30',s:'저녁 피크 실전',d:'임사부국밥 조리 투입 및 직화고 소스 운용 점검',m:'현장 실습',o:'주방·홀'},
+   {t:'22:30~23:00',s:'마무리',d:'5일차 진도 점검, 교육일지 작성 및 서명',m:'정리',o:'교육 담당'}]},
+ {d:6,title:'직화고 — 고기·구이 · 밥류 · 면류 · 재고 및 로스 관리',
+  goal:'부위별 구이 기준과 밥·면 메뉴를 숙지하고, 폐기대장과 로스율을 근거로 발주량을 보정할 수 있다.',
+  blocks:[
+   {t:'11:00~11:30',s:'전일 복습',d:'소스 11종 배합 점검 및 재실습',m:'실습',o:'주방장'},
+   {t:'11:30~13:30',s:'구이류',d:'삼겹살 구이 4종(기본/간장/고추장/매운고추장), 목살 구이 4종, 양념갈비 구이',m:'시연·실습',o:'주방장'},
+   {t:'13:30~14:15',s:'화력·굽기 기준',d:'부위별 굽기 정도와 시간, 직화렌지 화력 관리',m:'시연',o:'주방장'},
+   {t:'14:15~15:00',s:'밥류 1',d:'김치볶음밥, 떠먹는 파초밥',m:'시연·실습',o:'주방장'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~16:45',s:'밥류 2',d:'된장술밥, 육회비빔밥, 콩나물밥+양념간장',m:'시연·실습',o:'주방장'},
+   {t:'16:45~18:15',s:'면류',d:'쫄면, 냉쫄면, 칼비빔면, 물냉면, 비빔냉면',m:'시연·실습',o:'주방장'},
+   {t:'18:15~19:30',s:'재고·로스 관리',d:'폐기대장 작성, 로스율 산출, 로스율 기반 발주량 보정',m:'실습',o:'운영 매니저'},
+   {t:'19:30~22:30',s:'저녁 피크 실전',d:'2개 브랜드 주문 동시 대응 연습',m:'현장 실습',o:'주방·홀'},
+   {t:'22:30~23:00',s:'마무리',d:'6일차 진도 점검, 교육일지 작성 및 서명',m:'정리',o:'교육 담당'}]},
+ {d:7,title:'직화고 — 찜·찌개·세트 · 포장 · 오픈 초도 발주 · 피크타임 실전 · 종합평가',
+  goal:'2개 브랜드 주문을 동시에 처리하고, 개점일 기준 초도 발주를 확정하여 단독 운영이 가능한 상태에 도달한다.',
+  blocks:[
+   {t:'11:00~11:30',s:'전일 복습',d:'구이·밥·면 미흡 항목 재실습',m:'실습',o:'주방장'},
+   {t:'11:30~13:00',s:'찜·찌개류',d:'된장찌개, 삼겹 김치찜, 목살 김치찜, 계란찜',m:'시연·실습',o:'주방장'},
+   {t:'13:00~14:00',s:'세트 구성',d:'소스 6종, 반찬 3종, 쌈야채 세트 구성 기준',m:'실습',o:'주방장'},
+   {t:'14:00~15:00',s:'포장·마감',d:'용기별 포장·소스 별첨, 원산지 표기 확인, 주문서 확인 및 누락 점검',m:'실습',o:'주방장'},
+   {t:'15:00~15:30',s:'식사',d:'',m:'-',o:'-'},
+   {t:'15:30~17:30',s:'오픈 초도 발주 확정',d:'개점일 기준 초도 식자재·부자재 발주 수량 확정 및 전송, 입고 일정과 보관 위치 점검',m:'실습',o:'운영 매니저'},
+   {t:'17:30~21:30',s:'피크타임 실전',d:'2개 브랜드 동시 주문 대응, 우선순위 판단, 포장·배달 누락 방지 점검',m:'현장 실습',o:'주방·홀'},
+   {t:'21:30~22:20',s:'종합 평가',d:'전체 항목 최종 점검, 단독 운영 가능 여부 판정',m:'평가',o:'교육 담당'},
+   {t:'22:20~23:00',s:'1:1 피드백',d:'보완 과제 부여 및 추가 교육 일정 협의, 최종 교육일지 작성 및 서명',m:'면담',o:'교육 담당'}]}
+]};
+const DEF_ST={view:'setup',store:'',info:{name:'',start:'',mgr:''},selected:[],active:0,checks:{},logs:{},dayActive:0};
+const MEM={};
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return MEM[k]||null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){MEM[k]=v;}}
+let TPL=loadTpl(), ST=loadSt();
+function loadTpl(){try{const t=JSON.parse(lsGet(LS_TPL));if(t&&t.brands){
+  if(!t.curriculum||!t.curriculum.length||!t.v||t.v<3)t.curriculum=JSON.parse(JSON.stringify(DEF_TPL.curriculum));
+  if(!t.v||t.v<3){const nb=DEF_TPL.brands.find(b=>b.name==='공통 운영 · 발주/재고');
+    if(nb&&!t.brands.some(b=>b.name===nb.name))t.brands.push(JSON.parse(JSON.stringify(nb)));t.v=3;}
+  return t;}}catch(e){}
+  const d=JSON.parse(JSON.stringify(DEF_TPL));d.v=3;return d;}
+function loadSt(){try{const s=JSON.parse(lsGet(LS_ST));if(s&&s.checks){if(!s.logs)s.logs={};if(s.dayActive==null)s.dayActive=0;return s;}}catch(e){}return JSON.parse(JSON.stringify(DEF_ST));}
+function saveTpl(){lsSet(LS_TPL,JSON.stringify(TPL));toast();schedulePush();}
+function saveSt(){lsSet(LS_ST,JSON.stringify(ST));toast();schedulePush();}
+
+/* ══════════ 서버 동기화 ══════════ */
+const LS_SY='fnbhero_sync_cfg_v1';
+let SY={url:'',code:'',by:'',rev:0,timer:null,busy:false};
+(function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,busy:false});}catch(e){}})();
+function saveSy(){lsSet(LS_SY,JSON.stringify({url:SY.url,code:SY.code,by:SY.by,rev:SY.rev}));}
+function syncOn(){return !!(SY.url&&SY.code);}
+function syncKey(){const k=(ST.store||'매장')+'_'+(ST.info.start||'날짜미정');
+  return k.replace(/[^\wㄱ-ㅎ가-힣.-]/g,'_').slice(0,80);}
+function syncSt(state,msg){const el=document.getElementById('syncst');
+  document.querySelectorAll('.sdot').forEach(d=>{d.className='sdot'+(state?' '+state:'');});
+  const plain=String(msg||'').replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'').trim();
+  const lb=document.getElementById('syncLabel');if(lb&&plain)lb.textContent=plain.length>46?plain.slice(0,46)+'…':plain;
+  if(el)el.textContent=plain?'· '+(plain.length>28?plain.slice(0,28)+'…':plain):'';
+  const m=document.getElementById('syncMsg');
+  if(m){m.innerHTML=msg||'';m.className='syncmsg'+(state==='err'?' err':state==='on'?' ok':'');m.style.display=msg?'block':'none';}}
+function schedulePush(){if(!syncOn())return;clearTimeout(SY.timer);SY.timer=setTimeout(()=>pushSync(false),2500);}
+
+/* 통신 계층 — 실패 원인을 구분해 돌려줍니다 */
+function syncReq(opt){
+  var url=(SY.url||'').trim().replace(/\s+/g,'');
+  if(!/^https:\/\//i.test(url))
+    return Promise.resolve({ok:false,err:'주소가 <b>https://</b> 로 시작하지 않습니다. Apps Script 배포 화면의 웹 앱 URL을 그대로 붙여넣으십시오.'});
+  if(/\/dev$/.test(url))
+    return Promise.resolve({ok:false,err:'주소가 <b>/dev</b> 로 끝납니다. 이 주소는 본인 계정 로그인 상태에서만 열립니다. 배포 화면의 <b>/exec</b> 주소를 사용하십시오.'});
+  if(!/\/exec$/.test(url))
+    return Promise.resolve({ok:false,err:'주소가 <b>/exec</b> 로 끝나야 합니다. 현재 입력값을 확인하십시오.'});
+  var req=opt.post
+    ? fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(opt.post),redirect:'follow'})
+    : fetch(url+'?'+opt.get,{method:'GET',redirect:'follow'});
+  return req.then(function(r){return r.text().then(function(t){return{status:r.status,text:t};});})
+   .then(function(res){
+     var t=(res.text||'').trim();
+     if(res.status>=400)
+       return{ok:false,err:'서버가 오류를 반환했습니다 (HTTP '+res.status+'). 배포가 완료되었는지, 주소가 최신 배포의 것인지 확인하십시오.'};
+     if(t.charAt(0)!=='{'){
+       if(/accounts\.google\.com|ServiceLogin|signin\/v2|계정에 로그인/i.test(t))
+         return{ok:false,err:'로그인 화면이 돌아왔습니다. Apps Script <b>배포 → 배포 관리 → 수정</b>에서 <b>액세스 권한이 있는 사용자</b>를 <b>모든 사용자</b>로 바꾸고, 버전을 <b>새 버전</b>으로 지정해 다시 배포하십시오.'};
+       if(/Script function not found|스크립트 함수를 찾을 수 없/i.test(t))
+         return{ok:false,err:'스크립트에 doGet 또는 doPost 함수가 없습니다. Code.gs 내용을 다시 붙여넣고 저장한 뒤 새 버전으로 재배포하십시오.'};
+       if(/authorization|권한|승인이 필요/i.test(t))
+         return{ok:false,err:'스크립트 권한 승인이 완료되지 않았습니다. Apps Script 편집기에서 doGet 함수를 한 번 실행해 권한을 허용한 뒤 재배포하십시오.'};
+       return{ok:false,err:'JSON이 아닌 응답을 받았습니다. 웹 앱 주소가 올바른지 확인하십시오. 브라우저 주소창에 해당 URL을 직접 열어보면 원인을 확인할 수 있습니다.'};
+     }
+     try{return{ok:true,data:JSON.parse(t)};}catch(x){return{ok:false,err:'응답 내용을 해석하지 못했습니다.'};}
+   })
+   .catch(function(e){
+     var h='<b>서버에 연결하지 못했습니다.</b> 아래를 순서대로 확인하십시오.<br><br>';
+     if(inFrame())
+       h+='<b>0. 지금 미리보기 화면에서 보고 계신 경우</b><br>내장된 미리보기 창에서는 외부 서버 요청이 차단됩니다. GitHub Pages 주소나 내려받은 파일을 <b>브라우저 새 탭에서 직접 열어</b> 다시 시도하십시오.<br><br>';
+     h+='<b>1. 액세스 권한 (가장 흔한 원인)</b><br>Apps Script <b>배포 → 배포 관리 → 연필 아이콘</b>에서 <b>액세스 권한이 있는 사용자</b>가 <b>모든 사용자</b>인지 확인하십시오. <b>나만</b>으로 두면 구글 로그인 페이지로 넘어가면서 이 오류가 발생합니다.<br><br>'+
+        '<b>2. 재배포 여부</b><br>설정을 바꾼 뒤 버전을 <b>새 버전</b>으로 지정해 다시 배포해야 반영됩니다. 기존 배포를 수정만 하고 저장하지 않으면 그대로입니다.<br><br>'+
+        '<b>3. 주소 확인</b><br>아래 [주소 직접 열기] 버튼으로 새 탭에서 응답을 확인하십시오. JSON이 보이면 서버는 정상입니다.<br>'+
+        '<span class="mut">상세: '+esc(e&&e.message?e.message:String(e))+'</span>';
+     return{ok:false,err:h};
+   });
+}
+function inFrame(){try{return window.self!==window.top;}catch(e){return true;}}
+function syncOpen(){
+  var url=(SY.url||'').trim();
+  if(!url){syncSt('err','동기화 주소를 먼저 입력하십시오.');return;}
+  window.open(url+'?action=ping&code='+encodeURIComponent(SY.code||''),'_blank');
+}
+function syncTest(){
+  if(!SY.url||!SY.code){syncSt('err','동기화 주소와 접속 코드를 먼저 입력하십시오.');return;}
+  syncSt('wait','연결 확인 중…');
+  syncReq({get:'action=ping&code='+encodeURIComponent(SY.code)}).then(function(r){
+    if(!r.ok){syncSt('err',r.err);return;}
+    var d=r.data;
+    if(!d.ok){
+      syncSt('err',d.error==='CODE'
+        ? '주소는 정상입니다. <b>접속 코드가 일치하지 않습니다.</b> Code.gs의 ACCESS_CODE 값과 정확히 같은지 확인하십시오.'
+        : '서버 오류: '+esc(d.error||''));return;}
+    syncSt('on','연결 정상입니다. 저장 폴더 <b>'+esc(d.folder||'')+'</b> · 보관 중인 교육 '+(d.count!=null?d.count+'건':'-'));
+  });
+}
+
+function pullSync(silent){
+  if(!syncOn()){if(!silent)syncSt('err','동기화 주소와 접속 코드를 먼저 입력하십시오.');return;}
+  syncSt('wait','불러오는 중…');
+  syncReq({get:'action=load&code='+encodeURIComponent(SY.code)+'&key='+encodeURIComponent(syncKey())}).then(function(r){
+    if(!r.ok){syncSt('err',r.err);return;}
+    var d=r.data;
+    if(!d.ok){syncSt('err','불러오기 실패: '+esc(d.error||'알 수 없는 오류'));return;}
+    if(!d.found){SY.rev=0;saveSy();syncSt('on','서버에 저장된 기록이 없습니다. 작성 후 저장하면 새로 생성됩니다.');return;}
+    if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
+    if(d.st&&d.st.checks){ST=d.st;lsSet(LS_ST,JSON.stringify(ST));}
+    SY.rev=d.rev||0;saveSy();
+    syncSt('on','불러왔습니다 · '+fmtTime(d.updated)+(d.by?' · '+esc(d.by):''));
+    render();
+  });
+}
+function pushSync(force){
+  if(!syncOn()||SY.busy)return;SY.busy=true;syncSt('wait','저장 중…');
+  syncReq({post:{code:SY.code,key:syncKey(),base:SY.rev,force:!!force,by:SY.by||ST.info.mgr||'',tpl:TPL,st:ST}}).then(function(r){
+    SY.busy=false;
+    if(!r.ok){syncSt('err',r.err);return;}
+    var d=r.data;
+    if(d.conflict){syncSt('err','다른 기기에서 먼저 저장한 기록이 있습니다.');
+      if(confirm('다른 기기에서 먼저 저장한 기록이 있습니다.\n\n[확인] 서버 기록을 불러옵니다 (현재 화면의 입력은 사라집니다)\n[취소] 현재 화면 내용으로 덮어씁니다')){
+        if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
+        if(d.st&&d.st.checks){ST=d.st;lsSet(LS_ST,JSON.stringify(ST));}
+        SY.rev=d.rev||0;saveSy();syncSt('on','서버 기록을 적용했습니다.');render();
+      }else{pushSync(true);}
+      return;}
+    if(!d.ok){syncSt('err','저장 실패: '+esc(d.error||''));return;}
+    SY.rev=d.rev;saveSy();syncSt('on','저장됨 · '+fmtTime(d.updated));
+  });
+}
+function fmtTime(iso){if(!iso)return '';const d=new Date(iso);if(isNaN(d))return '';
+  const p=n=>String(n).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
+function syncCard(){
+  return '<div class="card"><h2>기기 간 기록 공유</h2>'+
+   '<div class="sub">동기화 주소를 입력하면 매장·교육 시작일이 같은 기록을 어느 기기에서든 이어서 작성할 수 있습니다.</div>'+
+   '<label class="f">동기화 주소 (Apps Script 웹 앱 URL)</label>'+
+   '<input class="w" id="fSyncUrl" placeholder="https://script.google.com/macros/s/.../exec" value="'+esc(SY.url)+'" style="max-width:520px">'+
+   '<div style="display:flex;gap:14px;flex-wrap:wrap">'+
+   '<div><label class="f">접속 코드</label><input id="fSyncCode" type="password" placeholder="발급받은 코드" value="'+esc(SY.code)+'"></div>'+
+   '<div><label class="f">작성자 (기록 표시용)</label><input id="fSyncBy" placeholder="예: 조성균" value="'+esc(SY.by)+'"></div></div>'+
+   '<div class="syncbar"><span class="sdot'+(syncOn()?' on':'')+'"></span><span id="syncLabel" class="mut">'+(syncOn()?'연결 설정됨':'미설정 — 이 기기에만 저장됩니다')+'</span>'+
+   '<span class="sp" style="flex:1"></span>'+
+   '<button class="btn gold" onclick="syncTest()">연결 테스트</button>'+
+   '<button class="btn" onclick="syncOpen()">주소 직접 열기</button>'+
+   '<button class="btn" onclick="pullSync(false)">서버에서 불러오기</button>'+
+   '<button class="btn go" onclick="pushSync(false)">서버에 저장</button></div>'+
+   '<div id="syncMsg" class="syncmsg"></div>'+
+   (inFrame()?'<div class="syncmsg err" style="display:block">현재 <b>미리보기 창(내장 프레임)</b> 안에서 실행 중입니다. 이 환경에서는 외부 서버 요청이 차단되어 동기화가 동작하지 않습니다. GitHub Pages 주소나 내려받은 파일을 <b>브라우저 새 탭</b>에서 열어 사용하십시오.</div>':'')+
+   '<div class="syncnote">저장 키는 <b>매장명 + 교육 시작일</b>로 자동 생성됩니다. 다른 기기에서는 동일한 매장명과 시작일을 입력한 뒤 [서버에서 불러오기]를 누르십시오.<br>입력 후에는 2.5초마다 자동 저장되며, 접속 코드는 이 기기에만 보관됩니다.</div></div>';
+}
+function bindSync(){
+  const u=document.getElementById('fSyncUrl'),c=document.getElementById('fSyncCode'),b=document.getElementById('fSyncBy');
+  if(!u)return;
+  const g=()=>{SY.url=u.value.trim();SY.code=c.value.trim();SY.by=b.value.trim();saveSy();
+    const dot=document.querySelector('.sdot');if(dot)dot.className='sdot'+(syncOn()?' on':'');
+    const lb=document.getElementById('syncLabel');if(lb)lb.textContent=syncOn()?'연결 설정됨':'미설정 — 이 기기에만 저장됩니다';};
+  [u,c,b].forEach(el=>el.addEventListener('input',g));
+}
+function toast(){document.getElementById('save').textContent='저장됨 '+new Date().toLocaleTimeString('ko-KR');}
+function esc(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function K(b,s,it){return b+'¦'+s+'¦'+it;}
+function chk(b,s,it){return ST.checks[K(b,s,it)]||{edu:false,prac:false,pass:false,note:''};}
+function selBrands(){return TPL.brands.filter(b=>ST.selected.includes(b.name));}
+function bProg(b){let t=0,p=0;b.secs.forEach(s=>s.items.forEach(it=>{t++;if(chk(b.name,s.name,it).pass)p++;}));return{t,p,pc:t?Math.round(p/t*100):0};}
+
+function show(v){ST.view=v;saveSt();render();}
+function render(){
+  const ready=ST.selected.length>0;
+  document.getElementById('navAdmin').classList.toggle('hide',ST.view==='admin');
+  document.getElementById('navCurr').classList.toggle('hide',!ready||ST.view==='curr');
+  document.getElementById('navList').classList.toggle('hide',!ready||ST.view==='list');
+  document.getElementById('navLog').classList.toggle('hide',!ready||ST.view==='log');
+  if(ST.view==='admin')return renderAdmin();
+  if(ST.view==='curr'&&ready)return renderCurriculum();
+  if(ST.view==='log'&&ready)return renderLog();
+  if(ST.view==='list'&&ready)return renderList();
+  return renderSetup();
+}
+/* ── 교육 일자 계산 ── */
+function dayDate(i){if(!ST.info.start)return '';const d=new Date(ST.info.start+'T00:00:00');if(isNaN(d))return '';d.setDate(d.getDate()+i);
+  const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+function dayDow(i){const s=dayDate(i);if(!s)return '';const d=new Date(s+'T00:00:00');return '일월화수목금토'[d.getDay()];}
+function dayLabel(i){const s=dayDate(i);return s?s+' ('+dayDow(i)+')':'날짜 미정';}
+
+function renderSetup(){
+  document.getElementById('hTitle').textContent='조리교육 시작 · 설정';
+  const app=document.getElementById('app');
+  let h='<div class="card"><h2>교육 설정</h2><div class="sub">매장명과 교육 브랜드(복수 선택)를 입력한 뒤 [체크리스트 시작]을 누르세요.</div>'+
+   '<label class="f">매장명 *</label><input class="w" id="fStore" placeholder="예: 서정점" value="'+esc(ST.store)+'">'+
+   '<div style="display:flex;gap:14px;flex-wrap:wrap"><div><label class="f">교육생</label><input id="fName" placeholder="이름" value="'+esc(ST.info.name)+'"></div>'+
+   '<div><label class="f">교육 시작일</label><input id="fStart" type="date" value="'+esc(ST.info.start)+'"></div>'+
+   '<div><label class="f">교육 담당자</label><input id="fMgr" placeholder="담당자" value="'+esc(ST.info.mgr)+'"></div></div>'+
+   '<label class="f">교육 브랜드 * (복수 선택)</label><div class="brandpick">';
+  TPL.brands.forEach(b=>{const on=ST.selected.includes(b.name);const c=b.secs.reduce((a,s)=>a+s.items.length,0);
+    h+='<label class="bp'+(on?' on':'')+'"><input type="checkbox" '+(on?'checked':'')+' onchange="toggleBrand(\''+esc(b.name)+'\',this.checked,this)"> <span>'+esc(b.name)+'<br><span class="m">'+c+'개 항목</span></span></label>';});
+  h+='</div><div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn go" onclick="startTo(\'curr\')">커리큘럼 열기 →</button>'+
+     '<button class="btn" onclick="startTo(\'list\')">체크리스트</button>'+
+     '<button class="btn" onclick="startTo(\'log\')">교육일지</button>'+
+     '<button class="btn" onclick="show(\'admin\')">⚙️ 템플릿 관리</button></div>'+
+     '<div class="mut" style="margin-top:10px">교육 시작일을 입력하면 커리큘럼과 교육일지의 일차별 날짜가 자동으로 계산됩니다.</div></div>';
+  h+=syncCard();
+  app.innerHTML=h;
+  ['fStore','fName','fStart','fMgr'].forEach(id=>document.getElementById(id).addEventListener('input',grabSetup));
+  bindSync();
+}
+function grabSetup(){ST.store=document.getElementById('fStore').value;ST.info={name:document.getElementById('fName').value,start:document.getElementById('fStart').value,mgr:document.getElementById('fMgr').value};saveSt();}
+function toggleBrand(name,on,el){if(on){if(!ST.selected.includes(name))ST.selected.push(name);}else{ST.selected=ST.selected.filter(x=>x!==name);}
+  el.closest('.bp').classList.toggle('on',on);saveSt();}
+function startList(){startTo('list');}
+function startTo(v){grabSetup();
+  if(!ST.store.trim()){alert('매장명을 입력하세요.');return;}
+  if(!ST.selected.length){alert('교육 브랜드를 1개 이상 선택하세요.');return;}
+  if(v==='list')ST.active=0;show(v);}
+
+function renderList(){
+  document.getElementById('hTitle').textContent='조리교육 체크리스트';
+  const brands=selBrands();if(ST.active>=brands.length)ST.active=0;
+  let t=0,p=0;brands.forEach(b=>{const g=bProg(b);t+=g.t;p+=g.p;});const ov=t?Math.round(p/t*100):0;
+  let h='<div class="metabar"><span>매장 <b>'+esc(ST.store||'-')+'</b></span><span>교육생 <b>'+esc(ST.info.name||'-')+'</b></span>'+
+    '<span>담당 <b>'+esc(ST.info.mgr||'-')+'</b></span><span class="sp" style="flex:1"></span>'+
+    '<button class="btn" onclick="show(\'setup\')">⟵ 설정 변경</button>'+
+    '<button class="btn" onclick="exportSt()">저장(백업)</button>'+
+    '<button class="btn" onclick="pickImp(\'st\')">불러오기</button>'+
+    '<button class="btn" onclick="window.print()">인쇄</button></div>';
+  h+='<div class="overall"><div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px"><span>전체 진도율</span><span>'+ov+'% ('+p+'/'+t+')</span></div><div class="bar"><i style="width:'+ov+'%"></i></div></div>';
+  h+='<div class="tabs">';
+  brands.forEach((b,i)=>{const g=bProg(b);h+='<div class="tab'+(i===ST.active?' on':'')+'" onclick="setActive('+i+')">'+esc(b.name)+'<span class="p">'+g.pc+'%</span></div>';});
+  h+='</div><div id="root"></div>';
+  document.getElementById('app').innerHTML=h;
+  const b=brands[ST.active];const root=document.getElementById('root');let hh='';
+  b.secs.forEach(s=>{const done=s.items.filter(it=>chk(b.name,s.name,it).pass).length;
+    hh+='<div class="sec"><h3><span class="c">'+esc(s.name)+'</span><span class="cnt" id="cnt_'+cssid(s.name)+'">'+done+'/'+s.items.length+'</span></h3>'+
+      '<table><thead><tr><th class="t">항목</th><th>교육</th><th>실습</th><th>평가</th><th style="width:200px">비고(재교육 등)</th></tr></thead><tbody>';
+    s.items.forEach(it=>{const c=chk(b.name,s.name,it);const id=cssid(s.name+it);
+      hh+='<tr id="r_'+id+'"'+(c.pass?' class="done"':'')+'><td class="t">'+esc(it)+'</td>'+
+       cbox(b.name,s.name,it,'edu',c.edu)+cbox(b.name,s.name,it,'prac',c.prac)+cbox(b.name,s.name,it,'pass',c.pass)+
+       '<td><input class="note" value="'+esc(c.note)+'" oninput="setNote(\''+js(b.name)+'\',\''+js(s.name)+'\',\''+js(it)+'\',this.value)"></td></tr>';});
+    hh+='</tbody></table></div>';});
+  root.innerHTML=hh;
+}
+function cbox(b,s,it,k,v){return '<td><input type="checkbox" class="ck" '+(v?'checked':'')+' onchange="ck(\''+js(b)+'\',\''+js(s)+'\',\''+js(it)+'\',\''+k+'\',this.checked)"></td>';}
+function js(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+function cssid(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return 'x'+h;}
+function setActive(i){ST.active=i;saveSt();renderList();}
+function ck(b,s,it,k,v){const key=K(b,s,it);const c=ST.checks[key]||{edu:false,prac:false,pass:false,note:''};c[k]=v;ST.checks[key]=c;
+  if(k==='pass'){const row=document.getElementById('r_'+cssid(s+it));if(row)row.classList.toggle('done',v);
+    const brands=selBrands();const b2=brands.find(x=>x.name===b)||brands[ST.active];const sec=b2&&b2.secs.find(x=>x.name===s);
+    if(sec){const done=sec.items.filter(x=>chk(b,s,x).pass).length;const el=document.getElementById('cnt_'+cssid(s));if(el)el.textContent=done+'/'+sec.items.length;}
+    // 탭·전체 진도율 갱신
+    const tabs=document.querySelectorAll('.tab .p');brands.forEach((bb,i)=>{if(tabs[i])tabs[i].textContent=bProg(bb).pc+'%';});
+    let t=0,p=0;brands.forEach(bb=>{const g=bProg(bb);t+=g.t;p+=g.p;});const ov=t?Math.round(p/t*100):0;
+    document.querySelector('.overall i').style.width=ov+'%';document.querySelector('.overall span:last-child').textContent=ov+'% ('+p+'/'+t+')';}
+  saveSt();}
+function setNote(b,s,it,v){const key=K(b,s,it);const c=ST.checks[key]||{edu:false,prac:false,pass:false,note:''};c.note=v;ST.checks[key]=c;saveSt();}
+
+/* ══════════ 커리큘럼 ══════════ */
+function CUR(){if(!TPL.curriculum)TPL.curriculum=[];return TPL.curriculum;}
+function metaBar(extra){
+  return '<div class="metabar"><span>매장 <b>'+esc(ST.store||'-')+'</b></span><span>교육생 <b>'+esc(ST.info.name||'-')+'</b></span>'+
+    '<span>담당 <b>'+esc(ST.info.mgr||'-')+'</b></span>'+
+    '<span>기간 <b>'+(ST.info.start?dayDate(0)+' ~ '+dayDate(CUR().length-1):'미정')+'</b> (총 '+CUR().length+'일)</span>'+
+    '<span class="sp" style="flex:1"></span><button class="btn" onclick="show(\'setup\')">⟵ 설정 변경</button>'+(extra||'')+
+    '<button class="btn" onclick="window.print()">인쇄</button></div>';
+}
+function dayTabs(onclickFn){
+  let h='<div class="tabs">';
+  CUR().forEach((c,i)=>{h+='<div class="tab'+(i===ST.dayActive?' on':'')+'" onclick="'+onclickFn+'('+i+')">'+c.d+'일차<span class="p">'+(dayDate(i)?dayDate(i).slice(5):'')+'</span></div>';});
+  return h+'</div>';
+}
+function setDay(i){ST.dayActive=i;saveSt();render();}
+
+function renderCurriculum(){
+  document.getElementById('hTitle').textContent='교육 커리큘럼';
+  if(ST.dayActive>=CUR().length)ST.dayActive=0;
+  let h=metaBar('<button class="btn" onclick="addDay()">+ 일차 추가</button>');
+  h+=dayTabs('setDay');
+  const c=CUR()[ST.dayActive];
+  if(!c){document.getElementById('app').innerHTML=h+'<div class="card">등록된 일차가 없습니다. [+ 일차 추가]를 눌러 시작하십시오.</div>';return;}
+  h+='<div class="daymeta"><span>'+c.d+'일차</span><span><b>'+dayLabel(ST.dayActive)+'</b></span>'+
+     '<span class="ce" contenteditable="true" style="flex:1;min-width:200px;font-weight:700;color:#1f3864" onblur="curTitle('+ST.dayActive+',this.textContent)">'+esc(c.title)+'</span>'+
+     '<button class="btn warn" onclick="delDay('+ST.dayActive+')">일차 삭제</button></div>';
+  h+='<div class="goal"><b style="color:#b8860b">학습 목표</b><br><span class="ce" contenteditable="true" onblur="curGoal('+ST.dayActive+',this.textContent)">'+esc(c.goal)+'</span></div>';
+  h+='<div class="sec curr"><h3><span class="c">일차별 세부 진행</span><span class="cnt">'+c.blocks.length+'개 과정</span></h3>'+
+     '<table><thead><tr><th style="width:104px">시간</th><th class="t" style="width:150px">과정</th><th class="t">세부 내용</th><th style="width:88px">방식</th><th style="width:88px">담당</th><th style="width:34px"></th></tr></thead><tbody>';
+  c.blocks.forEach((b,bi)=>{
+    h+='<tr><td class="tm"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'t\',this.textContent)">'+esc(b.t)+'</span></td>'+
+      '<td class="t" style="font-weight:700"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'s\',this.textContent)">'+esc(b.s)+'</span></td>'+
+      '<td><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'d\',this.textContent)">'+esc(b.d)+'</span></td>'+
+      '<td class="md"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'m\',this.textContent)">'+esc(b.m)+'</span></td>'+
+      '<td class="ow"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'o\',this.textContent)">'+esc(b.o)+'</span></td>'+
+      '<td><span class="del" onclick="delBlock('+ST.dayActive+','+bi+')">✕</span></td></tr>';});
+  h+='</tbody></table><div style="padding:9px 14px"><button class="btn" onclick="addBlock('+ST.dayActive+')">+ 과정 추가</button></div></div>';
+  h+='<div class="note-i">표 안의 시간·과정·세부 내용은 직접 클릭해 수정할 수 있으며, 수정 즉시 저장됩니다. 매장 영업 상황에 따라 시간은 조정 가능합니다.</div>';
+  document.getElementById('app').innerHTML=h;
+}
+function curTitle(i,v){CUR()[i].title=v.trim();saveTpl();}
+function curGoal(i,v){CUR()[i].goal=v.trim();saveTpl();}
+function curB(i,bi,k,v){CUR()[i].blocks[bi][k]=v.trim();saveTpl();}
+function addBlock(i){CUR()[i].blocks.push({t:'00:00~00:00',s:'새 과정',d:'',m:'실습',o:'주방장'});saveTpl();renderCurriculum();}
+function delBlock(i,bi){CUR()[i].blocks.splice(bi,1);saveTpl();renderCurriculum();}
+function addDay(){const n=CUR().length+1;CUR().push({d:n,title:n+'일차 교육',goal:'',blocks:[{t:'09:00~12:00',s:'새 과정',d:'',m:'실습',o:'주방장'}]});saveTpl();ST.dayActive=n-1;saveSt();renderCurriculum();}
+function delDay(i){if(!confirm((i+1)+'일차를 삭제할까요? 해당 일차의 교육일지도 함께 삭제됩니다.'))return;
+  CUR().splice(i,1);CUR().forEach((c,k)=>c.d=k+1);
+  const nl={};Object.keys(ST.logs).forEach(k=>{const n=+k;if(n<i)nl[n]=ST.logs[k];else if(n>i)nl[n-1]=ST.logs[k];});ST.logs=nl;
+  if(ST.dayActive>=CUR().length)ST.dayActive=Math.max(0,CUR().length-1);
+  saveTpl();saveSt();renderCurriculum();}
+
+/* ══════════ 교육일지 ══════════ */
+function LG(){if(!ST.logs[ST.dayActive])ST.logs[ST.dayActive]={};return ST.logs[ST.dayActive];}
+function renderLog(){
+  document.getElementById('hTitle').textContent='교육일지';
+  if(ST.dayActive>=CUR().length)ST.dayActive=0;
+  const c=CUR()[ST.dayActive]||{d:1,title:'',blocks:[]}, L=LG();
+  if(L.tin==null&&c.blocks&&c.blocks.length){const f=(c.blocks[0].t||'').split('~'),g=(c.blocks[c.blocks.length-1].t||'').split('~');
+    L.tin=(f[0]||'').trim();L.tout=(g[1]||'').trim();saveSt();}
+  let h=metaBar('');
+  h+=dayTabs('setDay');
+  h+='<div class="prn-only" style="border-bottom:2px solid #1f3864;padding-bottom:8px;margin-bottom:12px">'+
+     '<div style="font-size:17px;font-weight:700;color:#1f3864">조리교육 교육일지 · '+c.d+'일차</div>'+
+     '<div style="font-size:12px;color:#555;margin-top:3px">매장 '+esc(ST.store||'-')+' / 교육생 '+esc(ST.info.name||'-')+' / 교육 담당 '+esc(ST.info.mgr||'-')+'</div></div>';
+
+  const brands=selBrands();let t=0,p=0;brands.forEach(b=>{const g=bProg(b);t+=g.t;p+=g.p;});
+  const ov=t?Math.round(p/t*100):0;
+  let prog='<div class="prog-inline">';
+  brands.forEach(b=>{const g=bProg(b);prog+='<div class="row"><span>'+esc(b.name)+'</span><b>'+g.pc+'% ('+g.p+'/'+g.t+')</b></div>';});
+  prog+='<div class="row" style="border-top:1px solid #dfe7f5;margin-top:4px;padding-top:6px"><span><b>전체 진도율</b></span><b style="color:#1f7a44">'+ov+'% ('+p+'/'+t+')</b></div></div>';
+
+  h+='<div class="card logform"><h2>'+c.d+'일차 교육일지</h2><div class="sub">'+dayLabel(ST.dayActive)+' · '+esc(c.title)+'</div>';
+  h+='<div class="grid2"><div><label class="f">교육 시간</label>'+
+     '<input type="time" value="'+esc(L.tin||'')+'" onchange="setLog(\'tin\',this.value)"> ~ '+
+     '<input type="time" value="'+esc(L.tout||'')+'" onchange="setLog(\'tout\',this.value)"></div>'+
+     '<div><label class="f">참석자</label><input class="w" placeholder="예: 점주 홍길동, 주방 김OO" value="'+esc(L.attend||'')+'" oninput="setLog(\'attend\',this.value)"></div></div>';
+  h+='<label class="f">교육 내용 <button class="btn" style="padding:2px 8px;font-size:11px;margin-left:6px" onclick="fillFromCur()">커리큘럼에서 불러오기</button></label>'+
+     '<textarea rows="5" placeholder="당일 진행한 교육 과정을 기재합니다." oninput="setLog(\'content\',this.value)">'+esc(L.content||'')+'</textarea>';
+  h+='<label class="f">실습 내용 및 숙련도</label><textarea rows="4" placeholder="직접 조리한 메뉴와 반복 횟수, 도달 수준을 기재합니다." oninput="setLog(\'practice\',this.value)">'+esc(L.practice||'')+'</textarea>';
+  h+='<label class="f">특이사항 및 미흡 항목</label><textarea rows="3" placeholder="위생·안전 지적사항, 재교육이 필요한 항목을 기재합니다." oninput="setLog(\'issue\',this.value)">'+esc(L.issue||'')+'</textarea>';
+  h+='<label class="f">다음 일차 보완 과제</label><textarea rows="2" placeholder="익일 우선 보완할 항목을 기재합니다." oninput="setLog(\'todo\',this.value)">'+esc(L.todo||'')+'</textarea>';
+  h+='<label class="f">체크리스트 진도 현황 (자동 집계)</label>'+prog;
+  h+='<label class="f">교육 담당자 종합 의견</label><textarea rows="3" placeholder="당일 총평 및 판정 근거를 기재합니다." oninput="setLog(\'comment\',this.value)">'+esc(L.comment||'')+'</textarea>';
+  h+='<label class="f">당일 판정</label><select onchange="setLog(\'grade\',this.value)">'+
+     ['','정상 진행','보완 후 재실습 필요','재교육 필요'].map(g=>'<option value="'+g+'"'+((L.grade||'')===g?' selected':'')+'>'+(g||'선택')+'</option>').join('')+'</select>';
+
+  h+='<label class="f">확인 서명</label>'+
+     '<div class="mut" style="margin-bottom:6px">아래 칸에 마우스 또는 손가락으로 직접 서명하십시오. 인쇄본에 그대로 출력됩니다.</div>'+
+     '<div class="signwrap">'+sigBox('T','교육생',L)+sigBox('M','교육 담당자',L)+'</div>';
+  h+='<div class="mut" style="margin-top:12px">작성일 '+(L.sigDate||'미서명')+' · 입력 내용은 자동 저장됩니다. 교육 종료 시 [저장(백업)]으로 JSON 파일을 반드시 내려받으십시오.</div>';
+  h+='<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="exportSt()">저장(백업)</button>'+
+     '<button class="btn" onclick="window.print()">이 일지 인쇄</button>'+
+     '<button class="btn" onclick="show(\'list\')">체크리스트로 이동</button></div>';
+  h+='</div>';
+  document.getElementById('app').innerHTML=h;
+  initPads();
+}
+function sigBox(k,label,L){
+  const on=!!L['sig'+k];
+  return '<div class="signbox'+(on?' sigdone':'')+'"><div class="lbl"><span>'+label+'</span>'+
+    (on?'<span class="chip done">서명 완료</span>':'<span class="chip">미서명</span>')+
+    '<span class="sp"></span><button class="btn" style="padding:2px 9px;font-size:11px" onclick="clearSig(\''+k+'\')">지우기</button></div>'+
+    '<canvas class="sigpad" id="pad'+k+'"></canvas>'+
+    '<div class="sigmeta">'+esc(k==='T'?(ST.info.name||'교육생'):(ST.info.mgr||'교육 담당자'))+' (서명)</div></div>';
+}
+function setLog(k,v){const L=LG();L[k]=v;saveSt();}
+function fillFromCur(){const c=CUR()[ST.dayActive];if(!c)return;
+  const txt=c.blocks.filter(b=>b.s&&b.s!=='중식').map(b=>'· ['+b.t+'] '+b.s+(b.d?' — '+b.d:'')).join('\n');
+  const L=LG();L.content=(L.content?L.content+'\n':'')+txt;saveSt();renderLog();}
+function initPads(){
+  ['T','M'].forEach(k=>{
+    const c=document.getElementById('pad'+k);if(!c)return;
+    const r=c.getBoundingClientRect();c.width=Math.max(240,Math.round(r.width));c.height=110;
+    const x=c.getContext('2d');
+    const src=LG()['sig'+k];
+    if(src){const img=new Image();img.onload=function(){x.drawImage(img,0,0,c.width,c.height);};img.src=src;}
+    let drawing=false,last=null;
+    function pos(e){const b=c.getBoundingClientRect();return{x:(e.clientX-b.left)*(c.width/b.width),y:(e.clientY-b.top)*(c.height/b.height)};}
+    c.addEventListener('pointerdown',function(e){e.preventDefault();c.setPointerCapture(e.pointerId);drawing=true;last=pos(e);});
+    c.addEventListener('pointermove',function(e){if(!drawing)return;e.preventDefault();const p=pos(e);
+      x.strokeStyle='#16233a';x.lineWidth=2.2;x.lineCap='round';x.lineJoin='round';
+      x.beginPath();x.moveTo(last.x,last.y);x.lineTo(p.x,p.y);x.stroke();last=p;});
+    ['pointerup','pointercancel'].forEach(ev=>c.addEventListener(ev,function(){if(!drawing)return;drawing=false;storeSig(k,c);}));
+  });
+}
+function storeSig(k,c){const L=LG();L['sig'+k]=c.toDataURL('image/png');
+  const d=new Date(),p=n=>String(n).padStart(2,'0');L.sigDate=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+  saveSt();
+  const box=c.closest('.signbox');if(box){box.classList.add('sigdone');const ch=box.querySelector('.chip');if(ch){ch.className='chip done';ch.textContent='서명 완료';}}}
+function clearSig(k){const c=document.getElementById('pad'+k);if(c)c.getContext('2d').clearRect(0,0,c.width,c.height);
+  const L=LG();delete L['sig'+k];saveSt();renderLog();}
+
+function renderAdmin(){
+  document.getElementById('hTitle').textContent='관리자 · 브랜드 체크리스트 템플릿';
+  let h='<div class="note-i">여기서 수정한 브랜드/단계/항목은 <b>모든 교육생 체크리스트에 즉시 적용</b>됩니다. (진행 중 체크 상태는 항목명이 같으면 유지)</div>'+
+    '<div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">'+
+    '<button class="btn go" onclick="show(\'setup\')">✅ 완료·나가기</button>'+
+    '<button class="btn" onclick="addBrand()">+ 브랜드 추가</button>'+
+    '<button class="btn" onclick="exportTpl()">템플릿 백업</button>'+
+    '<button class="btn" onclick="pickImp(\'tpl\')">템플릿 불러오기</button>'+
+    '<button class="btn warn" onclick="resetTpl()">기본값 복원</button></div>';
+  TPL.brands.forEach((b,bi)=>{
+    h+='<div class="admin-brand"><div class="bh"><span class="ce" contenteditable="true" onblur="tplBrand('+bi+',this.textContent)">'+esc(b.name)+'</span>'+
+      '<span class="sp" style="flex:1"></span><button class="btn" onclick="addSec('+bi+')">+ 단계</button> <span class="del" onclick="delBrand('+bi+')">✕ 브랜드삭제</span></div>';
+    b.secs.forEach((s,si)=>{h+='<div class="admin-sec"><div class="sh"><span class="ce" contenteditable="true" onblur="tplSec('+bi+','+si+',this.textContent)">'+esc(s.name)+'</span>'+
+      '<button class="btn" style="padding:3px 8px;font-size:11px" onclick="addTItem('+bi+','+si+')">+ 항목</button> <span class="del" onclick="delSec('+bi+','+si+')">✕</span></div>';
+      s.items.forEach((it,ii)=>{h+='<div class="admin-item"><span class="ce" contenteditable="true" style="flex:1" onblur="tplItem('+bi+','+si+','+ii+',this.textContent)">'+esc(it)+'</span><span class="del" onclick="delTItem('+bi+','+si+','+ii+')">✕</span></div>';});
+      h+='</div>';});
+    h+='</div>';});
+  document.getElementById('app').innerHTML=h;
+}
+function tplBrand(bi,v){TPL.brands[bi].name=v.trim();saveTpl();}
+function tplSec(bi,si,v){TPL.brands[bi].secs[si].name=v.trim();saveTpl();}
+function tplItem(bi,si,ii,v){TPL.brands[bi].secs[si].items[ii]=v.trim();saveTpl();}
+function addBrand(){TPL.brands.push({name:'새 브랜드',secs:[{name:'1. 새 단계',items:['새 항목']}]});saveTpl();renderAdmin();}
+function delBrand(bi){if(!confirm('브랜드를 삭제할까요?'))return;const nm=TPL.brands[bi].name;TPL.brands.splice(bi,1);ST.selected=ST.selected.filter(x=>x!==nm);saveTpl();saveSt();renderAdmin();}
+function addSec(bi){TPL.brands[bi].secs.push({name:'새 단계',items:['새 항목']});saveTpl();renderAdmin();}
+function delSec(bi,si){TPL.brands[bi].secs.splice(si,1);saveTpl();renderAdmin();}
+function addTItem(bi,si){TPL.brands[bi].secs[si].items.push('새 항목');saveTpl();renderAdmin();}
+function delTItem(bi,si,ii){TPL.brands[bi].secs[si].items.splice(ii,1);saveTpl();renderAdmin();}
+function resetTpl(){if(!confirm('브랜드 템플릿을 기본값으로 복원할까요? (체크 기록은 유지)'))return;TPL=JSON.parse(JSON.stringify(DEF_TPL));TPL.v=3;saveTpl();renderAdmin();}
+
+function exportSt(){const nm=(ST.store||'매장')+'_'+(ST.info.name||'교육생');dl(ST,'조리교육_'+nm+'.json');}
+function exportTpl(){dl(TPL,'조리교육_브랜드템플릿.json');}
+function dl(obj,name){const b=new Blob([JSON.stringify(obj,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();}
+let impMode='st';
+function pickImp(m){impMode=m;document.getElementById('imp').click();}
+document.getElementById('imp').onchange=function(){const f=this.files[0];if(!f)return;const r=new FileReader();
+  r.onload=e=>{try{const d=JSON.parse(e.target.result);
+    if(impMode==='tpl'){if(!d.brands)throw 0;TPL=d;saveTpl();renderAdmin();alert('템플릿을 불러와 전체에 적용했습니다.');}
+    else{if(!d.checks)throw 0;ST=d;saveSt();render();alert('교육생 기록을 불러왔습니다.');}
+  }catch(x){alert('파일 형식 오류');}};r.readAsText(f);this.value='';};
+render();
+if(syncOn()&&ST.store)pullSync(true);
+window.addEventListener('beforeunload',function(){if(syncOn()&&SY.timer){clearTimeout(SY.timer);pushSync(false);}});
+</script></body></html>
