@@ -376,16 +376,16 @@ function loadSt(){try{const s=JSON.parse(lsGet(LS_ST));if(s&&s.checks){if(!s.log
     return s;}}catch(e){}return JSON.parse(JSON.stringify(DEF_ST));}
 /* 화면 이동·탭 전환은 로컬만 기록하고 서버로 보내지 않습니다 */
 function saveLocal(){lsSet(LS_ST,JSON.stringify(ST));}
-function saveTpl(){lsSet(LS_TPL,JSON.stringify(TPL));toast();markDirty();}
+function saveTpl(){lsSet(LS_TPL,JSON.stringify(TPL));toast();markDirty();SY.tplDirty=true;scheduleTplPush();}
 function saveSt(){lsSet(LS_ST,JSON.stringify(ST));toast();markDirty();}
 function markDirty(){if(!pushable()){paintSave();return;}SY.dirty=true;paintSave('dirty');schedulePush();}
 
 /* ══════════ 서버 동기화 ══════════ */
-const BUILD='2026-09-06 · v9 (매장 관리)';
+const BUILD='2026-09-06 · v10 (공용 템플릿 동기화)';
 const LS_SY='fnbhero_sync_cfg_v1';
-let SY={url:'',code:'',by:'',rev:0,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0};
+let SY={url:'',code:'',by:'',rev:0,tplRev:0,tplTimer:null,tplBusy:false,tplDirty:false,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0};
 (function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0});}catch(e){}})();
-function saveSy(){lsSet(LS_SY,JSON.stringify({url:SY.url,code:SY.code,by:SY.by,rev:SY.rev}));}
+function saveSy(){lsSet(LS_SY,JSON.stringify({url:SY.url,code:SY.code,by:SY.by,rev:SY.rev,tplRev:SY.tplRev||0}));}
 function syncOn(){return !!(SY.url&&SY.code);}
 function keyReady(){return !!(ST.store&&ST.info.start&&ST.selected.length);}
 function keyChanged(){return false;}  /* 고유 키 도입으로 더 이상 발생하지 않습니다 */
@@ -512,6 +512,50 @@ function syncTest(){
         ? '주소는 정상입니다. <b>접속 코드가 일치하지 않습니다.</b> Code.gs의 ACCESS_CODE 값과 정확히 같은지 확인하십시오.'
         : '서버 오류: '+esc(d.error||''));return;}
     syncSt('on','연결 정상입니다. 저장 폴더 <b>'+esc(d.folder||'')+'</b> · 보관 중인 교육 '+(d.count!=null?d.count+'건':'-'));
+    pullTemplate(true);
+  });
+}
+
+/* 공용 체크리스트 템플릿 — 교육 기록과 분리하여 모든 기기가 같은 기준을 사용합니다 */
+function scheduleTplPush(){
+  if(!syncOn())return;
+  clearTimeout(SY.tplTimer);SY.tplTimer=setTimeout(function(){pushTemplate(false);},2500);
+}
+function applyRemoteTemplate(d,msg){
+  if(!d||!d.tpl||!d.tpl.brands)return;
+  TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));SY.tplRev=d.rev||0;SY.tplDirty=false;saveSy();
+  syncSt('on',msg||('공용 템플릿을 불러왔습니다 · '+fmtTime(d.updated)));render();
+}
+function pullTemplate(silent){
+  if(!syncOn()){if(!silent)syncSt('err','동기화 주소와 접속 코드를 먼저 입력하십시오.');return;}
+  syncReq({get:'action=template&code='+encodeURIComponent(SY.code)}).then(function(r){
+    if(!r.ok){if(!silent)syncSt('err',r.err);return;}
+    const d=r.data;if(!d.ok){if(!silent)syncSt('err','공용 템플릿 불러오기 실패: '+esc(d.error||''));return;}
+    if(!d.found){if(!silent)syncSt('on','서버에 공용 템플릿이 없습니다. 관리자 화면에서 [공용 템플릿 저장]을 눌러 최초 등록하십시오.');return;}
+    if(JSON.stringify(d.tpl)===JSON.stringify(TPL)){SY.tplRev=d.rev||0;SY.tplDirty=false;saveSy();if(!silent)syncSt('on','공용 템플릿이 최신입니다 · '+fmtTime(d.updated));return;}
+    const body='서버에 공용 체크리스트 템플릿이 있습니다.<br>최종 저장 <b>'+fmtTime(d.updated)+'</b>'+(d.by?' · '+esc(d.by):'')+
+      (SY.tplDirty?'<br><br><b>이 기기에도 저장되지 않은 템플릿 변경이 있습니다.</b>':'');
+    modal('공용 템플릿 확인',body,[
+      {t:'서버 템플릿 적용',c:'go',f:function(){applyRemoteTemplate(d);}},
+      {t:'이 기기 템플릿 유지'},
+      {t:'닫기'}]);
+  });
+}
+function pushTemplate(force){
+  if(!syncOn()||SY.tplBusy)return;
+  SY.tplBusy=true;clearTimeout(SY.tplTimer);syncSt('wait','공용 템플릿 저장 중…');
+  syncReq({post:{code:SY.code,op:'saveTemplate',base:SY.tplRev||0,force:!!force,by:SY.by||ST.info.mgr||'',tpl:TPL}}).then(function(r){
+    SY.tplBusy=false;
+    if(!r.ok){syncSt('err',r.err);return;}
+    const d=r.data;
+    if(d.conflict){
+      modal('공용 템플릿 충돌','다른 기기에서 먼저 템플릿을 저장했습니다.<br>서버 최종 저장 <b>'+fmtTime(d.updated)+'</b>'+(d.by?' · '+esc(d.by):''),[
+        {t:'서버 템플릿 적용',c:'go',f:function(){applyRemoteTemplate(d);}},
+        {t:'이 기기 내용으로 덮어쓰기',c:'warn',f:function(){SY.tplRev=d.rev||0;pushTemplate(true);}},
+        {t:'닫기'}]);return;
+    }
+    if(!d.ok){syncSt('err','공용 템플릿 저장 실패: '+esc(d.error||''));return;}
+    SY.tplRev=d.rev||0;SY.tplDirty=false;saveSy();syncSt('on','공용 템플릿 저장됨 · '+fmtTime(d.updated));
   });
 }
 
@@ -606,10 +650,13 @@ function syncCard(){
    '<button class="btn gold" onclick="syncTest()">연결 테스트</button>'+
    '<button class="btn" onclick="syncOpen()">주소 직접 열기</button>'+
    '<button class="btn" onclick="pullSync(false)">서버에서 불러오기</button>'+
-   '<button class="btn go" onclick="pushSync(false)">서버에 저장</button></div>'+
+    '<button class="btn go" onclick="pushSync(false)">서버에 저장</button></div>'+
+    '<div class="syncbar"><b style="font-size:12px">공용 체크리스트</b><span class="sp" style="flex:1"></span>'+
+    '<button class="btn" onclick="pullTemplate(false)">공용 템플릿 불러오기</button>'+
+    '<button class="btn gold" onclick="pushTemplate(false)">공용 템플릿 저장</button></div>'+
    '<div id="syncMsg" class="syncmsg"></div>'+
    (inFrame()?'<div class="syncmsg err" style="display:block">현재 <b>미리보기 창(내장 프레임)</b> 안에서 실행 중입니다. 이 환경에서는 외부 서버 요청이 차단되어 동기화가 동작하지 않습니다. GitHub Pages 주소나 내려받은 파일을 <b>브라우저 새 탭</b>에서 열어 사용하십시오.</div>':'')+
-   '<div class="syncnote">저장 키는 <b>매장명 + 교육 시작일</b>로 자동 생성됩니다. 다른 기기에서는 동일한 매장명과 시작일을 입력한 뒤 [서버에서 불러오기]를 누르십시오.<br>입력 후에는 2.5초마다 자동 저장되며, 접속 코드는 이 기기에만 보관됩니다.</div></div>';
+    '<div class="syncnote">교육 기록은 교육별로 저장되고, 공용 체크리스트 템플릿은 별도로 모든 기기에 공유됩니다. 다른 기기에서는 동기화 주소와 접속 코드를 한 번 입력한 뒤 [연결 테스트] 또는 [공용 템플릿 불러오기]를 누르십시오.<br>수정된 공용 템플릿은 2.5초 뒤 자동 저장되며, 접속 코드는 이 기기에만 보관됩니다.</div></div>';
 }
 function bindSync(){
   const u=document.getElementById('fSyncUrl'),c=document.getElementById('fSyncCode'),b=document.getElementById('fSyncBy');
@@ -1423,12 +1470,14 @@ function showStd(b,s,it){
 
 function renderAdmin(){
   document.getElementById('hTitle').textContent='관리자 · 브랜드 체크리스트 템플릿';
-  let h='<div class="note-i">여기서 수정한 브랜드/단계/항목은 <b>모든 교육생 체크리스트에 즉시 적용</b>됩니다. (진행 중 체크 상태는 항목명이 같으면 유지)</div>'+
+  let h='<div class="note-i">여기서 수정한 브랜드/단계/항목은 <b>공용 템플릿으로 서버에 저장되어 모든 기기에 적용</b>됩니다. (진행 중 체크 상태는 항목명이 같으면 유지)</div>'+
     '<div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">'+
     '<button class="btn go" onclick="show(\'setup\')">✅ 완료·나가기</button>'+
     '<button class="btn" onclick="addBrand()">+ 브랜드 추가</button>'+
     '<button class="btn" onclick="exportTpl()">템플릿 백업</button>'+
     '<button class="btn" onclick="pickImp(\'tpl\')">템플릿 불러오기</button>'+
+    '<button class="btn" onclick="pullTemplate(false)">서버 템플릿 불러오기</button>'+
+    '<button class="btn gold" onclick="pushTemplate(false)">서버 템플릿 저장</button>'+
     '<button class="btn warn" onclick="resetTpl()">기본값 복원</button></div>';
   const cfg=PASSCFG();
   h+='<div class="card"><h2>수료 기준 설정</h2>'+
@@ -1506,6 +1555,7 @@ document.getElementById('imp').onchange=function(){const f=this.files[0];if(!f)r
 render();paintSave();
 /* 시작 시: 로컬이 비어 있으면 조용히 불러오고, 내용이 있으면 최신본 여부만 확인해 물어봅니다 */
 if(pushable()){if(!hasContent())pullSync(true);else checkRemote(true);}
+if(syncOn())pullTemplate(true);
 /* 화면으로 돌아올 때마다 최신본 확인 (30초 간격) */
 document.addEventListener('visibilitychange',function(){
   if(document.visibilityState!=='visible')return;
