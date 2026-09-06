@@ -1,5 +1,8 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>조리교육 통합관리 · 커리큘럼/체크리스트/교육일지</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0"><title>조리교육 통합관리 · 커리큘럼/체크리스트/교육일지</title>
 <style>
 :root{--navy:#1f3864;--blue:#2f5496;--line:#dcdfe6;--bg:#f4f6f9;--ok:#1f7a44;--warn:#c0392b;--mut:#6b7280;--gold:#b8860b}
 *{box-sizing:border-box}
@@ -201,6 +204,9 @@ table.board td{text-align:center;font-size:12.5px;vertical-align:middle}
 table.board td.t{text-align:left}
 tr.brow{cursor:pointer}
 tr.brow:hover{background:#f2f6fd}
+.rowact{display:flex;gap:5px;justify-content:center;flex-wrap:wrap}
+.rowact .btn{padding:3px 9px;font-size:11.5px}
+tr.brow.arch{background:#fafbfc;color:#8a94a6}
 tr.brow.bad{background:#fbfafa;color:#8a94a6}
 .syncmsg{display:none;margin-top:10px;padding:10px 13px;border-radius:8px;font-size:12.5px;line-height:1.6;border:1px solid #dfe7f5;background:#f7faff;color:#33415c}
 .syncmsg.err{border-color:#e3b7b3;background:#fbeaea;color:#8e2c22}
@@ -221,7 +227,7 @@ tr.brow.bad{background:#fbfafa;color:#8a94a6}
 </header>
 <div class="wrap" id="app"></div>
 <input type="file" id="imp" accept=".json" hidden>
-<footer>FNBHERO 교육팀 · 커리큘럼 · 체크리스트 · 교육일지 통합관리 · 커리큘럼과 브랜드 템플릿은 수정 즉시 저장되어 전체에 반영됩니다.</footer>
+<footer>FNBHERO 교육팀 · 커리큘럼 · 체크리스트 · 교육일지 통합관리<br><span id="buildstamp"></span></footer>
 <script>
 const LS_TPL='fnbhero_cook_tpl_v2', LS_ST='fnbhero_cook_state_v2';
 const DEF_TPL={brands:[
@@ -364,7 +370,9 @@ function loadTpl(){try{const t=JSON.parse(lsGet(LS_TPL));if(t&&t.brands){
   return t;}}catch(e){}
   const d=JSON.parse(JSON.stringify(DEF_TPL));d.v=3;return d;}
 function loadSt(){try{const s=JSON.parse(lsGet(LS_ST));if(s&&s.checks){if(!s.logs)s.logs={};if(s.dayActive==null)s.dayActive=0;
-    if(s.confirmed==null){s.confirmed=!!(s.store&&s.info&&s.info.start&&s.selected&&s.selected.length);s.syncKey=s.confirmed?((s.store)+'_'+(s.info.start)).replace(/[^\wㄱ-ㅎ가-힣.-]/g,'_').slice(0,80):'';}
+    if(s.confirmed==null){s.confirmed=!!(s.store&&s.info&&s.info.start&&s.selected&&s.selected.length);s.syncKey='';}
+    if(s.confirmed&&!s.syncKey&&s.store&&s.info&&s.info.start)
+      s.syncKey=((s.store)+'_'+(s.info.start)).replace(/[^\wㄱ-ㅎ가-힣.-]/g,'_').slice(0,80);
     return s;}}catch(e){}return JSON.parse(JSON.stringify(DEF_ST));}
 /* 화면 이동·탭 전환은 로컬만 기록하고 서버로 보내지 않습니다 */
 function saveLocal(){lsSet(LS_ST,JSON.stringify(ST));}
@@ -373,13 +381,14 @@ function saveSt(){lsSet(LS_ST,JSON.stringify(ST));toast();markDirty();}
 function markDirty(){if(!pushable()){paintSave();return;}SY.dirty=true;paintSave('dirty');schedulePush();}
 
 /* ══════════ 서버 동기화 ══════════ */
+const BUILD='2026-09-06 · v9 (매장 관리)';
 const LS_SY='fnbhero_sync_cfg_v1';
 let SY={url:'',code:'',by:'',rev:0,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0};
 (function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0});}catch(e){}})();
 function saveSy(){lsSet(LS_SY,JSON.stringify({url:SY.url,code:SY.code,by:SY.by,rev:SY.rev}));}
 function syncOn(){return !!(SY.url&&SY.code);}
 function keyReady(){return !!(ST.store&&ST.info.start&&ST.selected.length);}
-function keyChanged(){return !!(ST.confirmed&&ST.syncKey&&ST.syncKey!==syncKey());}
+function keyChanged(){return false;}  /* 고유 키 도입으로 더 이상 발생하지 않습니다 */
 function pushable(){return syncOn()&&ST.confirmed&&keyReady()&&!keyChanged();}
 function hasContent(){return Object.keys(ST.checks||{}).length>0||Object.keys(ST.logs||{}).length>0;}
 
@@ -428,10 +437,16 @@ function modal(title,body,btns){
   o.addEventListener('click',function(e){
     const t=e.target.closest('button[data-i]');
     if(!t){if(e.target===o)o.remove();return;}
-    const b=btns[+t.dataset.i];o.remove();if(b.f)b.f();});
+    const b=btns[+t.dataset.i];const v={};
+    o.querySelectorAll('input,textarea,select').forEach(x=>{if(x.id)v[x.id]=x.value;});
+    o.remove();if(b.f)b.f(v);});
   document.body.appendChild(o);}
-function syncKey(){const k=(ST.store||'매장')+'_'+(ST.info.start||'날짜미정');
+function newId(){return 'T'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+/* 확정된 교육은 고유 키를 씁니다. 매장명·시작일을 바꿔도 기록이 끊기지 않습니다. */
+function syncKey(){return ST.syncKey||legacyKey();}
+function legacyKey(){const k=(ST.store||'매장')+'_'+(ST.info.start||'날짜미정');
   return k.replace(/[^\wㄱ-ㅎ가-힣.-]/g,'_').slice(0,80);}
+function syncLabel(){return (ST.store||'매장')+'_'+(ST.info.start||'날짜미정');}
 function syncSt(state,msg){const el=null;
   document.querySelectorAll('.sdot').forEach(d=>{d.className='sdot'+(state?' '+state:'');});
   const plain=String(msg||'').replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'').trim();
@@ -541,7 +556,7 @@ function pushSync(force){
   if(!pushable()||SY.busy)return;
   if(!force&&!hasContent()&&SY.rev>0){SY.dirty=false;paintSave('saved');return;}
   SY.busy=true;paintSave('saving');syncSt('wait','저장 중…');
-  syncReq({post:{code:SY.code,key:syncKey(),base:SY.rev,force:!!force,by:SY.by||ST.info.mgr||'',tpl:TPL,st:ST}}).then(function(r){
+  syncReq({post:{code:SY.code,key:syncKey(),label:syncLabel(),base:SY.rev,force:!!force,by:SY.by||ST.info.mgr||'',tpl:TPL,st:ST}}).then(function(r){
     SY.busy=false;
     if(!r.ok){paintSave('error');syncSt('err',r.err);retryLater();return;}
     var d=r.data;
@@ -721,11 +736,13 @@ function renderSetup(){
          '<button class="btn" onclick="startTo(\'log\')">교육일지</button>'
        : '<button class="btn go" onclick="confirmStart()">교육 시작 →</button>')+
      '<button class="btn" onclick="show(\'board\')">전체 교육 현황</button>'+
+     (ST.confirmed?'<button class="btn" onclick="newTraining()">＋ 새 교육 시작</button>':'')+
      '<button class="btn" onclick="show(\'admin\')">⚙️ 템플릿 관리</button></div>'+
      '<div class="mut" style="margin-top:10px">'+
      (ST.confirmed
-       ? '저장 키 <b>'+esc(ST.syncKey||'')+'</b> 로 확정되어 있습니다. 매장명이나 시작일을 바꾸면 자동 저장이 멈추고 확인을 받습니다.'
+       ? '이 교육은 고유 키 <b>'+esc(ST.syncKey||'')+'</b> 로 관리됩니다. 매장명이나 시작일을 수정해도 기록은 그대로 이어집니다.'
        : '매장명·교육 시작일·브랜드를 입력한 뒤 [교육 시작]을 누르면 저장 키가 확정됩니다. 확정 전에는 서버에 저장되지 않습니다.')+
+     '<br>현재 빌드 <b>'+BUILD+'</b>'+
      '</div></div>';
   h+=snapCard();
   h+=syncCard();
@@ -741,14 +758,32 @@ function startList(){startTo('list');}
 function startTo(v){grabSetup();
   if(!ST.confirmed){alert('먼저 [교육 시작]을 눌러 교육 정보를 확정해 주십시오.');return;}
   if(v==='list')ST.active=0;show(v);}
+function newTraining(){
+  const copy=ST.selected.slice();
+  modal('새 교육 시작',
+    '현재 화면을 비우고 새 교육을 시작합니다.<br>진행 중인 교육 기록은 서버에 그대로 남아 있으며, 전체 현황에서 다시 열 수 있습니다.'+
+    (SY.dirty?'<br><br><span style="color:#8e2c22"><b>저장되지 않은 변경이 있습니다.</b> 먼저 저장하시는 것을 권합니다.</span>':'')+
+    (copy.length?'<br><br>이전 교육의 브랜드 선택('+esc(copy.join(', '))+')을 그대로 가져올까요?':''),
+    [{t:copy.length?'브랜드 유지하고 시작':'새로 시작',c:'go',f:function(){resetTraining(copy);}},
+     (copy.length?{t:'처음부터 새로',f:function(){resetTraining([]);}}:null),
+     {t:'취소'}].filter(Boolean));}
+function resetTraining(keepBrands){
+  snapshot('새 교육 시작 직전');
+  const view=DEF_ST;
+  ST=JSON.parse(JSON.stringify(DEF_ST));
+  ST.selected=keepBrands||[];
+  ST.view='setup';
+  SY.rev=0;SY.dirty=false;SY.lastSaved='';SY.lastAsked=0;saveSy();
+  saveLocal();paintSave('off');render();}
+
 function confirmStart(){grabSetup();
   if(!ST.store.trim()){alert('매장명을 입력하십시오.');return;}
   if(!ST.info.start){alert('교육 시작일을 입력하십시오.');return;}
   if(!ST.selected.length){alert('교육 브랜드를 1개 이상 선택하십시오.');return;}
-  const key=syncKey();
+  const key=ST.syncKey||newId();
   modal('교육 정보 확정',
     '<b>'+esc(ST.store)+'</b> · '+esc(ST.info.start)+' 시작<br>'+esc(ST.selected.join(', '))+
-    '<br><br>저장 키를 <b>'+esc(key)+'</b> 로 확정합니다.'+
+    '<br><br>이 교육을 시작합니다. 매장명과 시작일은 나중에 자유롭게 수정할 수 있습니다.'+
     (syncOn()?'<br>확정 후부터 서버 자동 저장이 시작됩니다.':'<br>동기화가 설정되지 않아 이 기기에만 저장됩니다.'),
     [{t:'확정하고 시작',c:'go',f:function(){
 ST.confirmed=true;ST.syncKey=key;saveLocal();
@@ -1014,18 +1049,26 @@ function renderBoard(){
     const d=r.data;
     if(!d.ok){box.innerHTML='<div class="syncmsg err" style="display:block">'+
       (d.error==='CODE'?'접속 코드가 일치하지 않습니다.':esc(d.error||'조회 실패'))+'</div>';return;}
-    const fs=d.files||[];
-    if(!fs.length){box.innerHTML='<div class="mut">서버에 저장된 교육이 없습니다.</div>';return;}
-    let t='<h2>교육 '+fs.length+'건</h2><div class="sub">행을 누르면 해당 교육을 불러옵니다.</div>'+
+    const all=d.files||[];
+    const fs=ST.showArchived?all:all.filter(f=>!f.archived);
+    const nArc=all.filter(f=>f.archived).length;
+    if(!all.length){box.innerHTML='<div class="mut">서버에 저장된 교육이 없습니다.</div>';return;}
+    let t='<h2>교육 '+fs.length+'건</h2><div class="sub">매장명을 누르면 해당 교육을 불러옵니다.'+
+      (nArc?' · 보관됨 '+nArc+'건':'')+'</div>'+
+      '<div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap">'+
+      '<button class="btn" onclick="toggleArchived()">'+(ST.showArchived?'보관 제외하고 보기':'보관 포함 표시')+'</button>'+
+      '<button class="btn" onclick="newTraining()">＋ 새 교육 시작</button></div>'+
       '<table class="board"><thead><tr><th class="t">매장 / 교육생</th><th>상태</th><th>교육 기간</th>'+
-      '<th>충족률</th><th>평균</th><th>판정</th><th>사후점검</th><th>일지·서명</th><th>최종 저장</th></tr></thead><tbody>';
+      '<th>충족률</th><th>평균</th><th>판정</th><th>사후점검</th><th>일지·서명</th><th>최종 저장</th><th style="width:150px">관리</th></tr></thead><tbody>';
     fs.forEach(f=>{
       const ph=phase(f), pc=f.total?Math.round(f.done/f.total*100):0;
       const end=(f.start&&f.days)?addDays(f.start,f.days-1):'';
       const bad=!f.store||!f.start;
-      t+='<tr class="brow'+(bad?' bad':'')+'" onclick="openTraining(\''+esc(f.key).replace(/'/g,"\\'")+'\',\''+
-         esc(f.store||'')+'\',\''+esc(f.start||'')+'\')">'+
-        '<td class="t"><b>'+esc(f.store||'(매장명 없음)')+'</b>'+
+      const A=[js(f.key),js(f.store||''),js(f.start||'')];
+      const lbl=js((f.store||'(매장명 없음)')+' · '+(f.start||'날짜 미정'));
+      t+='<tr class="brow'+(bad?' bad':'')+(f.archived?' arch':'')+'">'+
+        '<td class="t" style="cursor:pointer" onclick="openTraining(\''+A[0]+'\',\''+A[1]+'\',\''+A[2]+'\')">'+
+        (f.archived?'<span class="chip">보관</span> ':'')+'<b>'+esc(f.store||'(매장명 없음)')+'</b>'+
           '<div class="mut" style="font-size:11.5px">'+esc(f.trainee||'교육생 미입력')+
           (f.mgr?' · 담당 '+esc(f.mgr):'')+(f.brands&&f.brands.length?' · '+esc(f.brands.join(', ')):'')+'</div></td>'+
         '<td style="color:'+ph.c+';font-weight:700;white-space:nowrap">'+ph.t+'</td>'+
@@ -1041,7 +1084,12 @@ function renderBoard(){
             : (f.weak?'<span class="mut">보완 '+f.weak+'</span>':'-'))+'</td>'+
         '<td>'+(f.written||0)+'/'+(f.days||0)+' · '+(f.signed||0)+'</td>'+
         '<td style="white-space:nowrap;font-size:11.5px">'+fmtTime(f.updated)+
-          (f.by?'<div class="mut">'+esc(f.by)+'</div>':'')+'</td></tr>';
+          (f.by?'<div class="mut">'+esc(f.by)+'</div>':'')+'</td>'+
+        '<td><div class="rowact">'+
+          '<button class="btn" onclick="openTraining(\''+A[0]+'\',\''+A[1]+'\',\''+A[2]+'\')">열기</button>'+
+          '<button class="btn" onclick="archiveTraining(\''+A[0]+'\',\''+lbl+'\','+(f.archived?'false':'true')+')">'+(f.archived?'해제':'보관')+'</button>'+
+          '<button class="btn warn" onclick="deleteTraining(\''+A[0]+'\',\''+lbl+'\',\''+A[1]+'\')">삭제</button>'+
+        '</div></td></tr>';
     });
     t+='</tbody></table>';
     if(fs.some(f=>!f.store||!f.start))
@@ -1055,10 +1103,43 @@ function addDays(s,n){const d=new Date(s+'T00:00:00');if(isNaN(d))return '';
   d.setDate(d.getDate()+n);const p=v=>String(v).padStart(2,'0');
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
 function openTraining(key,store,start){
-  if(!store||!start){alert('이 기록은 매장명 또는 교육 시작일이 비어 있어 불러올 수 없습니다.');return;}
-  ST.store=store;ST.info.start=start;saveSt();
-  pullSync(false);setTimeout(()=>show('list'),700);
-}
+  if(!key){alert('이 기록은 식별 키가 없어 불러올 수 없습니다.');return;}
+  if(SY.dirty){modal('저장되지 않은 변경이 있습니다',
+    '현재 교육에 저장되지 않은 입력이 있습니다. 다른 교육을 열면 그 내용은 사라집니다.',
+    [{t:'저장하고 열기',c:'go',f:function(){pushSync(false);setTimeout(()=>doOpen(key,store,start),900);}},
+     {t:'버리고 열기',c:'warn',f:function(){doOpen(key,store,start);}},{t:'취소'}]);return;}
+  doOpen(key,store,start);}
+function doOpen(key,store,start){
+  snapshot('다른 교육 열기 직전');
+  ST.syncKey=key;ST.store=store||'';ST.info.start=start||'';ST.confirmed=true;
+  SY.rev=0;SY.lastAsked=0;saveSy();saveLocal();
+  pullSync(false);setTimeout(()=>show('list'),800);}
+
+/* 보관 · 보관해제 · 삭제 */
+function fuOp(op,key,label,after){
+  syncReq({post:{code:SY.code,key:key,op:op,by:SY.by||''}}).then(function(r){
+    if(!r.ok){syncSt('err',r.err);alert('처리에 실패했습니다.');return;}
+    if(!r.data.ok){alert('처리 실패: '+(r.data.error||''));return;}
+    if(after)after();
+    renderBoard();});}
+function archiveTraining(key,label,on){
+  modal(on?'교육 보관':'보관 해제',
+    '<b>'+esc(label)+'</b><br><br>'+
+    (on?'현황 목록에서 숨깁니다. 기록은 그대로 보존되며 [보관 포함 표시]로 다시 볼 수 있습니다.'
+       :'이 교육을 다시 현황 목록에 표시합니다.'),
+    [{t:on?'보관':'보관 해제',c:'go',f:function(){fuOp(on?'archive':'unarchive',key,label);}},{t:'취소'}]);}
+function deleteTraining(key,label,store){
+  modal('교육 기록 삭제',
+    '<b>'+esc(label)+'</b><br><br>'+
+    '이 기록을 삭제하면 평가·교육일지·서명이 함께 사라집니다. 구글 드라이브 휴지통으로 옮겨지며 30일 안에는 복구할 수 있습니다.'+
+    '<br><br>실수를 막기 위해 아래에 매장명 <b>'+esc(store||label)+'</b> 을(를) 그대로 입력해 주십시오.'+
+    '<br><input id="delconfirm" style="width:100%;margin-top:8px" placeholder="매장명 입력">',
+    [{t:'삭제',c:'warn',f:function(v){
+        if((v.delconfirm||'').trim()!==String(store||label).trim()){alert('매장명이 일치하지 않아 삭제하지 않았습니다.');return;}
+        fuOp('delete',key,label,function(){
+          if(ST.syncKey===key){resetTraining([]);}});}},
+     {t:'취소'}]);}
+function toggleArchived(){ST.showArchived=!ST.showArchived;saveLocal();renderBoard();}
 
 /* ══════════ 보완 과제 · 기준 설정 · 수료 확인서 ══════════ */
 function pushWeakToLog(){
@@ -1421,6 +1502,7 @@ document.getElementById('imp').onchange=function(){const f=this.files[0];if(!f)r
     if(impMode==='tpl'){if(!d.brands)throw 0;TPL=d;saveTpl();renderAdmin();alert('템플릿을 불러와 전체에 적용했습니다.');}
     else{if(!d.checks)throw 0;ST=d;saveSt();render();alert('교육생 기록을 불러왔습니다.');}
   }catch(x){alert('파일 형식 오류');}};r.readAsText(f);this.value='';};
+(function(){const b=document.getElementById('buildstamp');if(b)b.textContent='빌드 '+BUILD;})();
 render();paintSave();
 /* 시작 시: 로컬이 비어 있으면 조용히 불러오고, 내용이 있으면 최신본 여부만 확인해 물어봅니다 */
 if(pushable()){if(!hasContent())pullSync(true);else checkRemote(true);}
