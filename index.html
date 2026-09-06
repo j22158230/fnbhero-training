@@ -99,6 +99,59 @@ textarea{font-family:inherit;font-size:13.5px;border:1px solid #c9d3e0;border-ra
 .syncbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:8px}
 .sdot{width:9px;height:9px;border-radius:50%;background:#c4ccd8;display:inline-block}
 .sdot.on{background:#1f7a44}.sdot.err{background:#c0392b}.sdot.wait{background:#b8860b}
+/* 평가 */
+.savebar{font-size:12px;padding:4px 11px;border-radius:20px;cursor:pointer;font-weight:700;white-space:nowrap;
+  background:rgba(255,255,255,.14);color:#cdd8ec;border:1px solid rgba(255,255,255,.22)}
+.savebar.dirty{background:#b8860b;color:#fff;border-color:#b8860b}
+.savebar.saving{background:#4b6ea9;color:#fff;border-color:#4b6ea9}
+.savebar.saved{background:#1f7a44;color:#fff;border-color:#1f7a44}
+.savebar.error,.savebar.keychg{background:#c0392b;color:#fff;border-color:#c0392b}
+.ovl{position:fixed;inset:0;background:rgba(16,24,40,.55);display:flex;align-items:center;justify-content:center;z-index:900;padding:18px}
+.mdl{background:#fff;border-radius:13px;max-width:520px;width:100%;padding:20px 22px;box-shadow:0 18px 50px rgba(0,0,0,.3)}
+.mdl h3{margin:0 0 8px;font-size:17px;color:var(--navy)}
+.mdl .bd{font-size:13.5px;line-height:1.7;color:#33415c}
+.mdl .ft{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;margin-top:18px}
+.warnbar{background:#fbeaea;border:1px solid #e3b7b3;color:#8e2c22;border-radius:9px;padding:11px 14px;font-size:13px;line-height:1.65;margin-bottom:12px}
+.warnbar b{font-weight:700}
+.stdbtn{display:inline-block;margin-left:7px;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:4px;
+  border:1px solid #c9d3e0;color:#8a94a6;background:#fff;cursor:pointer;vertical-align:1px}
+.stdbtn.has{border-color:#1f7a44;color:#1f7a44;background:#f0faf4}
+.stdbtn:hover{background:#eef2fb}
+.btn.stdedit{padding:3px 9px;font-size:11px}
+.btn.stdedit.on{border-color:#1f7a44;color:#1f7a44;background:#f0faf4}
+.stdbox{display:none;padding:8px 10px 10px 26px;background:#f7faff;border-left:3px solid #b8860b}
+.stdbox.open{display:block}
+.stdrow{display:flex;align-items:center;gap:9px;margin-top:6px}
+.stdrow label{width:100px;font-size:11.5px;font-weight:700;color:#33415c;flex:none}
+.stdrow input{flex:1;font-size:12.5px;padding:5px 9px;border:1px solid #c9d3e0;border-radius:6px}
+label.reqchk{font-size:11.5px;color:#8e2c22;font-weight:700;display:flex;align-items:center;gap:3px;white-space:nowrap}
+select.minsel{font-size:11.5px;padding:3px 5px;border:1px solid #c9d3e0;border-radius:5px;background:#fff}
+.req{display:inline-block;background:#8e2c22;color:#fff;border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:700;vertical-align:1px}
+.gapbadge{display:inline-block;background:#fff3d9;color:#8a6100;border:1px solid #e6cf9a;border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:700;margin-left:6px}
+.hist{font-size:11px;color:#8a94a6;margin-top:3px}
+select.lvsel{width:100%;font-size:12px;padding:5px 4px;border:1px solid #c9d3e0;border-radius:6px;background:#fff}
+select.lvsel.lv1{border-color:#c0392b;color:#8e2c22;font-weight:700}
+select.lvsel.lv2{border-color:#b8860b;color:#8a6100;font-weight:700}
+select.lvsel.lv3{border-color:#1f7a44;color:#1f7a44}
+select.lvsel.lv4{border-color:#1f7a44;background:#f0faf4;color:#1f7a44;font-weight:700}
+tr.warnrow{background:#fdf6ec}
+.vbox{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.vcard{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 13px}
+.vcard .k{font-size:11.5px;color:var(--mut)}
+.vcard .v{font-size:19px;font-weight:700;color:var(--navy);margin-top:2px}
+.verd{display:inline-block;border-radius:20px;padding:4px 14px;font-size:13px;font-weight:700}
+.verd.ok{background:#e8f6ee;color:#1f7a44}
+.verd.cond{background:#fff3d9;color:#8a6100}
+.verd.ng{background:#fbeaea;color:#8e2c22}
+.verd.none{background:#eef0f4;color:#6b7480}
+.weak{background:#fdf6ec;border:1px solid #e6cf9a;border-radius:9px;padding:11px 14px;margin-top:12px;font-size:12.5px;line-height:1.7}
+.weak b{color:#8a6100}
+.weak ul{margin:6px 0 0;padding-left:18px}
+table.board td{text-align:center;font-size:12.5px;vertical-align:middle}
+table.board td.t{text-align:left}
+tr.brow{cursor:pointer}
+tr.brow:hover{background:#f2f6fd}
+tr.brow.bad{background:#fbfafa;color:#8a94a6}
 .syncmsg{display:none;margin-top:10px;padding:10px 13px;border-radius:8px;font-size:12.5px;line-height:1.6;border:1px solid #dfe7f5;background:#f7faff;color:#33415c}
 .syncmsg.err{border-color:#e3b7b3;background:#fbeaea;color:#8e2c22}
 .syncmsg.ok{border-color:#bfe3cd;background:#f0faf4;color:#1f7a44}
@@ -107,11 +160,13 @@ textarea{font-family:inherit;font-size:13.5px;border:1px solid #c9d3e0;border-ra
 <header>
   <h1 id="hTitle">조리교육 통합관리</h1>
   <span id="save" style="font-size:12px;color:#cdd8ec"></span>
-  <span id="syncst" style="font-size:12px;color:#cdd8ec"></span>
+  <span id="savebar" class="savebar" onclick="saveNow()" title="눌러서 지금 저장">이 기기에만 저장</span>
   <span class="sp"></span>
+  <button class="btn ghost" id="navBoard" onclick="show('board')">전체 현황</button>
   <button class="btn ghost" id="navCurr" onclick="show('curr')">커리큘럼</button>
   <button class="btn ghost" id="navList" onclick="show('list')">체크리스트</button>
   <button class="btn ghost" id="navLog" onclick="show('log')">교육일지</button>
+  <button class="btn ghost" id="navFu" onclick="show('fu')">사후점검</button>
   <button class="btn ghost" id="navAdmin" onclick="show('admin')">⚙️ 관리자</button>
 </header>
 <div class="wrap" id="app"></div>
@@ -247,7 +302,7 @@ curriculum:[
    {t:'21:30~22:20',s:'종합 평가',d:'전체 항목 최종 점검, 단독 운영 가능 여부 판정',m:'평가',o:'교육 담당'},
    {t:'22:20~23:00',s:'1:1 피드백',d:'보완 과제 부여 및 추가 교육 일정 협의, 최종 교육일지 작성 및 서명',m:'면담',o:'교육 담당'}]}
 ]};
-const DEF_ST={view:'setup',store:'',info:{name:'',start:'',mgr:''},selected:[],active:0,checks:{},logs:{},dayActive:0};
+const DEF_ST={view:'setup',store:'',info:{name:'',start:'',mgr:''},selected:[],active:0,checks:{},logs:{},dayActive:0,confirmed:false,syncKey:''};
 const MEM={};
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return MEM[k]||null;}}
 function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){MEM[k]=v;}}
@@ -258,19 +313,75 @@ function loadTpl(){try{const t=JSON.parse(lsGet(LS_TPL));if(t&&t.brands){
     if(nb&&!t.brands.some(b=>b.name===nb.name))t.brands.push(JSON.parse(JSON.stringify(nb)));t.v=3;}
   return t;}}catch(e){}
   const d=JSON.parse(JSON.stringify(DEF_TPL));d.v=3;return d;}
-function loadSt(){try{const s=JSON.parse(lsGet(LS_ST));if(s&&s.checks){if(!s.logs)s.logs={};if(s.dayActive==null)s.dayActive=0;return s;}}catch(e){}return JSON.parse(JSON.stringify(DEF_ST));}
-function saveTpl(){lsSet(LS_TPL,JSON.stringify(TPL));toast();schedulePush();}
-function saveSt(){lsSet(LS_ST,JSON.stringify(ST));toast();schedulePush();}
+function loadSt(){try{const s=JSON.parse(lsGet(LS_ST));if(s&&s.checks){if(!s.logs)s.logs={};if(s.dayActive==null)s.dayActive=0;
+    if(s.confirmed==null){s.confirmed=!!(s.store&&s.info&&s.info.start&&s.selected&&s.selected.length);s.syncKey=s.confirmed?((s.store)+'_'+(s.info.start)).replace(/[^\wㄱ-ㅎ가-힣.-]/g,'_').slice(0,80):'';}
+    return s;}}catch(e){}return JSON.parse(JSON.stringify(DEF_ST));}
+/* 화면 이동·탭 전환은 로컬만 기록하고 서버로 보내지 않습니다 */
+function saveLocal(){lsSet(LS_ST,JSON.stringify(ST));}
+function saveTpl(){lsSet(LS_TPL,JSON.stringify(TPL));toast();markDirty();}
+function saveSt(){lsSet(LS_ST,JSON.stringify(ST));toast();markDirty();}
+function markDirty(){if(!pushable()){paintSave();return;}SY.dirty=true;paintSave('dirty');schedulePush();}
 
 /* ══════════ 서버 동기화 ══════════ */
 const LS_SY='fnbhero_sync_cfg_v1';
-let SY={url:'',code:'',by:'',rev:0,timer:null,busy:false};
-(function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,busy:false});}catch(e){}})();
+let SY={url:'',code:'',by:'',rev:0,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:''};
+(function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:''});}catch(e){}})();
 function saveSy(){lsSet(LS_SY,JSON.stringify({url:SY.url,code:SY.code,by:SY.by,rev:SY.rev}));}
 function syncOn(){return !!(SY.url&&SY.code);}
+function keyReady(){return !!(ST.store&&ST.info.start&&ST.selected.length);}
+function keyChanged(){return !!(ST.confirmed&&ST.syncKey&&ST.syncKey!==syncKey());}
+function pushable(){return syncOn()&&ST.confirmed&&keyReady()&&!keyChanged();}
+function hasContent(){return Object.keys(ST.checks||{}).length>0||Object.keys(ST.logs||{}).length>0;}
+
+/* 저장 상태 표시 */
+function paintSave(state){
+  const el=document.getElementById('savebar');if(!el)return;
+  if(state)SY.state=state;
+  let s=SY.state,txt,cls;
+  if(keyChanged()){s='keychg';}
+  else if(!syncOn()||!ST.confirmed)s='off';
+  switch(s){
+    case 'dirty': txt='저장 대기 · 눌러서 지금 저장';cls='dirty';break;
+    case 'saving':txt='저장 중…';cls='saving';break;
+    case 'saved': txt='저장됨 · '+(SY.lastSaved||'');cls='saved';break;
+    case 'error': txt='저장 안 됨 · 눌러서 재시도';cls='error';break;
+    case 'keychg':txt='자동 저장 중단 · 교육 정보 변경됨';cls='keychg';break;
+    default:      txt=syncOn()?(ST.confirmed?'대기':'이 기기에만 저장'):'이 기기에만 저장';cls='';}
+  el.textContent=txt;el.className='savebar '+cls;SY.state=s;}
+function saveNow(){
+  if(keyChanged()){show('setup');return;}
+  if(!syncOn()){alert('동기화 주소와 접속 코드가 설정되지 않았습니다.');show('setup');return;}
+  if(!ST.confirmed){alert('설정 화면에서 [교육 시작]을 눌러 교육 정보를 확정해 주십시오.');show('setup');return;}
+  clearTimeout(SY.timer);pushSync(false);}
+
+/* 되돌리기용 스냅샷 — 기기에 최대 5개 */
+const LS_SNAP='fnbhero_snap_v1';
+function snapList(){try{return JSON.parse(lsGet(LS_SNAP))||[];}catch(e){return [];}}
+function snapshot(tag){try{
+  const a=snapList();
+  a.push({at:new Date().toISOString(),tag:tag||'',key:syncKey(),store:ST.store,st:JSON.parse(JSON.stringify(ST))});
+  while(a.length>5)a.shift();
+  lsSet(LS_SNAP,JSON.stringify(a));}catch(e){}}
+function restoreSnap(i){const a=snapList(),o=a[i];if(!o)return;
+  modal('되돌리기 확인',
+    '<b>'+esc(o.store||o.key)+'</b><br>'+fmtTime(o.at)+' 시점 상태로 되돌립니다.<br><br>현재 화면의 내용은 사라집니다. 되돌린 뒤 [지금 저장]을 눌러야 서버에도 반영됩니다.',
+    [{t:'되돌리기',c:'warn',f:function(){snapshot('되돌리기 직전');ST=o.st;saveLocal();paintSave('dirty');render();}},
+     {t:'취소'}]);}
+
+/* 모달 — 취소는 아무 동작도 하지 않습니다 */
+function modal(title,body,btns){
+  const o=document.createElement('div');o.className='ovl';
+  let h='<div class="mdl"><h3>'+title+'</h3><div class="bd">'+body+'</div><div class="ft">';
+  btns.forEach((b,i)=>{h+='<button class="btn '+(b.c||'')+'" data-i="'+i+'">'+b.t+'</button>';});
+  o.innerHTML=h+'</div></div>';
+  o.addEventListener('click',function(e){
+    const t=e.target.closest('button[data-i]');
+    if(!t){if(e.target===o)o.remove();return;}
+    const b=btns[+t.dataset.i];o.remove();if(b.f)b.f();});
+  document.body.appendChild(o);}
 function syncKey(){const k=(ST.store||'매장')+'_'+(ST.info.start||'날짜미정');
   return k.replace(/[^\wㄱ-ㅎ가-힣.-]/g,'_').slice(0,80);}
-function syncSt(state,msg){const el=document.getElementById('syncst');
+function syncSt(state,msg){const el=null;
   document.querySelectorAll('.sdot').forEach(d=>{d.className='sdot'+(state?' '+state:'');});
   const plain=String(msg||'').replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'').trim();
   const lb=document.getElementById('syncLabel');if(lb&&plain)lb.textContent=plain.length>46?plain.slice(0,46)+'…':plain;
@@ -346,30 +457,52 @@ function pullSync(silent){
     var d=r.data;
     if(!d.ok){syncSt('err','불러오기 실패: '+esc(d.error||'알 수 없는 오류'));return;}
     if(!d.found){SY.rev=0;saveSy();syncSt('on','서버에 저장된 기록이 없습니다. 작성 후 저장하면 새로 생성됩니다.');return;}
+    snapshot('불러오기 직전');
     if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
-    if(d.st&&d.st.checks){ST=d.st;lsSet(LS_ST,JSON.stringify(ST));}
-    SY.rev=d.rev||0;saveSy();
+    if(d.st&&d.st.checks){ST=d.st;ST.confirmed=true;ST.syncKey=syncKey();lsSet(LS_ST,JSON.stringify(ST));}
+    SY.rev=d.rev||0;saveSy();SY.dirty=false;SY.lastSaved=fmtTime(d.updated);paintSave('saved');
     syncSt('on','불러왔습니다 · '+fmtTime(d.updated)+(d.by?' · '+esc(d.by):''));
     render();
   });
 }
 function pushSync(force){
-  if(!syncOn()||SY.busy)return;SY.busy=true;syncSt('wait','저장 중…');
+  if(!pushable()||SY.busy)return;
+  if(!force&&!hasContent()&&SY.rev>0){SY.dirty=false;paintSave('saved');return;}
+  SY.busy=true;paintSave('saving');syncSt('wait','저장 중…');
   syncReq({post:{code:SY.code,key:syncKey(),base:SY.rev,force:!!force,by:SY.by||ST.info.mgr||'',tpl:TPL,st:ST}}).then(function(r){
     SY.busy=false;
-    if(!r.ok){syncSt('err',r.err);return;}
+    if(!r.ok){paintSave('error');syncSt('err',r.err);retryLater();return;}
     var d=r.data;
-    if(d.conflict){syncSt('err','다른 기기에서 먼저 저장한 기록이 있습니다.');
-      if(confirm('다른 기기에서 먼저 저장한 기록이 있습니다.\n\n[확인] 서버 기록을 불러옵니다 (현재 화면의 입력은 사라집니다)\n[취소] 현재 화면 내용으로 덮어씁니다')){
-        if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
-        if(d.st&&d.st.checks){ST=d.st;lsSet(LS_ST,JSON.stringify(ST));}
-        SY.rev=d.rev||0;saveSy();syncSt('on','서버 기록을 적용했습니다.');render();
-      }else{pushSync(true);}
+    if(d.conflict){paintSave('error');syncSt('err','다른 기기에서 먼저 저장한 기록이 있습니다.');
+      modal('다른 기기에서 먼저 저장했습니다',
+        '서버 최종 저장 '+fmtTime(d.updated)+(d.by?' · '+esc(d.by):'')+
+        '<br><br>두 기록이 서로 다릅니다. 어느 쪽을 남길지 선택해 주십시오.<br>'+
+        '<span class="mut">닫기를 누르면 아무것도 바뀌지 않습니다. 이 기기의 내용은 그대로 남습니다.</span>',
+        [{t:'서버 기록 불러오기',c:'go',f:function(){
+            snapshot('충돌 · 서버 적용 직전');
+            if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
+            if(d.st&&d.st.checks){ST=d.st;lsSet(LS_ST,JSON.stringify(ST));}
+            SY.rev=d.rev||0;saveSy();SY.dirty=false;paintSave('saved');
+            SY.lastSaved=fmtTime(d.updated);syncSt('on','서버 기록을 적용했습니다.');render();}},
+         {t:'이 기기 내용으로 덮어쓰기',c:'warn',f:function(){
+            modal('덮어쓰기 확인',
+              '서버의 '+fmtTime(d.updated)+' 기록이 이 기기 내용으로 대체됩니다.<br>'+
+              '서버에는 직전 버전 1개가 남아 복구할 수 있습니다.',
+              [{t:'덮어쓰기 실행',c:'warn',f:function(){snapshot('덮어쓰기 직전');pushSync(true);}},{t:'취소'}]);}},
+         {t:'닫기'}]);
       return;}
-    if(!d.ok){syncSt('err','저장 실패: '+esc(d.error||''));return;}
-    SY.rev=d.rev;saveSy();syncSt('on','저장됨 · '+fmtTime(d.updated));
+    if(d.empty){paintSave('error');
+      modal('빈 내용으로 덮어쓸 수 없습니다',
+        '서버에는 기록이 있는데 이 기기에는 평가·일지 내용이 없습니다.<br>'+
+        '먼저 [서버에서 불러오기]로 기존 기록을 받아 오십시오.',
+        [{t:'서버에서 불러오기',c:'go',f:function(){pullSync(false);}},{t:'닫기'}]);
+      return;}
+    if(!d.ok){paintSave('error');syncSt('err','저장 실패: '+esc(d.error||''));retryLater();return;}
+    SY.rev=d.rev;saveSy();SY.dirty=false;SY.lastSaved=fmtTime(d.updated);
+    snapshot('저장 시점');paintSave('saved');syncSt('on','저장됨 · '+fmtTime(d.updated));
   });
 }
+function retryLater(){clearTimeout(SY.retry);SY.retry=setTimeout(function(){if(SY.dirty)pushSync(false);},20000);}
 function fmtTime(iso){if(!iso)return '';const d=new Date(iso);if(isNaN(d))return '';
   const p=n=>String(n).padStart(2,'0');
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());}
@@ -402,17 +535,73 @@ function bindSync(){
 function toast(){document.getElementById('save').textContent='저장됨 '+new Date().toLocaleTimeString('ko-KR');}
 function esc(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 function K(b,s,it){return b+'¦'+s+'¦'+it;}
-function chk(b,s,it){return ST.checks[K(b,s,it)]||{edu:false,prac:false,pass:false,note:''};}
+/* ── 4단계 평가 모델 ─────────────────────────
+   1 미습득 / 2 보조 필요 / 3 단독 가능 / 4 숙련
+   self = 교육생 자기평가, mgr = 담당자 평가, 0 = 미평가 */
+const LV=['미평가','1 미습득','2 보조 필요','3 단독 가능','4 숙련'];
+const LVS=['-','1','2','3','4'];
+function chk(b,s,it){const c=ST.checks[K(b,s,it)];
+  if(!c)return{self:0,mgr:0,note:'',hist:[]};
+  if(c.self===undefined){ // 구버전(교육/실습/평가 체크) 자동 환산
+    return{self:0,mgr:c.pass?3:(c.prac?2:(c.edu?1:0)),note:c.note||'',hist:[]};}
+  return{self:c.self||0,mgr:c.mgr||0,note:c.note||'',hist:c.hist||[]};}
 function selBrands(){return TPL.brands.filter(b=>ST.selected.includes(b.name));}
-function bProg(b){let t=0,p=0;b.secs.forEach(s=>s.items.forEach(it=>{t++;if(chk(b.name,s.name,it).pass)p++;}));return{t,p,pc:t?Math.round(p/t*100):0};}
+/* 항목별 기준 — 관리자에서 수정 */
+function RULES(){if(!TPL.rules)TPL.rules={};return TPL.rules;}
+function rule(b,s,it){const r=RULES()[K(b,s,it)];
+  return{req:r?!!r.req:false, min:(r&&r.min)?r.min:(TPL.pass&&TPL.pass.defMin?TPL.pass.defMin:3)};}
+function setRule(b,s,it,k,v){const key=K(b,s,it);const r=RULES()[key]||{};r[k]=v;RULES()[key]=r;saveTpl();}
+function PASSCFG(){if(!TPL.pass)TPL.pass={defMin:3,avg:3.0,useAvg:true};
+  if(TPL.pass.defMin==null)TPL.pass.defMin=3;if(TPL.pass.avg==null)TPL.pass.avg=3.0;
+  if(TPL.pass.useAvg==null)TPL.pass.useAvg=true;return TPL.pass;}
+/* 브랜드 진행 상황 — 기준 충족률과 평균 점수 */
+function bProg(b){let t=0,p=0,sum=0,scored=0,reqT=0,reqOk=0;
+  b.secs.forEach(s=>s.items.forEach(it=>{t++;
+    const c=chk(b.name,s.name,it),r=rule(b.name,s.name,it);
+    if(c.mgr>0){sum+=c.mgr;scored++;}
+    if(c.mgr>=r.min)p++;
+    if(r.req){reqT++;if(c.mgr>=r.min)reqOk++;}}));
+  return{t,p,pc:t?Math.round(p/t*100):0,avg:scored?sum/scored:0,scored,reqT,reqOk};}
+/* 익일 보완 과제 대상 — 2점 이하 또는 자기평가와 2점 이상 격차 */
+function weakItems(){const out=[];
+  selBrands().forEach(b=>b.secs.forEach(s=>s.items.forEach(it=>{
+    const c=chk(b.name,s.name,it);if(!c.mgr)return;
+    const gap=(c.self&&Math.abs(c.self-c.mgr)>=2);
+    if(c.mgr<=2||gap)out.push({b:b.name,s:s.name,it,self:c.self,mgr:c.mgr,gap,note:c.note});})));
+  return out;}
+/* 수료 판정 */
+function verdict(){
+  const bs=selBrands();let t=0,p=0,sum=0,scored=0,reqT=0,reqNg=[];
+  bs.forEach(b=>b.secs.forEach(s=>s.items.forEach(it=>{t++;
+    const c=chk(b.name,s.name,it),r=rule(b.name,s.name,it);
+    if(c.mgr>0){sum+=c.mgr;scored++;}
+    if(c.mgr>=r.min)p++;
+    if(r.req){reqT++;if(c.mgr<r.min)reqNg.push({b:b.name,s:s.name,it,mgr:c.mgr,min:r.min});}})));
+  const avg=scored?sum/scored:0,cfg=PASSCFG();
+  const low=[];bs.forEach(b=>b.secs.forEach(s=>s.items.forEach(it=>{
+    const c=chk(b.name,s.name,it),r=rule(b.name,s.name,it);
+    if(c.mgr>0&&c.mgr<r.min)low.push({b:b.name,s:s.name,it,mgr:c.mgr,min:r.min});})));
+  let res,cls;
+  if(!scored){res='평가 미실시';cls='none';}
+  else if(reqNg.length){res='미수료';cls='ng';}
+  else if(cfg.useAvg&&avg<cfg.avg){res='조건부 수료';cls='cond';}
+  else if(low.length){res='조건부 수료';cls='cond';}
+  else res='수료',cls='ok';
+  return{res,cls,t,p,avg,scored,reqT,reqNg,low,unscored:t-scored};}
 
-function show(v){ST.view=v;saveSt();render();}
+function show(v){ST.view=v;saveLocal();render();}
 function render(){
-  const ready=ST.selected.length>0;
+  const ready=ST.selected.length>0&&ST.confirmed;
+  setTimeout(paintSave,0);
   document.getElementById('navAdmin').classList.toggle('hide',ST.view==='admin');
+  document.getElementById('navBoard').classList.toggle('hide',!syncOn()||ST.view==='board');
   document.getElementById('navCurr').classList.toggle('hide',!ready||ST.view==='curr');
   document.getElementById('navList').classList.toggle('hide',!ready||ST.view==='list');
   document.getElementById('navLog').classList.toggle('hide',!ready||ST.view==='log');
+  document.getElementById('navFu').classList.toggle('hide',!ready||ST.view==='fu'||!(ST.certLocked||(ST.fu&&ST.fu.base&&ST.fu.base.length)));
+  if(ST.view==='fu'&&ready)return renderFollow();
+  if(ST.view==='cert'&&ready)return renderCert();
+  if(ST.view==='board')return renderBoard();
   if(ST.view==='admin')return renderAdmin();
   if(ST.view==='curr'&&ready)return renderCurriculum();
   if(ST.view==='log'&&ready)return renderLog();
@@ -425,10 +614,27 @@ function dayDate(i){if(!ST.info.start)return '';const d=new Date(ST.info.start+'
 function dayDow(i){const s=dayDate(i);if(!s)return '';const d=new Date(s+'T00:00:00');return '일월화수목금토'[d.getDay()];}
 function dayLabel(i){const s=dayDate(i);return s?s+' ('+dayDow(i)+')':'날짜 미정';}
 
+function keyWarn(){
+  if(!keyChanged())return '';
+  return '<div class="warnbar"><b>자동 저장이 멈춰 있습니다.</b><br>'+
+    '확정된 저장 키는 <b>'+esc(ST.syncKey)+'</b> 인데 현재 입력값은 <b>'+esc(syncKey())+'</b> 입니다. '+
+    '다른 교육으로 잘못 저장되는 것을 막기 위해 전송을 보류했습니다.'+
+    '<div style="margin-top:9px"><button class="btn warn" onclick="reconfirmKey()">처리 방법 선택</button></div></div>';}
+function snapCard(){
+  const a=snapList();
+  let h='<div class="card"><h2>되돌리기</h2><div class="sub">저장 시점의 상태를 이 기기에 최대 5개까지 보관합니다. 서버에도 직전 버전 1개가 남습니다.</div>';
+  if(!a.length)h+='<div class="mut">보관된 시점이 없습니다.</div>';
+  else{h+='<table><thead><tr><th class="t">시점</th><th class="t">교육</th><th class="t">구분</th><th style="width:90px"></th></tr></thead><tbody>';
+    a.slice().reverse().forEach((o,ri)=>{const i=a.length-1-ri;
+      h+='<tr><td class="t">'+fmtTime(o.at)+'</td><td class="t">'+esc(o.store||o.key||'-')+'</td>'+
+        '<td class="t mut">'+esc(o.tag||'')+'</td>'+
+        '<td><button class="btn" style="padding:3px 10px;font-size:11.5px" onclick="restoreSnap('+i+')">되돌리기</button></td></tr>';});
+    h+='</tbody></table>';}
+  return h+'</div>';}
 function renderSetup(){
   document.getElementById('hTitle').textContent='조리교육 시작 · 설정';
   const app=document.getElementById('app');
-  let h='<div class="card"><h2>교육 설정</h2><div class="sub">매장명과 교육 브랜드(복수 선택)를 입력한 뒤 [체크리스트 시작]을 누르세요.</div>'+
+  let h='<div id="keywarn">'+keyWarn()+'</div><div class="card"><h2>교육 설정</h2><div class="sub">매장명·교육 시작일·브랜드를 입력한 뒤 [교육 시작]을 누르면 저장 키가 확정됩니다.</div>'+
    '<label class="f">매장명 *</label><input class="w" id="fStore" placeholder="예: 서정점" value="'+esc(ST.store)+'">'+
    '<div style="display:flex;gap:14px;flex-wrap:wrap"><div><label class="f">교육생</label><input id="fName" placeholder="이름" value="'+esc(ST.info.name)+'"></div>'+
    '<div><label class="f">교육 시작일</label><input id="fStart" type="date" value="'+esc(ST.info.start)+'"></div>'+
@@ -436,65 +642,139 @@ function renderSetup(){
    '<label class="f">교육 브랜드 * (복수 선택)</label><div class="brandpick">';
   TPL.brands.forEach(b=>{const on=ST.selected.includes(b.name);const c=b.secs.reduce((a,s)=>a+s.items.length,0);
     h+='<label class="bp'+(on?' on':'')+'"><input type="checkbox" '+(on?'checked':'')+' onchange="toggleBrand(\''+esc(b.name)+'\',this.checked,this)"> <span>'+esc(b.name)+'<br><span class="m">'+c+'개 항목</span></span></label>';});
-  h+='</div><div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn go" onclick="startTo(\'curr\')">커리큘럼 열기 →</button>'+
-     '<button class="btn" onclick="startTo(\'list\')">체크리스트</button>'+
-     '<button class="btn" onclick="startTo(\'log\')">교육일지</button>'+
+  h+='</div><div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">'+
+     (ST.confirmed
+       ? '<button class="btn go" onclick="startTo(\'curr\')">커리큘럼 열기 →</button>'+
+         '<button class="btn" onclick="startTo(\'list\')">체크리스트</button>'+
+         '<button class="btn" onclick="startTo(\'log\')">교육일지</button>'
+       : '<button class="btn go" onclick="confirmStart()">교육 시작 →</button>')+
+     '<button class="btn" onclick="show(\'board\')">전체 교육 현황</button>'+
      '<button class="btn" onclick="show(\'admin\')">⚙️ 템플릿 관리</button></div>'+
-     '<div class="mut" style="margin-top:10px">교육 시작일을 입력하면 커리큘럼과 교육일지의 일차별 날짜가 자동으로 계산됩니다.</div></div>';
+     '<div class="mut" style="margin-top:10px">'+
+     (ST.confirmed
+       ? '저장 키 <b>'+esc(ST.syncKey||'')+'</b> 로 확정되어 있습니다. 매장명이나 시작일을 바꾸면 자동 저장이 멈추고 확인을 받습니다.'
+       : '매장명·교육 시작일·브랜드를 입력한 뒤 [교육 시작]을 누르면 저장 키가 확정됩니다. 확정 전에는 서버에 저장되지 않습니다.')+
+     '</div></div>';
+  h+=snapCard();
   h+=syncCard();
   app.innerHTML=h;
   ['fStore','fName','fStart','fMgr'].forEach(id=>document.getElementById(id).addEventListener('input',grabSetup));
   bindSync();
 }
-function grabSetup(){ST.store=document.getElementById('fStore').value;ST.info={name:document.getElementById('fName').value,start:document.getElementById('fStart').value,mgr:document.getElementById('fMgr').value};saveSt();}
+function grabSetup(){ST.store=document.getElementById('fStore').value;ST.info={name:document.getElementById('fName').value,start:document.getElementById('fStart').value,mgr:document.getElementById('fMgr').value};saveSt();
+  const kw=document.getElementById('keywarn');if(kw)kw.innerHTML=keyWarn();paintSave();}
 function toggleBrand(name,on,el){if(on){if(!ST.selected.includes(name))ST.selected.push(name);}else{ST.selected=ST.selected.filter(x=>x!==name);}
   el.closest('.bp').classList.toggle('on',on);saveSt();}
 function startList(){startTo('list');}
 function startTo(v){grabSetup();
-  if(!ST.store.trim()){alert('매장명을 입력하세요.');return;}
-  if(!ST.selected.length){alert('교육 브랜드를 1개 이상 선택하세요.');return;}
+  if(!ST.confirmed){alert('먼저 [교육 시작]을 눌러 교육 정보를 확정해 주십시오.');return;}
   if(v==='list')ST.active=0;show(v);}
+function confirmStart(){grabSetup();
+  if(!ST.store.trim()){alert('매장명을 입력하십시오.');return;}
+  if(!ST.info.start){alert('교육 시작일을 입력하십시오.');return;}
+  if(!ST.selected.length){alert('교육 브랜드를 1개 이상 선택하십시오.');return;}
+  const key=syncKey();
+  modal('교육 정보 확정',
+    '<b>'+esc(ST.store)+'</b> · '+esc(ST.info.start)+' 시작<br>'+esc(ST.selected.join(', '))+
+    '<br><br>저장 키를 <b>'+esc(key)+'</b> 로 확정합니다.'+
+    (syncOn()?'<br>확정 후부터 서버 자동 저장이 시작됩니다.':'<br>동기화가 설정되지 않아 이 기기에만 저장됩니다.'),
+    [{t:'확정하고 시작',c:'go',f:function(){
+ST.confirmed=true;ST.syncKey=key;saveLocal();
+       if(syncOn())pullThenStart();else{paintSave();show('curr');}
+     }},{t:'취소'}]);}
+/* 확정 직후 서버에 같은 키의 기존 기록이 있으면 먼저 확인합니다 */
+function pullThenStart(){
+  paintSave('saving');
+  syncReq({get:'action=load&code='+encodeURIComponent(SY.code)+'&key='+encodeURIComponent(syncKey())}).then(function(r){
+    if(!r.ok||!r.data.ok){paintSave('error');show('curr');return;}
+    const d=r.data;
+    if(!d.found){SY.rev=0;saveSy();paintSave('dirty');markDirty();show('curr');return;}
+    modal('서버에 같은 교육 기록이 있습니다',
+      '최종 저장 '+fmtTime(d.updated)+(d.by?' · '+esc(d.by):'')+
+      '<br><br>서버 기록을 불러와 이어서 작성하시겠습니까? 현재 이 기기의 내용은 사라집니다.',
+      [{t:'서버 기록 불러오기',c:'go',f:function(){
+         snapshot('불러오기 직전');
+         if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
+         if(d.st&&d.st.checks){ST=d.st;ST.confirmed=true;ST.syncKey=syncKey();lsSet(LS_ST,JSON.stringify(ST));}
+         SY.rev=d.rev||0;saveSy();paintSave('saved');SY.lastSaved=fmtTime(d.updated);render();}},
+       {t:'이 기기 내용 유지',f:function(){SY.rev=d.rev||0;saveSy();paintSave('dirty');show('curr');}}]);
+  });}
+/* 교육 정보를 바꾼 경우 */
+function reconfirmKey(){
+  const nk=syncKey();
+  modal('교육 정보가 변경되었습니다',
+    '확정된 저장 키는 <b>'+esc(ST.syncKey)+'</b> 이고, 현재 입력값은 <b>'+esc(nk)+'</b> 입니다.<br><br>'+
+    '자동 저장이 멈춰 있습니다. 어떻게 처리할까요?',
+    [{t:'새 교육으로 저장',c:'go',f:function(){
+        snapshot('새 교육 전환 직전');ST.syncKey=nk;SY.rev=0;saveSy();saveLocal();paintSave('dirty');markDirty();render();}},
+     {t:'해당 교육 불러오기',f:function(){ST.syncKey=nk;SY.rev=0;saveSy();saveLocal();pullSync(false);}},
+     {t:'입력 되돌리기',f:function(){
+        const pa=ST.syncKey.split('_');ST.info.start=pa.pop();ST.store=pa.join('_').replace(/_/g,' ');
+        saveLocal();paintSave();render();}},
+     {t:'나중에'}]);}
 
 function renderList(){
   document.getElementById('hTitle').textContent='조리교육 체크리스트';
   const brands=selBrands();if(ST.active>=brands.length)ST.active=0;
-  let t=0,p=0;brands.forEach(b=>{const g=bProg(b);t+=g.t;p+=g.p;});const ov=t?Math.round(p/t*100):0;
+  const V=verdict();const ov=V.t?Math.round(V.p/V.t*100):0;
   let h='<div class="metabar"><span>매장 <b>'+esc(ST.store||'-')+'</b></span><span>교육생 <b>'+esc(ST.info.name||'-')+'</b></span>'+
     '<span>담당 <b>'+esc(ST.info.mgr||'-')+'</b></span><span class="sp" style="flex:1"></span>'+
     '<button class="btn" onclick="show(\'setup\')">⟵ 설정 변경</button>'+
     '<button class="btn" onclick="exportSt()">저장(백업)</button>'+
     '<button class="btn" onclick="pickImp(\'st\')">불러오기</button>'+
     '<button class="btn" onclick="window.print()">인쇄</button></div>';
-  h+='<div class="overall"><div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px"><span>전체 진도율</span><span>'+ov+'% ('+p+'/'+t+')</span></div><div class="bar"><i style="width:'+ov+'%"></i></div></div>';
+  h+='<div class="overall"><div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px"><span>기준 충족률</span><span>'+ov+'% ('+V.p+'/'+V.t+')</span></div><div class="bar"><i style="width:'+ov+'%"></i></div>'+
+    '<div class="vbox">'+
+    '<div class="vcard"><div class="k">현재 판정</div><div class="v"><span class="verd '+V.cls+'">'+V.res+'</span></div></div>'+
+    '<div class="vcard"><div class="k">담당자 평가 평균</div><div class="v">'+(V.scored?V.avg.toFixed(2):'-')+' <span style="font-size:12px;color:#8a94a6">/ 4.00</span></div></div>'+
+    '<div class="vcard"><div class="k">필수 항목</div><div class="v">'+(V.reqT-V.reqNg.length)+'/'+V.reqT+'</div></div>'+
+    '<div class="vcard"><div class="k">미평가 항목</div><div class="v">'+V.unscored+'</div></div>'+
+    '</div></div>';
+  const wk=weakItems();
+  if(wk.length){
+    h+='<div class="weak"><b>익일 보완 대상 '+wk.length+'건</b> — 담당자 평가 2점 이하이거나, 교육생 자기평가와 2점 이상 차이 나는 항목입니다.<ul>'+
+      wk.slice(0,8).map(x=>'<li>'+esc(x.it)+' <span class="mut">(자기 '+(x.self||'-')+' / 담당 '+x.mgr+(x.gap?' · 인식 차이':'')+')</span></li>').join('')+
+      '</ul>'+(wk.length>8?'<div class="mut" style="margin-top:4px">외 '+(wk.length-8)+'건</div>':'')+
+      '<div style="margin-top:9px"><button class="btn" onclick="pushWeakToLog()">교육일지 보완 과제에 넣기</button>'+
+      '<button class="btn" onclick="show(\'cert\')" style="margin-left:6px">수료 확인서</button></div></div>';}
+  else h+='<div style="margin-top:12px"><button class="btn" onclick="show(\'cert\')">수료 확인서</button></div>';
   h+='<div class="tabs">';
-  brands.forEach((b,i)=>{const g=bProg(b);h+='<div class="tab'+(i===ST.active?' on':'')+'" onclick="setActive('+i+')">'+esc(b.name)+'<span class="p">'+g.pc+'%</span></div>';});
+  brands.forEach((b,i)=>{const g=bProg(b);h+='<div class="tab'+(i===ST.active?' on':'')+'" onclick="setActive('+i+')">'+esc(b.name)+'<span class="p">'+g.pc+'% · 평균 '+(g.scored?g.avg.toFixed(1):'-')+'</span></div>';});
   h+='</div><div id="root"></div>';
   document.getElementById('app').innerHTML=h;
   const b=brands[ST.active];const root=document.getElementById('root');let hh='';
-  b.secs.forEach(s=>{const done=s.items.filter(it=>chk(b.name,s.name,it).pass).length;
+  b.secs.forEach(s=>{const done=s.items.filter(it=>chk(b.name,s.name,it).mgr>=rule(b.name,s.name,it).min).length;
     hh+='<div class="sec"><h3><span class="c">'+esc(s.name)+'</span><span class="cnt" id="cnt_'+cssid(s.name)+'">'+done+'/'+s.items.length+'</span></h3>'+
-      '<table><thead><tr><th class="t">항목</th><th>교육</th><th>실습</th><th>평가</th><th style="width:200px">비고(재교육 등)</th></tr></thead><tbody>';
-    s.items.forEach(it=>{const c=chk(b.name,s.name,it);const id=cssid(s.name+it);
-      hh+='<tr id="r_'+id+'"'+(c.pass?' class="done"':'')+'><td class="t">'+esc(it)+'</td>'+
-       cbox(b.name,s.name,it,'edu',c.edu)+cbox(b.name,s.name,it,'prac',c.prac)+cbox(b.name,s.name,it,'pass',c.pass)+
+      '<table><thead><tr><th class="t">항목</th><th style="width:96px">기준</th><th style="width:118px">자기평가</th><th style="width:118px">담당자 평가</th><th style="width:190px">비고 · 보완 사항</th></tr></thead><tbody>';
+    s.items.forEach(it=>{const c=chk(b.name,s.name,it),r=rule(b.name,s.name,it);const id=cssid(s.name+it);
+      const ok=c.mgr>=r.min, warn=c.mgr>0&&c.mgr<=2, gap=c.self&&Math.abs(c.self-c.mgr)>=2;
+      hh+='<tr id="r_'+id+'" class="'+(ok?'done':(warn?'warnrow':''))+'"><td class="t">'+
+       (r.req?'<span class="req">필수</span> ':'')+esc(it)+
+       '<span class="stdbtn'+(hasStd(b.name,s.name,it)?' has':'')+'" title="평가 기준 보기" onclick="showStd(\''+js(b.name)+'\',\''+js(s.name)+'\',\''+js(it)+'\')">기준</span>'+
+       (gap?'<span class="gapbadge" title="자기평가와 담당자 평가 차이 2점 이상">인식 차이</span>':'')+
+       (c.hist&&c.hist.length?'<div class="hist">'+c.hist.map(x=>esc(x.d.slice(5))+' 자기 '+x.self+' / 담당 '+x.mgr).join(' → ')+'</div>':'')+
+       '</td>'+
+       '<td class="mut" style="font-size:11.5px">'+r.min+'점 이상</td>'+
+       sel4(b.name,s.name,it,'self',c.self)+sel4(b.name,s.name,it,'mgr',c.mgr)+
        '<td><input class="note" value="'+esc(c.note)+'" oninput="setNote(\''+js(b.name)+'\',\''+js(s.name)+'\',\''+js(it)+'\',this.value)"></td></tr>';});
     hh+='</tbody></table></div>';});
   root.innerHTML=hh;
 }
-function cbox(b,s,it,k,v){return '<td><input type="checkbox" class="ck" '+(v?'checked':'')+' onchange="ck(\''+js(b)+'\',\''+js(s)+'\',\''+js(it)+'\',\''+k+'\',this.checked)"></td>';}
+function sel4(b,s,it,k,v){let o='';
+  for(let i=0;i<=4;i++)o+='<option value="'+i+'"'+(v===i?' selected':'')+'>'+LV[i]+'</option>';
+  return '<td><select class="lvsel lv'+(v||0)+(k==='mgr'?' mgrsel':'')+'" onchange="ck(\''+js(b)+'\',\''+js(s)+'\',\''+js(it)+'\',\''+k+'\',+this.value)">'+o+'</select></td>';}
 function js(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 function cssid(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return 'x'+h;}
-function setActive(i){ST.active=i;saveSt();renderList();}
-function ck(b,s,it,k,v){const key=K(b,s,it);const c=ST.checks[key]||{edu:false,prac:false,pass:false,note:''};c[k]=v;ST.checks[key]=c;
-  if(k==='pass'){const row=document.getElementById('r_'+cssid(s+it));if(row)row.classList.toggle('done',v);
-    const brands=selBrands();const b2=brands.find(x=>x.name===b)||brands[ST.active];const sec=b2&&b2.secs.find(x=>x.name===s);
-    if(sec){const done=sec.items.filter(x=>chk(b,s,x).pass).length;const el=document.getElementById('cnt_'+cssid(s));if(el)el.textContent=done+'/'+sec.items.length;}
-    // 탭·전체 진도율 갱신
-    const tabs=document.querySelectorAll('.tab .p');brands.forEach((bb,i)=>{if(tabs[i])tabs[i].textContent=bProg(bb).pc+'%';});
-    let t=0,p=0;brands.forEach(bb=>{const g=bProg(bb);t+=g.t;p+=g.p;});const ov=t?Math.round(p/t*100):0;
-    document.querySelector('.overall i').style.width=ov+'%';document.querySelector('.overall span:last-child').textContent=ov+'% ('+p+'/'+t+')';}
-  saveSt();}
-function setNote(b,s,it,v){const key=K(b,s,it);const c=ST.checks[key]||{edu:false,prac:false,pass:false,note:''};c.note=v;ST.checks[key]=c;saveSt();}
+function setActive(i){ST.active=i;saveLocal();renderList();}
+function cur_(b,s,it){const key=K(b,s,it);const o=chk(b,s,it);
+  ST.checks[key]={self:o.self,mgr:o.mgr,note:o.note,hist:o.hist||[]};return ST.checks[key];}
+function ck(b,s,it,k,v){const c=cur_(b,s,it);c[k]=v;
+  // 재평가 이력 — 같은 날짜는 갱신, 다른 날짜는 추가
+  const d=todayStr();const h=c.hist;const last=h[h.length-1];
+  if(last&&last.d===d){last.self=c.self;last.mgr=c.mgr;}
+  else if(c.self||c.mgr)h.push({d:d,self:c.self,mgr:c.mgr});
+  saveSt();renderList();}
+function setNote(b,s,it,v){cur_(b,s,it).note=v;saveSt();}
 
 /* ══════════ 커리큘럼 ══════════ */
 function CUR(){if(!TPL.curriculum)TPL.curriculum=[];return TPL.curriculum;}
@@ -510,7 +790,7 @@ function dayTabs(onclickFn){
   CUR().forEach((c,i)=>{h+='<div class="tab'+(i===ST.dayActive?' on':'')+'" onclick="'+onclickFn+'('+i+')">'+c.d+'일차<span class="p">'+(dayDate(i)?dayDate(i).slice(5):'')+'</span></div>';});
   return h+'</div>';
 }
-function setDay(i){ST.dayActive=i;saveSt();render();}
+function setDay(i){ST.dayActive=i;saveLocal();render();}
 
 function renderCurriculum(){
   document.getElementById('hTitle').textContent='교육 커리큘럼';
@@ -554,8 +834,10 @@ function renderLog(){
   document.getElementById('hTitle').textContent='교육일지';
   if(ST.dayActive>=CUR().length)ST.dayActive=0;
   const c=CUR()[ST.dayActive]||{d:1,title:'',blocks:[]}, L=LG();
-  if(L.tin==null&&c.blocks&&c.blocks.length){const f=(c.blocks[0].t||'').split('~'),g=(c.blocks[c.blocks.length-1].t||'').split('~');
-    L.tin=(f[0]||'').trim();L.tout=(g[1]||'').trim();saveSt();}
+  let dIn='',dOut='';
+  if(c.blocks&&c.blocks.length){const f=(c.blocks[0].t||'').split('~'),g=(c.blocks[c.blocks.length-1].t||'').split('~');
+    dIn=(f[0]||'').trim();dOut=(g[1]||'').trim();}
+  const vIn=(L.tin!=null?L.tin:dIn), vOut=(L.tout!=null?L.tout:dOut);
   let h=metaBar('');
   h+=dayTabs('setDay');
   h+='<div class="prn-only" style="border-bottom:2px solid #1f3864;padding-bottom:8px;margin-bottom:12px">'+
@@ -570,8 +852,8 @@ function renderLog(){
 
   h+='<div class="card logform"><h2>'+c.d+'일차 교육일지</h2><div class="sub">'+dayLabel(ST.dayActive)+' · '+esc(c.title)+'</div>';
   h+='<div class="grid2"><div><label class="f">교육 시간</label>'+
-     '<input type="time" value="'+esc(L.tin||'')+'" onchange="setLog(\'tin\',this.value)"> ~ '+
-     '<input type="time" value="'+esc(L.tout||'')+'" onchange="setLog(\'tout\',this.value)"></div>'+
+     '<input type="time" value="'+esc(vIn)+'" onchange="setLog(\'tin\',this.value)"> ~ '+
+     '<input type="time" value="'+esc(vOut)+'" onchange="setLog(\'tout\',this.value)"></div>'+
      '<div><label class="f">참석자</label><input class="w" placeholder="예: 점주 홍길동, 주방 김OO" value="'+esc(L.attend||'')+'" oninput="setLog(\'attend\',this.value)"></div></div>';
   h+='<label class="f">교육 내용 <button class="btn" style="padding:2px 8px;font-size:11px;margin-left:6px" onclick="fillFromCur()">커리큘럼에서 불러오기</button></label>'+
      '<textarea rows="5" placeholder="당일 진행한 교육 과정을 기재합니다." oninput="setLog(\'content\',this.value)">'+esc(L.content||'')+'</textarea>';
@@ -629,6 +911,361 @@ function storeSig(k,c){const L=LG();L['sig'+k]=c.toDataURL('image/png');
 function clearSig(k){const c=document.getElementById('pad'+k);if(c)c.getContext('2d').clearRect(0,0,c.width,c.height);
   const L=LG();delete L['sig'+k];saveSt();renderLog();}
 
+/* ══════════ 전체 교육 현황 ══════════ */
+function todayStr(){const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+function dayDiff(a,b){const x=new Date(a+'T00:00:00'),y=new Date(b+'T00:00:00');
+  if(isNaN(x)||isNaN(y))return null;return Math.round((y-x)/86400000);}
+function phase(f){
+  if(!f.start)return{t:'날짜 미입력',c:'#8a94a6'};
+  const n=dayDiff(f.start,todayStr());
+  if(n===null)return{t:'-',c:'#8a94a6'};
+  const days=f.days||7;
+  if(n<0)return{t:'시작 전 (D'+n+')',c:'#8a94a6'};
+  if(n>=days)return{t:'교육 종료',c:'#1f7a44'};
+  return{t:'진행 중 · '+(n+1)+'일차',c:'#b8860b'};
+}
+function renderBoard(){
+  document.getElementById('hTitle').textContent='전체 교육 현황';
+  let h='<div class="metabar"><span>동기화 서버에 저장된 모든 교육을 조회합니다.</span>'+
+    '<span class="sp" style="flex:1"></span><button class="btn" onclick="show(\'setup\')">⟵ 설정</button>'+
+    '<button class="btn go" onclick="renderBoard()">새로고침</button></div>';
+  h+='<div id="boardBody" class="card"><div class="mut">불러오는 중…</div></div>';
+  document.getElementById('app').innerHTML=h;
+  if(!syncOn()){document.getElementById('boardBody').innerHTML=
+    '<div class="syncmsg err" style="display:block">동기화 주소와 접속 코드가 설정되지 않았습니다. 설정 화면에서 먼저 입력하십시오.</div>';return;}
+  syncReq({get:'action=list&code='+encodeURIComponent(SY.code)}).then(function(r){
+    const box=document.getElementById('boardBody');if(!box)return;
+    if(!r.ok){box.innerHTML='<div class="syncmsg err" style="display:block">'+r.err+'</div>';return;}
+    const d=r.data;
+    if(!d.ok){box.innerHTML='<div class="syncmsg err" style="display:block">'+
+      (d.error==='CODE'?'접속 코드가 일치하지 않습니다.':esc(d.error||'조회 실패'))+'</div>';return;}
+    const fs=d.files||[];
+    if(!fs.length){box.innerHTML='<div class="mut">서버에 저장된 교육이 없습니다.</div>';return;}
+    let t='<h2>교육 '+fs.length+'건</h2><div class="sub">행을 누르면 해당 교육을 불러옵니다.</div>'+
+      '<table class="board"><thead><tr><th class="t">매장 / 교육생</th><th>상태</th><th>교육 기간</th>'+
+      '<th>충족률</th><th>평균</th><th>판정</th><th>사후점검</th><th>일지·서명</th><th>최종 저장</th></tr></thead><tbody>';
+    fs.forEach(f=>{
+      const ph=phase(f), pc=f.total?Math.round(f.done/f.total*100):0;
+      const end=(f.start&&f.days)?addDays(f.start,f.days-1):'';
+      const bad=!f.store||!f.start;
+      t+='<tr class="brow'+(bad?' bad':'')+'" onclick="openTraining(\''+esc(f.key).replace(/'/g,"\\'")+'\',\''+
+         esc(f.store||'')+'\',\''+esc(f.start||'')+'\')">'+
+        '<td class="t"><b>'+esc(f.store||'(매장명 없음)')+'</b>'+
+          '<div class="mut" style="font-size:11.5px">'+esc(f.trainee||'교육생 미입력')+
+          (f.mgr?' · 담당 '+esc(f.mgr):'')+(f.brands&&f.brands.length?' · '+esc(f.brands.join(', ')):'')+'</div></td>'+
+        '<td style="color:'+ph.c+';font-weight:700;white-space:nowrap">'+ph.t+'</td>'+
+        '<td style="white-space:nowrap">'+(f.start?esc(f.start)+(end?'<br>~ '+esc(end):''):'-')+'</td>'+
+        '<td><b>'+pc+'%</b><div class="mut" style="font-size:11.5px">'+f.done+'/'+f.total+'</div></td>'+
+        '<td><b>'+(f.scored?Number(f.avg).toFixed(2):'-')+'</b>'+
+          (f.reqT?'<div class="mut" style="font-size:11.5px">필수 '+(f.reqT-(f.reqNg||0))+'/'+f.reqT+'</div>':'')+'</td>'+
+        '<td>'+(f.verdict?'<span class="verd '+(f.verdict==='수료'?'ok':f.verdict==='미수료'?'ng':f.verdict==='조건부 수료'?'cond':'none')+'" style="font-size:11.5px;padding:3px 9px">'+esc(f.verdict)+'</span>':'-')+
+          (f.certLocked?'<div class="mut" style="font-size:11px">'+esc(f.certDate)+' 확정</div>':'')+'</td>'+
+        '<td>'+(f.fuTotal
+            ? (f.fuRemain?'<b style="color:#8e2c22">미해결 '+f.fuRemain+'</b>':'<b style="color:#1f7a44">완결</b>')+
+              '<div class="mut" style="font-size:11px">'+f.fuDone+'/3회'+(f.fuNext?' · 다음 '+esc(f.fuNext.slice(5)):'')+'</div>'
+            : (f.weak?'<span class="mut">보완 '+f.weak+'</span>':'-'))+'</td>'+
+        '<td>'+(f.written||0)+'/'+(f.days||0)+' · '+(f.signed||0)+'</td>'+
+        '<td style="white-space:nowrap;font-size:11.5px">'+fmtTime(f.updated)+
+          (f.by?'<div class="mut">'+esc(f.by)+'</div>':'')+'</td></tr>';
+    });
+    t+='</tbody></table>';
+    if(fs.some(f=>!f.store||!f.start))
+      t+='<div class="syncnote" style="border-color:#e3b7b3;background:#fbeaea;color:#8e2c22">'+
+        '회색으로 표시된 행은 매장명 또는 교육 시작일이 비어 있는 상태에서 저장된 기록입니다. '+
+        '설정 화면에서 매장명과 교육 시작일을 먼저 입력한 뒤 저장하십시오.</div>';
+    box.innerHTML=t;
+  });
+}
+function addDays(s,n){const d=new Date(s+'T00:00:00');if(isNaN(d))return '';
+  d.setDate(d.getDate()+n);const p=v=>String(v).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+function openTraining(key,store,start){
+  if(!store||!start){alert('이 기록은 매장명 또는 교육 시작일이 비어 있어 불러올 수 없습니다.');return;}
+  ST.store=store;ST.info.start=start;saveSt();
+  pullSync(false);setTimeout(()=>show('list'),700);
+}
+
+/* ══════════ 보완 과제 · 기준 설정 · 수료 확인서 ══════════ */
+function pushWeakToLog(){
+  const wk=weakItems();if(!wk.length){alert('보완 대상 항목이 없습니다.');return;}
+  const txt=wk.map(x=>'· ['+x.b+'] '+x.it+' (자기 '+(x.self||'-')+' / 담당 '+x.mgr+(x.gap?' · 인식 차이':'')+')'+(x.note?' — '+x.note:'')).join('\n');
+  const L=LG();L.todo=(L.todo?L.todo+'\n':'')+txt;saveSt();
+  alert(CUR()[ST.dayActive]?(ST.dayActive+1)+'일차 교육일지의 [다음 일차 보완 과제]에 '+wk.length+'건을 넣었습니다.':'교육일지에 반영했습니다.');
+  show('log');}
+
+function renderCert(){
+  document.getElementById('hTitle').textContent='수료 확인서';
+  const V=verdict(),cfg=PASSCFG(),bs=selBrands();
+  let h=metaBar('');
+  h+='<div class="card"><h2>조리교육 수료 확인서</h2>'+
+    '<div class="sub">교육 기간 '+(ST.info.start?dayDate(0)+' ~ '+dayDate(CUR().length-1):'-')+' · 총 '+CUR().length+'일</div>';
+  h+='<div class="vbox">'+
+    '<div class="vcard"><div class="k">최종 판정</div><div class="v"><span class="verd '+V.cls+'">'+V.res+'</span></div></div>'+
+    '<div class="vcard"><div class="k">평가 평균</div><div class="v">'+(V.scored?V.avg.toFixed(2):'-')+' <span style="font-size:12px;color:#8a94a6">/ 4.00</span></div></div>'+
+    '<div class="vcard"><div class="k">기준 충족</div><div class="v">'+V.p+'/'+V.t+'</div></div>'+
+    '<div class="vcard"><div class="k">필수 항목</div><div class="v">'+(V.reqT-V.reqNg.length)+'/'+V.reqT+'</div></div></div>';
+  h+='<div class="syncnote">수료 기준 — 필수 항목 각 기준점 이상'+(cfg.useAvg?', 전체 평균 '+cfg.avg.toFixed(1)+'점 이상':'')+
+     '. 기준은 관리자 화면에서 항목별로 변경할 수 있습니다.</div>';
+
+  h+='<h2 style="margin-top:22px">영역별 결과</h2><table><thead><tr><th class="t">브랜드 / 단계</th><th style="width:90px">항목</th><th style="width:90px">평균</th><th style="width:110px">기준 충족</th></tr></thead><tbody>';
+  bs.forEach(b=>{const g=bProg(b);
+    h+='<tr style="background:#f4f7fc"><td class="t"><b>'+esc(b.name)+'</b></td><td>'+g.t+'</td><td><b>'+(g.scored?g.avg.toFixed(2):'-')+'</b></td><td>'+g.p+'/'+g.t+'</td></tr>';
+    b.secs.forEach(s=>{let t=0,p=0,sum=0,sc=0;
+      s.items.forEach(it=>{t++;const c=chk(b.name,s.name,it),r=rule(b.name,s.name,it);
+        if(c.mgr>0){sum+=c.mgr;sc++;}if(c.mgr>=r.min)p++;});
+      h+='<tr><td class="t" style="padding-left:22px">'+esc(s.name)+'</td><td>'+t+'</td><td>'+(sc?(sum/sc).toFixed(2):'-')+'</td><td>'+p+'/'+t+'</td></tr>';});});
+  h+='</tbody></table>';
+
+  const ng=V.reqNg.concat(V.low.filter(x=>!V.reqNg.some(y=>y.it===x.it&&y.s===x.s)));
+  h+='<h2 style="margin-top:22px">기준 미달 항목 '+ng.length+'건</h2>'+
+     '<div class="sub">수료 시점의 미달 항목을 그대로 기재합니다. 해당 항목은 오픈 후 사후점검 대상입니다.</div>';
+  if(!ng.length)h+='<div class="mut" style="padding:8px 0">미달 항목이 없습니다.</div>';
+  else{h+='<table><thead><tr><th class="t">항목</th><th style="width:70px">구분</th><th style="width:80px">평가</th><th style="width:80px">기준</th><th class="t" style="width:200px">보완 안내</th></tr></thead><tbody>';
+    ng.forEach(x=>{const c=chk(x.b,x.s,x.it);
+      h+='<tr><td class="t">'+esc(x.it)+'<div class="mut" style="font-size:11.5px">'+esc(x.b)+'</div></td>'+
+        '<td>'+(rule(x.b,x.s,x.it).req?'<span class="req">필수</span>':'선택')+'</td>'+
+        '<td><b>'+(x.mgr||'-')+'</b></td><td>'+x.min+'</td><td class="t">'+esc(c.note||'')+'</td></tr>';});
+    h+='</tbody></table>';}
+
+  const L=LVDEF();
+  h+='<h2 style="margin-top:22px">적용된 평가 기준</h2>'+
+     '<div class="sub">이 교육에 적용된 점수 판정 기준입니다.</div>'+
+     '<table><thead><tr><th style="width:70px">점수</th><th class="t">판정 기준</th></tr></thead><tbody>';
+  [4,3,2,1].forEach(i=>{h+='<tr><td><b>'+i+'점</b></td><td class="t">'+esc(L[i])+'</td></tr>';});
+  h+='</tbody></table>';
+  const stdList=[];
+  bs.forEach(b=>b.secs.forEach(s2=>s2.items.forEach(it=>{
+    if(hasStd(b.name,s2.name,it)&&(rule(b.name,s2.name,it).req||chk(b.name,s2.name,it).mgr<rule(b.name,s2.name,it).min))
+      stdList.push({b:b.name,s:s2.name,it:it});})));
+  if(stdList.length){
+    h+='<h2 style="margin-top:22px">항목별 완성 기준 '+stdList.length+'건</h2>'+
+       '<div class="sub">필수 항목과 기준 미달 항목의 완성 기준을 함께 기재합니다.</div>'+
+       '<table><thead><tr><th class="t">항목</th><th class="t">완성 기준</th></tr></thead><tbody>';
+    stdList.forEach(x=>{const o=std(x.b,x.s,x.it);
+      h+='<tr><td class="t">'+esc(x.it)+'<div class="mut" style="font-size:11.5px">'+esc(x.b)+'</div></td><td class="t">'+
+        STD_F.filter(f=>o[f[0]]).map(f=>'<b>'+f[1]+'</b> '+esc(o[f[0]])).join('<br>')+'</td></tr>';});
+    h+='</tbody></table>';}
+  h+='<h2 style="margin-top:22px">교육생 확인</h2>'+
+     '<div class="syncnote">위 평가 결과와 미달 항목에 대한 안내를 확인하였으며, 해당 항목은 오픈 후 사후점검을 통해 보완하기로 안내받았습니다.</div>'+
+     '<div class="signwrap">'+certSig('CT','교육생 '+(ST.info.name||''))+certSig('CM','교육 담당자 '+(ST.info.mgr||''))+'</div>'+
+     '<div class="mut" style="margin-top:10px">확정일 '+(ST.certDate||'미확정')+'</div>'+
+     '<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">'+
+     '<button class="btn go" onclick="confirmCert()">'+(ST.certLocked?'확정 해제':'수료 확정 (기록 잠금)')+'</button>'+
+     '<button class="btn" onclick="window.print()">확인서 인쇄</button>'+
+     (ST.certLocked?'<button class="btn" onclick="show(\'fu\')">사후점검</button>':'')+
+     '<button class="btn" onclick="show(\'list\')">체크리스트로</button></div>';
+  if(ST.certLocked)h+='<div class="syncmsg ok" style="display:block;margin-top:10px">'+
+    ST.certDate+' 확정됨 · 이후 평가를 수정하면 수정 이력이 별도로 남습니다.</div>';
+  h+='</div>';
+  document.getElementById('app').innerHTML=h;
+  initCertPads();
+}
+function certSig(k,label){
+  const on=!!(ST.certSig&&ST.certSig[k]);
+  return '<div class="signbox'+(on?' sigdone':'')+'"><div class="lbl"><span>'+esc(label)+'</span>'+
+    (on?'<span class="chip done">서명 완료</span>':'<span class="chip">미서명</span>')+
+    '<span class="sp"></span><button class="btn" style="padding:2px 9px;font-size:11px" onclick="clearCertSig(\''+k+'\')">지우기</button></div>'+
+    '<canvas class="sigpad" id="pad'+k+'"></canvas><div class="sigmeta">(서명)</div></div>';
+}
+function initCertPads(){
+  if(!ST.certSig)ST.certSig={};
+  ['CT','CM'].forEach(k=>{
+    const c=document.getElementById('pad'+k);if(!c)return;
+    const r=c.getBoundingClientRect();c.width=Math.max(240,Math.round(r.width));c.height=110;
+    const x=c.getContext('2d');const src=ST.certSig[k];
+    if(src){const img=new Image();img.onload=function(){x.drawImage(img,0,0,c.width,c.height);};img.src=src;}
+    let dr=false,last=null;
+    function pos(e){const b=c.getBoundingClientRect();return{x:(e.clientX-b.left)*(c.width/b.width),y:(e.clientY-b.top)*(c.height/b.height)};}
+    c.addEventListener('pointerdown',function(e){e.preventDefault();c.setPointerCapture(e.pointerId);dr=true;last=pos(e);});
+    c.addEventListener('pointermove',function(e){if(!dr)return;e.preventDefault();const p=pos(e);
+      x.strokeStyle='#16233a';x.lineWidth=2.2;x.lineCap='round';x.lineJoin='round';
+      x.beginPath();x.moveTo(last.x,last.y);x.lineTo(p.x,p.y);x.stroke();last=p;});
+    ['pointerup','pointercancel'].forEach(ev=>c.addEventListener(ev,function(){if(!dr)return;dr=false;
+      ST.certSig[k]=c.toDataURL('image/png');saveSt();
+      const box=c.closest('.signbox');if(box){box.classList.add('sigdone');const ch=box.querySelector('.chip');if(ch){ch.className='chip done';ch.textContent='서명 완료';}}}));
+  });
+}
+function clearCertSig(k){const c=document.getElementById('pad'+k);if(c)c.getContext('2d').clearRect(0,0,c.width,c.height);
+  if(ST.certSig)delete ST.certSig[k];saveSt();renderCert();}
+function confirmCert(){
+  if(ST.certLocked){
+    modal('확정 해제','확정을 해제하면 평가를 다시 수정할 수 있습니다. 이미 등록된 사후점검 대상은 그대로 유지됩니다.',
+      [{t:'확정 해제',c:'warn',f:function(){ST.certLocked=false;saveSt();renderCert();}},{t:'취소'}]);return;}
+  const V=verdict();
+  modal('수료 확정',
+    '현재 판정은 <b>'+esc(V.res)+'</b> 입니다. (평균 '+(V.scored?V.avg.toFixed(2):'-')+' · 기준 충족 '+V.p+'/'+V.t+')'+
+    '<br><br>확정하면 이 시점의 평가가 기록으로 잠기고, 기준 미달 항목이 사후점검 대상으로 등록됩니다.',
+    [{t:'수료 확정',c:'go',f:doConfirmCert},{t:'취소'}]);}
+function doConfirmCert(){
+  const V=verdict();
+  ST.certLocked=true;ST.certDate=todayStr();ST.certVerdict=V.res;ST.certAvg=+V.avg.toFixed(2);
+  const base=fuInit();ST.fuRound=FU_R[0];saveSt();
+  modal('수료 확정 완료',
+    '판정 <b>'+esc(V.res)+'</b> · 확정일 '+ST.certDate+'<br><br>'+
+    (base.length
+      ? '기준 미달 <b>'+base.length+'건</b>을 사후점검 대상으로 등록했습니다.<br>점검 예정일 — D+7 '+fuDue(7)+' / D+14 '+fuDue(14)+' / D+30 '+fuDue(30)
+      : '기준 미달 항목이 없어 사후점검 대상이 없습니다.'),
+    [{t:base.length?'사후점검 화면으로':'확인',c:'go',f:function(){if(base.length)show('fu');else renderCert();}},
+     {t:'확인서 보기',f:function(){renderCert();}}]);}
+
+/* ══════════ 사후점검 (D+7 / D+14 / D+30) ══════════ */
+const FU_R=[7,14,30];
+function FU(){if(!ST.fu)ST.fu={base:[],rounds:{}};if(!ST.fu.rounds)ST.fu.rounds={};return ST.fu;}
+function fuRound(r){const f=FU();if(!f.rounds[r])f.rounds[r]={scores:{},note:'',by:'',done:false,at:''};
+  if(!f.rounds[r].scores)f.rounds[r].scores={};return f.rounds[r];}
+function fuDue(r){return ST.certDate?addDays(ST.certDate,r):'';}
+/* 수료 확정 시점의 기준 미달·미평가 항목을 사후점검 대상으로 고정합니다 */
+function fuInit(){
+  const base=[];
+  selBrands().forEach(b=>b.secs.forEach(s=>s.items.forEach(it=>{
+    const c=chk(b.name,s.name,it),r=rule(b.name,s.name,it);
+    if(c.mgr<r.min)base.push({k:K(b.name,s.name,it),b:b.name,s:s.name,it:it,min:r.min,mgr0:c.mgr,note:c.note||''});})));
+  FU().base=base;return base;}
+/* 해당 회차까지의 최신 점수 */
+function fuScore(k,upto){
+  let v=null;
+  FU().base.forEach(x=>{if(x.k===k&&v===null)v=x.mgr0;});
+  FU_R.forEach(r=>{if(r<=upto){const sc=fuRound(r).scores[k];if(sc)v=sc;}});
+  return v===null?0:v;}
+/* 이번 회차에서 점검할 항목 — 직전까지 기준 미달인 것 */
+function fuTargets(r){const prev=FU_R.filter(x=>x<r).pop()||0;
+  return FU().base.filter(x=>fuScore(x.k,prev)<x.min);}
+function fuStatus(r){const rd=fuRound(r);
+  if(rd.done)return{t:'완료',c:'ok'};
+  const due=fuDue(r);if(!due)return{t:'예정일 미정',c:'none'};
+  const n=dayDiff(todayStr(),due);
+  if(n>0)return{t:'D-'+n,c:'none'};
+  if(n===0)return{t:'오늘',c:'cond'};
+  return{t:(-n)+'일 경과',c:'ng'};}
+function fuRemain(){const last=FU_R[FU_R.length-1];
+  return FU().base.filter(x=>fuScore(x.k,last)<x.min).length;}
+
+function renderFollow(){
+  document.getElementById('hTitle').textContent='사후점검';
+  const f=FU();
+  if(!ST.certLocked&&!f.base.length){
+    document.getElementById('app').innerHTML=metaBar('')+
+      '<div class="card"><h2>사후점검</h2><div class="sub">수료를 확정하면 기준 미달 항목이 자동으로 점검 대상에 등록됩니다.</div>'+
+      '<div class="warnbar" style="margin-top:12px">아직 수료가 확정되지 않았습니다. 체크리스트 화면에서 <b>수료 확인서</b>를 열고 <b>수료 확정</b>을 먼저 진행하십시오.</div>'+
+      '<button class="btn go" onclick="show(\'cert\')">수료 확인서로 이동</button></div>';return;}
+  if(ST.fuRound==null||FU_R.indexOf(ST.fuRound)<0)ST.fuRound=FU_R[0];
+  const r=ST.fuRound, rd=fuRound(r), tg=fuTargets(r), st=fuStatus(r);
+  let h=metaBar('');
+  h+='<div class="overall"><div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px">'+
+    '<span>사후점검 대상</span><span>'+f.base.length+'건 중 미해결 '+fuRemain()+'건</span></div>'+
+    '<div class="bar"><i style="width:'+(f.base.length?Math.round((f.base.length-fuRemain())/f.base.length*100):0)+'%"></i></div>'+
+    '<div class="mut" style="margin-top:8px">수료 확정일 '+(ST.certDate||'-')+' · 판정 '+(ST.certVerdict||'-')+'</div></div>';
+  h+='<div class="tabs">';
+  FU_R.forEach(x=>{const s2=fuStatus(x);
+    h+='<div class="tab'+(x===r?' on':'')+'" onclick="setFu('+x+')">D+'+x+
+      '<span class="p">'+(fuDue(x)?fuDue(x).slice(5):'-')+' · '+s2.t+'</span></div>';});
+  h+='</div>';
+
+  h+='<div class="card"><h2>D+'+r+' 점검 <span class="verd '+st.c+'" style="font-size:12px;padding:3px 11px;margin-left:8px">'+st.t+'</span></h2>'+
+    '<div class="sub">예정일 '+(fuDue(r)||'-')+' · 대상 '+tg.length+'건</div>';
+  h+='<div class="grid2"><div><label class="f">실시일</label><input type="date" value="'+esc(rd.at||'')+'" onchange="setFuF('+r+',\'at\',this.value)"></div>'+
+     '<div><label class="f">점검자</label><input class="w" placeholder="예: 조성균" value="'+esc(rd.by||'')+'" oninput="setFuF('+r+',\'by\',this.value)"></div></div>';
+
+  if(!tg.length)h+='<div class="syncmsg ok" style="display:block;margin-top:14px">이 회차에 점검할 미해결 항목이 없습니다.</div>';
+  else{
+    h+='<table style="margin-top:14px"><thead><tr><th class="t">항목</th><th style="width:70px">기준</th><th style="width:78px">수료 시</th><th style="width:78px">직전</th><th style="width:118px">이번 점검</th><th class="t" style="width:180px">비고</th></tr></thead><tbody>';
+    const prev=FU_R.filter(x=>x<r).pop()||0;
+    tg.forEach(x=>{const cur=rd.scores[x.k]||0, pv=fuScore(x.k,prev);
+      const ok=cur>=x.min;
+      h+='<tr class="'+(ok?'done':(cur&&cur<=2?'warnrow':''))+'"><td class="t">'+esc(x.it)+
+        '<div class="mut" style="font-size:11.5px">'+esc(x.b)+' · '+esc(x.s)+'</div></td>'+
+        '<td class="mut">'+x.min+'점</td><td><b>'+(x.mgr0||'-')+'</b></td><td>'+(pv||'-')+'</td>'+
+        '<td><select class="lvsel lv'+cur+'" onchange="setFuScore('+r+',\''+js(x.k)+'\',+this.value)">'+
+          LV.map((t,i)=>'<option value="'+i+'"'+(cur===i?' selected':'')+'>'+t+'</option>').join('')+'</select></td>'+
+        '<td><input class="note" value="'+esc(rd.notes&&rd.notes[x.k]||'')+'" oninput="setFuNote('+r+',\''+js(x.k)+'\',this.value)"></td></tr>';});
+    h+='</tbody></table>';}
+
+  h+='<label class="f">점검 의견</label><textarea rows="3" placeholder="현장 상태, 반복되는 문제, 추가 조치 사항을 기재합니다." oninput="setFuF('+r+',\'note\',this.value)">'+esc(rd.note||'')+'</textarea>';
+  h+='<label class="f">확인 서명</label><div class="signwrap">'+
+     fuSig(r,'T','점주 / 교육생')+fuSig(r,'M','점검자')+'</div>';
+  h+='<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">'+
+     '<button class="btn '+(rd.done?'warn':'go')+'" onclick="toggleFuDone('+r+')">'+(rd.done?'완료 해제':'이 회차 완료 처리')+'</button>'+
+     '<button class="btn" onclick="window.print()">점검표 인쇄</button>'+
+     '<button class="btn" onclick="show(\'cert\')">수료 확인서</button></div>';
+  if(rd.done)h+='<div class="syncmsg ok" style="display:block;margin-top:10px">'+esc(rd.at||'')+' 완료 처리됨</div>';
+  h+='</div>';
+
+  const last=FU_R[FU_R.length-1];
+  if(fuRound(last).done){
+    const rem=fuRemain();
+    h+='<div class="card"><h2>사후점검 종료</h2>'+
+      '<div class="vbox"><div class="vcard"><div class="k">최종 결과</div><div class="v">'+
+      (rem?'<span class="verd ng">추가 교육 필요</span>':'<span class="verd ok">완결</span>')+'</div></div>'+
+      '<div class="vcard"><div class="k">해결</div><div class="v">'+(f.base.length-rem)+'/'+f.base.length+'</div></div></div>'+
+      (rem?'<div class="warnbar" style="margin-top:12px">미해결 '+rem+'건이 남아 있습니다. 추가 교육 일정을 협의하십시오.</div>':'')+'</div>';}
+  document.getElementById('app').innerHTML=h;
+  initFuPads(r);
+}
+function setFu(r){ST.fuRound=r;saveLocal();renderFollow();}
+function setFuF(r,k,v){fuRound(r)[k]=v;saveSt();}
+function setFuScore(r,k,v){fuRound(r).scores[k]=v;saveSt();renderFollow();}
+function setFuNote(r,k,v){const rd=fuRound(r);if(!rd.notes)rd.notes={};rd.notes[k]=v;saveSt();}
+function toggleFuDone(r){const rd=fuRound(r);
+  if(rd.done){rd.done=false;saveSt();renderFollow();return;}
+  if(!rd.at)rd.at=todayStr();
+  modal('D+'+r+' 점검 완료',
+    '이 회차를 완료 처리합니다. 미해결 항목은 다음 회차로 자동 이월됩니다.',
+    [{t:'완료 처리',c:'go',f:function(){rd.done=true;saveSt();renderFollow();}},{t:'취소'}]);}
+function fuSig(r,k,label){const rd=fuRound(r);const on=!!(rd.sig&&rd.sig[k]);
+  return '<div class="signbox'+(on?' sigdone':'')+'"><div class="lbl"><span>'+esc(label)+'</span>'+
+    (on?'<span class="chip done">서명 완료</span>':'<span class="chip">미서명</span>')+
+    '<span class="sp"></span><button class="btn" style="padding:2px 9px;font-size:11px" onclick="clearFuSig('+r+',\''+k+'\')">지우기</button></div>'+
+    '<canvas class="sigpad" id="padF'+k+'"></canvas><div class="sigmeta">(서명)</div></div>';}
+function initFuPads(r){const rd=fuRound(r);if(!rd.sig)rd.sig={};
+  ['T','M'].forEach(k=>{const c=document.getElementById('padF'+k);if(!c)return;
+    const bb=c.getBoundingClientRect();c.width=Math.max(240,Math.round(bb.width));c.height=110;
+    const x=c.getContext('2d');const src=rd.sig[k];
+    if(src){const img=new Image();img.onload=function(){x.drawImage(img,0,0,c.width,c.height);};img.src=src;}
+    let dr=false,last=null;
+    function pos(e){const b=c.getBoundingClientRect();return{x:(e.clientX-b.left)*(c.width/b.width),y:(e.clientY-b.top)*(c.height/b.height)};}
+    c.addEventListener('pointerdown',function(e){e.preventDefault();c.setPointerCapture(e.pointerId);dr=true;last=pos(e);});
+    c.addEventListener('pointermove',function(e){if(!dr)return;e.preventDefault();const p=pos(e);
+      x.strokeStyle='#16233a';x.lineWidth=2.2;x.lineCap='round';x.lineJoin='round';
+      x.beginPath();x.moveTo(last.x,last.y);x.lineTo(p.x,p.y);x.stroke();last=p;});
+    ['pointerup','pointercancel'].forEach(ev=>c.addEventListener(ev,function(){if(!dr)return;dr=false;
+      rd.sig[k]=c.toDataURL('image/png');saveSt();
+      const box=c.closest('.signbox');if(box){box.classList.add('sigdone');const ch=box.querySelector('.chip');if(ch){ch.className='chip done';ch.textContent='서명 완료';}}}));});}
+function clearFuSig(r,k){const c=document.getElementById('padF'+k);if(c)c.getContext('2d').clearRect(0,0,c.width,c.height);
+  const rd=fuRound(r);if(rd.sig)delete rd.sig[k];saveSt();renderFollow();}
+
+/* ══════════ 평가 기준 ══════════ */
+const DEF_LV={
+ 1:'시연을 관찰만 하고 직접 수행하지 못한다.',
+ 2:'담당자의 지시나 도움을 받아야 수행할 수 있다.',
+ 3:'혼자 수행할 수 있으나 속도가 느리거나 완성도에 편차가 있다.',
+ 4:'피크타임에도 기준 시간 안에 일정한 품질로 수행한다.'};
+function LVDEF(){if(!TPL.levels)TPL.levels=JSON.parse(JSON.stringify(DEF_LV));
+  [1,2,3,4].forEach(i=>{if(!TPL.levels[i])TPL.levels[i]=DEF_LV[i];});return TPL.levels;}
+function setLvDef(i,v){LVDEF()[i]=v.trim();saveTpl();}
+const STD_F=[['qty','중량 · 계량'],['time','시간 · 온도'],['look','육안 · 식감'],['fail','불합격 기준']];
+function std(b,s,it){const r=RULES()[K(b,s,it)];return (r&&r.std)||{};}
+function setStd(b,s,it,f,v){const key=K(b,s,it);const r=RULES()[key]||{};
+  if(!r.std)r.std={};r.std[f]=v.trim();RULES()[key]=r;saveTpl();}
+function hasStd(b,s,it){const o=std(b,s,it);return STD_F.some(f=>o[f[0]]);}
+function stdCount(){let t=0,w=0;
+  TPL.brands.forEach(b=>b.secs.forEach(s=>s.items.forEach(it=>{t++;if(hasStd(b.name,s.name,it))w++;})));
+  return{t,w,pc:t?Math.round(w/t*100):0};}
+function showStd(b,s,it){
+  const o=std(b,s,it),r=rule(b,s,it),L=LVDEF();
+  let h='<div style="font-weight:700;color:#1f3864;margin-bottom:6px">'+esc(it)+'</div>'+
+    '<div class="mut" style="font-size:12px;margin-bottom:10px">'+esc(b)+' · '+esc(s)+
+    ' · 합격 기준 <b>'+r.min+'점</b>'+(r.req?' · <span class="req">필수</span>':'')+'</div>';
+  if(hasStd(b,s,it)){
+    h+='<table style="margin-bottom:12px"><tbody>';
+    STD_F.forEach(f=>{if(o[f[0]])h+='<tr><td class="t" style="width:110px;font-weight:700;color:#33415c">'+f[1]+'</td><td class="t">'+esc(o[f[0]])+'</td></tr>';});
+    h+='</tbody></table>';
+  }else h+='<div class="warnbar" style="margin-bottom:12px">이 항목의 완성 기준이 아직 작성되지 않았습니다. 관리자 화면에서 입력할 수 있습니다.</div>';
+  h+='<div style="font-weight:700;color:#1f3864;margin-bottom:5px">점수 판정 기준</div><table><tbody>';
+  [4,3,2,1].forEach(i=>{h+='<tr'+(i===r.min?' style="background:#f0faf4"':'')+'><td style="width:64px;font-weight:700">'+i+'점</td><td class="t">'+esc(L[i])+'</td></tr>';});
+  h+='</tbody></table>';
+  modal('평가 기준',h,[{t:'닫기'}]);}
+
 function renderAdmin(){
   document.getElementById('hTitle').textContent='관리자 · 브랜드 체크리스트 템플릿';
   let h='<div class="note-i">여기서 수정한 브랜드/단계/항목은 <b>모든 교육생 체크리스트에 즉시 적용</b>됩니다. (진행 중 체크 상태는 항목명이 같으면 유지)</div>'+
@@ -638,16 +1275,57 @@ function renderAdmin(){
     '<button class="btn" onclick="exportTpl()">템플릿 백업</button>'+
     '<button class="btn" onclick="pickImp(\'tpl\')">템플릿 불러오기</button>'+
     '<button class="btn warn" onclick="resetTpl()">기본값 복원</button></div>';
+  const cfg=PASSCFG();
+  h+='<div class="card"><h2>수료 기준 설정</h2>'+
+    '<div class="sub">항목별 기준점과 필수 여부는 아래 목록에서 개별로 지정합니다. 여기서는 전체 기본값을 정합니다.</div>'+
+    '<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">'+
+    '<div><label class="f">기본 기준점</label><select onchange="setPass(\'defMin\',+this.value)">'+
+      [1,2,3,4].map(v=>'<option value="'+v+'"'+(cfg.defMin===v?' selected':'')+'>'+LV[v]+'</option>').join('')+'</select></div>'+
+    '<div><label class="f">전체 평균 기준</label><select onchange="setPass(\'avg\',+this.value)">'+
+      [2.0,2.5,3.0,3.5,4.0].map(v=>'<option value="'+v+'"'+(Math.abs(cfg.avg-v)<0.01?' selected':'')+'>'+v.toFixed(1)+'점 이상</option>').join('')+'</select></div>'+
+    '<div><label class="f">평균 기준 적용</label><select onchange="setPass(\'useAvg\',this.value===\'1\')">'+
+      '<option value="1"'+(cfg.useAvg?' selected':'')+'>적용</option><option value="0"'+(!cfg.useAvg?' selected':'')+'>미적용</option></select></div>'+
+    '<div style="flex:1"></div>'+
+    '<button class="btn" onclick="bulkReq(true)">전 항목 필수 지정</button>'+
+    '<button class="btn" onclick="bulkReq(false)">전 항목 필수 해제</button></div>'+
+    '<div class="syncnote">필수 항목이 하나라도 기준점 미만이면 <b>미수료</b>로 판정됩니다. 선택 항목만 미달이면 <b>조건부 수료</b>가 됩니다.</div></div>';
+  const L=LVDEF(),sc=stdCount();
+  h+='<div class="card"><h2>점수 판정 기준</h2>'+
+    '<div class="sub">모든 항목에 공통으로 적용되는 4단계 정의입니다. 담당자가 바뀌어도 판정이 흔들리지 않도록 문구를 확정해 두십시오.</div>'+
+    '<table><thead><tr><th style="width:70px">점수</th><th class="t">판정 기준</th></tr></thead><tbody>';
+  [4,3,2,1].forEach(i=>{h+='<tr><td><b>'+i+'점</b></td><td class="t"><span class="ce" contenteditable="true" style="display:block" onblur="setLvDef('+i+',this.textContent)">'+esc(L[i])+'</span></td></tr>';});
+  h+='</tbody></table>'+
+    '<div class="syncnote">항목별 완성 기준(중량·시간·육안·불합격 기준)은 아래 목록에서 <b>기준</b> 버튼으로 입력합니다. '+
+    '현재 <b>'+sc.w+'/'+sc.t+'개 ('+sc.pc+'%)</b> 작성되었습니다. 작성된 기준은 체크리스트와 수료 확인서에 함께 출력됩니다.</div></div>';
   TPL.brands.forEach((b,bi)=>{
     h+='<div class="admin-brand"><div class="bh"><span class="ce" contenteditable="true" onblur="tplBrand('+bi+',this.textContent)">'+esc(b.name)+'</span>'+
       '<span class="sp" style="flex:1"></span><button class="btn" onclick="addSec('+bi+')">+ 단계</button> <span class="del" onclick="delBrand('+bi+')">✕ 브랜드삭제</span></div>';
     b.secs.forEach((s,si)=>{h+='<div class="admin-sec"><div class="sh"><span class="ce" contenteditable="true" onblur="tplSec('+bi+','+si+',this.textContent)">'+esc(s.name)+'</span>'+
       '<button class="btn" style="padding:3px 8px;font-size:11px" onclick="addTItem('+bi+','+si+')">+ 항목</button> <span class="del" onclick="delSec('+bi+','+si+')">✕</span></div>';
-      s.items.forEach((it,ii)=>{h+='<div class="admin-item"><span class="ce" contenteditable="true" style="flex:1" onblur="tplItem('+bi+','+si+','+ii+',this.textContent)">'+esc(it)+'</span><span class="del" onclick="delTItem('+bi+','+si+','+ii+')">✕</span></div>';});
+      s.items.forEach((it,ii)=>{const r=rule(b.name,s.name,it);
+        h+='<div class="admin-item"><span class="ce" contenteditable="true" style="flex:1" onblur="tplItem('+bi+','+si+','+ii+',this.textContent)">'+esc(it)+'</span>'+
+        '<label class="reqchk"><input type="checkbox"'+(r.req?' checked':'')+' onchange="setRule(\''+js(b.name)+'\',\''+js(s.name)+'\',\''+js(it)+'\',\'req\',this.checked);renderAdmin()"> 필수</label>'+
+        '<select class="minsel" onchange="setRule(\''+js(b.name)+'\',\''+js(s.name)+'\',\''+js(it)+'\',\'min\',+this.value)">'+
+          [1,2,3,4].map(v=>'<option value="'+v+'"'+(r.min===v?' selected':'')+'>기준 '+v+'점</option>').join('')+'</select>'+
+        '<button class="btn stdedit'+(hasStd(b.name,s.name,it)?' on':'')+'" onclick="toggleStd(\''+cssid(b.name+s.name+it)+'\')">기준</button>'+
+        '<span class="del" onclick="delTItem('+bi+','+si+','+ii+')">✕</span></div>'+
+        '<div class="stdbox" id="std_'+cssid(b.name+s.name+it)+'">'+
+          STD_F.map(f=>'<div class="stdrow"><label>'+f[1]+'</label>'+
+            '<input value="'+esc(std(b.name,s.name,it)[f[0]]||'')+'" placeholder="'+esc(stdPH(f[0]))+'" '+
+            'oninput="setStd(\''+js(b.name)+'\',\''+js(s.name)+'\',\''+js(it)+'\',\''+f[0]+'\',this.value)"></div>').join('')+
+        '</div>';});
       h+='</div>';});
     h+='</div>';});
   document.getElementById('app').innerHTML=h;
 }
+function stdPH(f){return {qty:'예: 머릿고기 80g, 순대 60g',time:'예: 육수 90℃ 이상, 조리 3분 이내',
+  look:'예: 국물 탁도 균일, 고명 흐트러짐 없음',fail:'예: 육수 온도 미달, 건더기 중량 ±20% 초과'}[f]||'';}
+function toggleStd(id){const el=document.getElementById('std_'+id);if(el)el.classList.toggle('open');}
+function setPass(k,v){PASSCFG()[k]=v;saveTpl();renderAdmin();}
+function bulkReq(v){if(!confirm(v?'모든 항목을 필수로 지정하시겠습니까?':'모든 항목의 필수 지정을 해제하시겠습니까?'))return;
+  TPL.brands.forEach(b=>b.secs.forEach(s=>s.items.forEach(it=>{
+    const key=K(b.name,s.name,it);const r=RULES()[key]||{};r.req=v;RULES()[key]=r;})));
+  saveTpl();renderAdmin();}
 function tplBrand(bi,v){TPL.brands[bi].name=v.trim();saveTpl();}
 function tplSec(bi,si,v){TPL.brands[bi].secs[si].name=v.trim();saveTpl();}
 function tplItem(bi,si,ii,v){TPL.brands[bi].secs[si].items[ii]=v.trim();saveTpl();}
@@ -669,7 +1347,10 @@ document.getElementById('imp').onchange=function(){const f=this.files[0];if(!f)r
     if(impMode==='tpl'){if(!d.brands)throw 0;TPL=d;saveTpl();renderAdmin();alert('템플릿을 불러와 전체에 적용했습니다.');}
     else{if(!d.checks)throw 0;ST=d;saveSt();render();alert('교육생 기록을 불러왔습니다.');}
   }catch(x){alert('파일 형식 오류');}};r.readAsText(f);this.value='';};
-render();
-if(syncOn()&&ST.store)pullSync(true);
-window.addEventListener('beforeunload',function(){if(syncOn()&&SY.timer){clearTimeout(SY.timer);pushSync(false);}});
+render();paintSave();
+/* 미저장 내용이 없을 때만 서버 기록을 자동으로 불러옵니다 */
+if(pushable()&&!hasContent())pullSync(true);
+window.addEventListener('beforeunload',function(e){
+  if(pushable()&&SY.dirty){clearTimeout(SY.timer);pushSync(false);
+    e.preventDefault();e.returnValue='저장되지 않은 내용이 있습니다.';return e.returnValue;}});
 </script></body></html>
