@@ -374,8 +374,8 @@ function markDirty(){if(!pushable()){paintSave();return;}SY.dirty=true;paintSave
 
 /* ══════════ 서버 동기화 ══════════ */
 const LS_SY='fnbhero_sync_cfg_v1';
-let SY={url:'',code:'',by:'',rev:0,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:''};
-(function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:''});}catch(e){}})();
+let SY={url:'',code:'',by:'',rev:0,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0};
+(function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0});}catch(e){}})();
 function saveSy(){lsSet(LS_SY,JSON.stringify({url:SY.url,code:SY.code,by:SY.by,rev:SY.rev}));}
 function syncOn(){return !!(SY.url&&SY.code);}
 function keyReady(){return !!(ST.store&&ST.info.start&&ST.selected.length);}
@@ -500,6 +500,27 @@ function syncTest(){
   });
 }
 
+/* 서버에 새 기록이 있는지 확인 — 덮어쓰지 않고 물어봅니다 */
+function checkRemote(auto){
+  if(!pushable()||SY.busy||SY.checking)return;
+  SY.checking=true;
+  syncReq({get:'action=load&code='+encodeURIComponent(SY.code)+'&key='+encodeURIComponent(syncKey())}).then(function(r){
+    SY.checking=false;
+    if(!r.ok||!r.data.ok||!r.data.found)return;
+    const d=r.data;
+    if((d.rev||0)<=SY.rev)return;
+    if(auto&&SY.lastAsked===d.rev)return;
+    SY.lastAsked=d.rev;
+    const body='다른 기기에서 저장한 기록이 있습니다.<br>최종 저장 <b>'+fmtTime(d.updated)+'</b>'+(d.by?' · '+esc(d.by):'')+
+      (SY.dirty?'<br><br><b>이 기기에 저장되지 않은 변경이 있습니다.</b> 불러오면 그 내용은 사라집니다.':'');
+    modal('서버에 최신 기록이 있습니다',body,
+      [{t:'불러오기',c:'go',f:function(){
+          snapshot('원격 갱신 적용 직전');
+          if(d.tpl&&d.tpl.brands){TPL=d.tpl;lsSet(LS_TPL,JSON.stringify(TPL));}
+          if(d.st&&d.st.checks){ST=d.st;ST.confirmed=true;ST.syncKey=syncKey();lsSet(LS_ST,JSON.stringify(ST));}
+          SY.rev=d.rev||0;saveSy();SY.dirty=false;SY.lastSaved=fmtTime(d.updated);paintSave('saved');render();}},
+       {t:'나중에'}]);
+  }).catch(function(){SY.checking=false;});}
 function pullSync(silent){
   if(!syncOn()){if(!silent)syncSt('err','동기화 주소와 접속 코드를 먼저 입력하십시오.');return;}
   syncSt('wait','불러오는 중…');
@@ -770,7 +791,8 @@ function renderList(){
   const V=verdict();const ov=V.t?Math.round(V.p/V.t*100):0;
   let h='<div class="metabar"><span>매장 <b>'+esc(ST.store||'-')+'</b></span><span>교육생 <b>'+esc(ST.info.name||'-')+'</b></span>'+
     '<span>담당 <b>'+esc(ST.info.mgr||'-')+'</b></span><span class="sp" style="flex:1"></span>'+
-    '<button class="btn" onclick="show(\'setup\')">⟵ 설정 변경</button>'+
+    '<button class="btn" onclick="show(\'setup\')">⟵ 설정</button>'+
+    (syncOn()&&ST.confirmed?'<button class="btn" onclick="pullSync(false)">서버에서 새로고침</button>':'')+
     '<button class="btn" onclick="exportSt()">저장(백업)</button>'+
     '<button class="btn" onclick="pickImp(\'st\')">불러오기</button>'+
     '<button class="btn" onclick="window.print()">인쇄</button></div>';
@@ -833,7 +855,8 @@ function metaBar(extra){
   return '<div class="metabar"><span>매장 <b>'+esc(ST.store||'-')+'</b></span><span>교육생 <b>'+esc(ST.info.name||'-')+'</b></span>'+
     '<span>담당 <b>'+esc(ST.info.mgr||'-')+'</b></span>'+
     '<span>기간 <b>'+(ST.info.start?dayDate(0)+' ~ '+dayDate(CUR().length-1):'미정')+'</b> (총 '+CUR().length+'일)</span>'+
-    '<span class="sp" style="flex:1"></span><button class="btn" onclick="show(\'setup\')">⟵ 설정 변경</button>'+(extra||'')+
+    '<span class="sp" style="flex:1"></span><button class="btn" onclick="show(\'setup\')">⟵ 설정</button>'+
+    (syncOn()&&ST.confirmed?'<button class="btn" onclick="pullSync(false)">서버에서 새로고침</button>':'')+(extra||'')+
     '<button class="btn" onclick="window.print()">인쇄</button></div>';
 }
 function dayTabs(onclickFn){
@@ -1399,8 +1422,16 @@ document.getElementById('imp').onchange=function(){const f=this.files[0];if(!f)r
     else{if(!d.checks)throw 0;ST=d;saveSt();render();alert('교육생 기록을 불러왔습니다.');}
   }catch(x){alert('파일 형식 오류');}};r.readAsText(f);this.value='';};
 render();paintSave();
-/* 미저장 내용이 없을 때만 서버 기록을 자동으로 불러옵니다 */
-if(pushable()&&!hasContent())pullSync(true);
+/* 시작 시: 로컬이 비어 있으면 조용히 불러오고, 내용이 있으면 최신본 여부만 확인해 물어봅니다 */
+if(pushable()){if(!hasContent())pullSync(true);else checkRemote(true);}
+/* 화면으로 돌아올 때마다 최신본 확인 (30초 간격) */
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState!=='visible')return;
+  const now=Date.now();if(SY.lastCheck&&now-SY.lastCheck<30000)return;
+  SY.lastCheck=now;checkRemote(true);});
+window.addEventListener('focus',function(){
+  const now=Date.now();if(SY.lastCheck&&now-SY.lastCheck<30000)return;
+  SY.lastCheck=now;checkRemote(true);});
 window.addEventListener('beforeunload',function(e){
   if(pushable()&&SY.dirty){clearTimeout(SY.timer);pushSync(false);
     e.preventDefault();e.returnValue='저장되지 않은 내용이 있습니다.';return e.returnValue;}});
