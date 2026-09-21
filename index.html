@@ -358,7 +358,7 @@ curriculum:[
    {t:'21:30~22:20',s:'종합 평가',d:'전체 항목 최종 점검, 단독 운영 가능 여부 판정',m:'평가',o:'교육 담당'},
    {t:'22:20~23:00',s:'1:1 피드백',d:'보완 과제 부여 및 추가 교육 일정 협의, 최종 교육일지 작성 및 서명',m:'면담',o:'교육 담당'}]}
 ]};
-const DEF_ST={view:'setup',store:'',info:{name:'',start:'',mgr:''},selected:[],active:0,checks:{},logs:{},dayActive:0,confirmed:false,syncKey:''};
+const DEF_ST={view:'setup',store:'',info:{name:'',start:'',mgr:''},selected:[],active:0,checks:{},logs:{},dayActive:0,dayShifts:{},confirmed:false,syncKey:''};
 const MEM={};
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return MEM[k]||null;}}
 function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){MEM[k]=v;}}
@@ -381,7 +381,7 @@ function saveSt(){lsSet(LS_ST,JSON.stringify(ST));toast();markDirty();}
 function markDirty(){if(!pushable()){paintSave();return;}SY.dirty=true;paintSave('dirty');schedulePush();}
 
 /* ══════════ 서버 동기화 ══════════ */
-const BUILD='2026-09-06 · v10 (공용 템플릿 동기화)';
+const BUILD='2026-09-21 · v11 (일차별 오전조·오후조)';
 const LS_SY='fnbhero_sync_cfg_v1';
 let SY={url:'',code:'',by:'',rev:0,tplRev:0,tplTimer:null,tplBusy:false,tplDirty:false,timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0};
 (function(){try{const c=JSON.parse(lsGet(LS_SY));if(c)SY=Object.assign(SY,c,{timer:null,retry:null,busy:false,dirty:false,state:'off',lastSaved:'',checking:false,lastCheck:0,lastAsked:0});}catch(e){}})();
@@ -948,6 +948,37 @@ function dayTabs(onclickFn){
 }
 function setDay(i){ST.dayActive=i;saveLocal();render();}
 
+// 조 선택은 공용 템플릿이 아닌 각 교육 기록에 저장합니다.
+function dayShift(i){return ST.dayShifts&&ST.dayShifts[i]==='morning'?'morning':'afternoon';}
+function setDayShift(i,value){
+  if(value!=='morning'&&value!=='afternoon')return;
+  if(!ST.dayShifts)ST.dayShifts={};
+  ST.dayShifts[i]=value;saveSt();renderCurriculum();
+}
+function blockMinutes(t){
+  const m=String(t||'').match(/^(\d{1,2}):(\d{2})\s*[~～–-]\s*(\d{1,2}):(\d{2})$/);
+  if(!m)return 30;
+  const start=+m[1]*60+(+m[2]),end=+m[3]*60+(+m[4]);
+  if(+m[1]>23||+m[3]>24||+m[2]>59||+m[4]>59||end>1440)return 30;
+  return (end-start+1440)%1440||30;
+}
+function shiftTime(minutes){
+  const n=((minutes%1440)+1440)%1440;
+  return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
+}
+function scheduledBlocks(i){
+  const c=CUR()[i];if(!c)return [];
+  const weights=c.blocks.map(b=>blockMinutes(b.t));
+  const total=weights.reduce((a,b)=>a+b,0);
+  const start=dayShift(i)==='morning'?360:840;
+  let elapsed=0,previous=0;
+  return c.blocks.map((b,k)=>{
+    elapsed+=weights[k];
+    const end=k===c.blocks.length-1?600:Math.round(elapsed/total*600);
+    const result=Object.assign({},b,{t:shiftTime(start+previous)+'~'+shiftTime(start+end)});
+    previous=end;return result;
+  });
+}
 function renderCurriculum(){
   document.getElementById('hTitle').textContent='교육 커리큘럼';
   if(ST.dayActive>=CUR().length)ST.dayActive=0;
@@ -957,19 +988,22 @@ function renderCurriculum(){
   if(!c){document.getElementById('app').innerHTML=h+'<div class="card">등록된 일차가 없습니다. [+ 일차 추가]를 눌러 시작하십시오.</div>';return;}
   h+='<div class="daymeta"><span>'+c.d+'일차</span><span><b>'+dayLabel(ST.dayActive)+'</b></span>'+
      '<span class="ce" contenteditable="true" style="flex:1;min-width:200px;font-weight:700;color:#1f3864" onblur="curTitle('+ST.dayActive+',this.textContent)">'+esc(c.title)+'</span>'+
+     '<label>교육 조 <select aria-label="일차별 교육 조" onchange="setDayShift('+ST.dayActive+',this.value)">'+
+     '<option value="morning" '+(dayShift(ST.dayActive)==='morning'?'selected':'')+'>오전조 06:00~16:00</option>'+
+     '<option value="afternoon" '+(dayShift(ST.dayActive)==='afternoon'?'selected':'')+'>오후조 14:00~00:00 (다음 날)</option></select></label>'+
      '<button class="btn warn" onclick="delDay('+ST.dayActive+')">일차 삭제</button></div>';
   h+='<div class="goal"><b style="color:#b8860b">학습 목표</b><br><span class="ce" contenteditable="true" onblur="curGoal('+ST.dayActive+',this.textContent)">'+esc(c.goal)+'</span></div>';
   h+='<div class="sec curr"><h3><span class="c">일차별 세부 진행</span><span class="cnt">'+c.blocks.length+'개 과정</span></h3>'+
      '<table><thead><tr><th style="width:104px">시간</th><th class="t" style="width:150px">과정</th><th class="t">세부 내용</th><th style="width:88px">방식</th><th style="width:88px">담당</th><th style="width:34px"></th></tr></thead><tbody>';
-  c.blocks.forEach((b,bi)=>{
-    h+='<tr><td class="tm" data-l="시간"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'t\',this.textContent)">'+esc(b.t)+'</span></td>'+
+  scheduledBlocks(ST.dayActive).forEach((b,bi)=>{
+    h+='<tr><td class="tm" data-l="시간">'+esc(b.t)+'</td>'+
       '<td class="t" data-l="과정" style="font-weight:700"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'s\',this.textContent)">'+esc(b.s)+'</span></td>'+
       '<td data-l="세부 내용"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'d\',this.textContent)">'+esc(b.d)+'</span></td>'+
       '<td class="md" data-l="방식"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'m\',this.textContent)">'+esc(b.m)+'</span></td>'+
       '<td class="ow" data-l="담당"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'o\',this.textContent)">'+esc(b.o)+'</span></td>'+
       '<td><span class="del" onclick="delBlock('+ST.dayActive+','+bi+')">✕</span></td></tr>';});
   h+='</tbody></table><div style="padding:9px 14px"><button class="btn" onclick="addBlock('+ST.dayActive+')">+ 과정 추가</button></div></div>';
-  h+='<div class="note-i">표 안의 시간·과정·세부 내용은 직접 클릭해 수정할 수 있으며, 수정 즉시 저장됩니다. 매장 영업 상황에 따라 시간은 조정 가능합니다.</div>';
+  h+='<div class="note-i">교육 조는 일차별로 선택하며 이 교육 기록에 저장됩니다. 세부 시간은 기존 과정의 소요 시간 비율에 따라 총 10시간으로 자동 배분됩니다(분 단위 반올림). 과정·세부 내용은 클릭해 수정할 수 있습니다. 교육일지의 기존 기록은 유지되며, 커리큘럼 가져오기를 실행할 때 선택한 조의 시간이 반영됩니다.</div>';
   document.getElementById('app').innerHTML=h;
 }
 function curTitle(i,v){CUR()[i].title=v.trim();saveTpl();}
@@ -981,6 +1015,7 @@ function addDay(){const n=CUR().length+1;CUR().push({d:n,title:n+'일차 교육'
 function delDay(i){if(!confirm((i+1)+'일차를 삭제할까요? 해당 일차의 교육일지도 함께 삭제됩니다.'))return;
   CUR().splice(i,1);CUR().forEach((c,k)=>c.d=k+1);
   const nl={};Object.keys(ST.logs).forEach(k=>{const n=+k;if(n<i)nl[n]=ST.logs[k];else if(n>i)nl[n-1]=ST.logs[k];});ST.logs=nl;
+  const shifts={};Object.keys(ST.dayShifts||{}).forEach(k=>{const n=+k;if(n<i)shifts[n]=ST.dayShifts[k];else if(n>i)shifts[n-1]=ST.dayShifts[k];});ST.dayShifts=shifts;
   if(ST.dayActive>=CUR().length)ST.dayActive=Math.max(0,CUR().length-1);
   saveTpl();saveSt();renderCurriculum();}
 
@@ -1042,7 +1077,7 @@ function sigBox(k,label,L){
 }
 function setLog(k,v){const L=LG();L[k]=v;saveSt();}
 function fillFromCur(){const c=CUR()[ST.dayActive];if(!c)return;
-  const txt=c.blocks.filter(b=>b.s&&b.s!=='중식').map(b=>'· ['+b.t+'] '+b.s+(b.d?' — '+b.d:'')).join('\n');
+  const txt=scheduledBlocks(ST.dayActive).filter(b=>b.s&&b.s!=='중식').map(b=>'· ['+b.t+'] '+b.s+(b.d?' — '+b.d:'')).join('\n');
   const L=LG();L.content=(L.content?L.content+'\n':'')+txt;saveSt();renderLog();}
 function initPads(){
   ['T','M'].forEach(k=>{
