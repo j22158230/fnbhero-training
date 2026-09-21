@@ -992,6 +992,7 @@ function renderCurriculum(){
      '<option value="morning" '+(dayShift(ST.dayActive)==='morning'?'selected':'')+'>오전조 06:00~16:00</option>'+
      '<option value="afternoon" '+(dayShift(ST.dayActive)==='afternoon'?'selected':'')+'>오후조 14:00~00:00 (다음 날)</option></select></label>'+
      '<button class="btn warn" onclick="delDay('+ST.dayActive+')">일차 삭제</button></div>';
+  h+='<div class="note-i"><b>교육 진행 안내</b><br>커리큘럼은 매장 상황 또는 사장님의 숙련도에 따라 교육 내용과 세부 일정이 변경될 수 있습니다.</div>';
   h+='<div class="goal"><b style="color:#b8860b">학습 목표</b><br><span class="ce" contenteditable="true" onblur="curGoal('+ST.dayActive+',this.textContent)">'+esc(c.goal)+'</span></div>';
   h+='<div class="sec curr"><h3><span class="c">일차별 세부 진행</span><span class="cnt">'+c.blocks.length+'개 과정</span></h3>'+
      '<table><thead><tr><th style="width:104px">시간</th><th class="t" style="width:150px">과정</th><th class="t">세부 내용</th><th style="width:88px">방식</th><th style="width:88px">담당</th><th style="width:34px"></th></tr></thead><tbody>';
