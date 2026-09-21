@@ -949,7 +949,19 @@ function setDayShift(i,value){
   ST.dayShifts[i]=value;saveSt();renderCurriculum();
 }
 function curriculumRows(c){
-  return c.blocks.map((b,bi)=>({b,bi})).filter(({b})=>!/^(식사|조식|중식|석식|아침|점심|저녁)(\s*(식사|시간))?$/.test(String(b.s||'').trim()));
+  const rows=c.blocks.map((b,bi)=>({b,bi})).filter(({b})=>!/^(식사|조식|중식|석식|아침|점심|저녁)(\s*(식사|시간))?$/.test(String(b.s||'').trim()));
+  const isOrientation=({b})=>/오리엔테이션/.test(String(b.s||''));
+  const orientation=rows.filter(isOrientation);
+  if(!orientation.length)return rows;
+  const lessons=rows.filter(row=>!isOrientation(row));
+  if(dayShift(ST.dayActive)==='afternoon')return orientation.concat(lessons);
+  // 명시된 마무리 과정이 없으면 마지막에 오리엔테이션을 진행합니다.
+  let closing=-1;
+  for(let i=lessons.length-1;i>=0;i--){
+    if(/^(교육\s*)?마무리$/.test(String(lessons[i].b.s||'').trim())){closing=i;break;}
+  }
+  lessons.splice(closing<0?lessons.length:closing,0,...orientation);
+  return lessons;
 }
 function renderCurriculum(){
   document.getElementById('hTitle').textContent='교육 커리큘럼';
