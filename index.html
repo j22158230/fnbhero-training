@@ -62,7 +62,7 @@ footer{padding:16px;text-align:center;color:var(--mut);font-size:12px}
 .curr table{table-layout:fixed}
 .curr th{font-size:12px}
 .curr td{vertical-align:top;text-align:left;font-size:12.5px}
-.curr td.tm{text-align:center;font-weight:700;color:var(--navy);white-space:nowrap;width:104px}
+.curr td.tm{text-align:center;font-weight:700;color:var(--navy);white-space:nowrap;width:72px}
 .curr td.md,.curr td.ow{text-align:center;width:88px;color:#4a5568}
 .curr .ce[contenteditable="true"]{display:block;min-height:20px}
 .daymeta{background:#eef2fb;border:1px solid #d6e0f5;border-radius:9px;padding:10px 14px;margin-bottom:12px;font-size:13px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
@@ -955,30 +955,6 @@ function setDayShift(i,value){
   if(!ST.dayShifts)ST.dayShifts={};
   ST.dayShifts[i]=value;saveSt();renderCurriculum();
 }
-function blockMinutes(t){
-  const m=String(t||'').match(/^(\d{1,2}):(\d{2})\s*[~～–-]\s*(\d{1,2}):(\d{2})$/);
-  if(!m)return 30;
-  const start=+m[1]*60+(+m[2]),end=+m[3]*60+(+m[4]);
-  if(+m[1]>23||+m[3]>24||+m[2]>59||+m[4]>59||end>1440)return 30;
-  return (end-start+1440)%1440||30;
-}
-function shiftTime(minutes){
-  const n=((minutes%1440)+1440)%1440;
-  return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
-}
-function scheduledBlocks(i){
-  const c=CUR()[i];if(!c)return [];
-  const weights=c.blocks.map(b=>blockMinutes(b.t));
-  const total=weights.reduce((a,b)=>a+b,0);
-  const start=dayShift(i)==='morning'?360:840;
-  let elapsed=0,previous=0;
-  return c.blocks.map((b,k)=>{
-    elapsed+=weights[k];
-    const end=k===c.blocks.length-1?600:Math.round(elapsed/total*600);
-    const result=Object.assign({},b,{t:shiftTime(start+previous)+'~'+shiftTime(start+end)});
-    previous=end;return result;
-  });
-}
 function renderCurriculum(){
   document.getElementById('hTitle').textContent='교육 커리큘럼';
   if(ST.dayActive>=CUR().length)ST.dayActive=0;
@@ -995,16 +971,16 @@ function renderCurriculum(){
   h+='<div class="note-i"><b>교육 진행 안내</b><br>커리큘럼은 매장 상황 또는 사장님의 숙련도에 따라 교육 내용과 세부 일정이 변경될 수 있습니다.</div>';
   h+='<div class="goal"><b style="color:#b8860b">학습 목표</b><br><span class="ce" contenteditable="true" onblur="curGoal('+ST.dayActive+',this.textContent)">'+esc(c.goal)+'</span></div>';
   h+='<div class="sec curr"><h3><span class="c">일차별 세부 진행</span><span class="cnt">'+c.blocks.length+'개 과정</span></h3>'+
-     '<table><thead><tr><th style="width:104px">시간</th><th class="t" style="width:150px">과정</th><th class="t">세부 내용</th><th style="width:88px">방식</th><th style="width:88px">담당</th><th style="width:34px"></th></tr></thead><tbody>';
-  scheduledBlocks(ST.dayActive).forEach((b,bi)=>{
-    h+='<tr><td class="tm" data-l="시간">'+esc(b.t)+'</td>'+
+     '<table><thead><tr><th style="width:72px">순서</th><th class="t" style="width:150px">과정</th><th class="t">세부 내용</th><th style="width:88px">방식</th><th style="width:88px">담당</th><th style="width:34px"></th></tr></thead><tbody>';
+  c.blocks.forEach((b,bi)=>{
+    h+='<tr><td class="tm" data-l="순서">'+(bi+1)+'</td>'+
       '<td class="t" data-l="과정" style="font-weight:700"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'s\',this.textContent)">'+esc(b.s)+'</span></td>'+
       '<td data-l="세부 내용"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'d\',this.textContent)">'+esc(b.d)+'</span></td>'+
       '<td class="md" data-l="방식"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'m\',this.textContent)">'+esc(b.m)+'</span></td>'+
       '<td class="ow" data-l="담당"><span class="ce" contenteditable="true" onblur="curB('+ST.dayActive+','+bi+',\'o\',this.textContent)">'+esc(b.o)+'</span></td>'+
       '<td><span class="del" onclick="delBlock('+ST.dayActive+','+bi+')">✕</span></td></tr>';});
   h+='</tbody></table><div style="padding:9px 14px"><button class="btn" onclick="addBlock('+ST.dayActive+')">+ 과정 추가</button></div></div>';
-  h+='<div class="note-i">교육 조는 일차별로 선택하며 이 교육 기록에 저장됩니다. 세부 시간은 기존 과정의 소요 시간 비율에 따라 총 10시간으로 자동 배분됩니다(분 단위 반올림). 과정·세부 내용은 클릭해 수정할 수 있습니다. 교육일지의 기존 기록은 유지되며, 커리큘럼 가져오기를 실행할 때 선택한 조의 시간이 반영됩니다.</div>';
+  h+='<div class="note-i">교육 조는 일차별로 선택하며 이 교육 기록에 저장됩니다. 세부 과정은 진행 순서로 안내하며, 과정·세부 내용은 클릭해 수정할 수 있습니다. 교육일지에 가져올 때도 교육 조와 진행 순서가 반영됩니다.</div>';
   document.getElementById('app').innerHTML=h;
 }
 function curTitle(i,v){CUR()[i].title=v.trim();saveTpl();}
@@ -1078,7 +1054,8 @@ function sigBox(k,label,L){
 }
 function setLog(k,v){const L=LG();L[k]=v;saveSt();}
 function fillFromCur(){const c=CUR()[ST.dayActive];if(!c)return;
-  const txt=scheduledBlocks(ST.dayActive).filter(b=>b.s&&b.s!=='중식').map(b=>'· ['+b.t+'] '+b.s+(b.d?' — '+b.d:'')).join('\n');
+  const shift=dayShift(ST.dayActive)==='morning'?'오전조 06:00~16:00':'오후조 14:00~00:00 (다음 날)';
+  const txt='교육 시간: '+shift+'\n'+c.blocks.map((b,i)=>({b,i})).filter(x=>x.b.s&&x.b.s!=='중식').map(({b,i})=>(i+1)+'. '+b.s+(b.d?' — '+b.d:'')).join('\n');
   const L=LG();L.content=(L.content?L.content+'\n':'')+txt;saveSt();renderLog();}
 function initPads(){
   ['T','M'].forEach(k=>{
